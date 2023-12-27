@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
 using System;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;  //UniTask
 
 public static class LoginManager  //ゲーム開始時に一個だけインスタンスが作られる
