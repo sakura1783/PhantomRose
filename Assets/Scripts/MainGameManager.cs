@@ -15,12 +15,14 @@ public class MainGameManager : MonoBehaviour
 
     [SerializeField] private RouteDataSO routeDataSO;
 
+    [SerializeField] private WaveInfoView waveInfoView;
+
     private List<Transform> routeList = new();
 
     private List<EventBase> currentEventList = new();
 
-    private int currentRouteIndex = 0;  // TODO ReactivePropertyにする
-    //private ReactiveProperty<int> CurrentRouteIndex = new(0);
+    //private int currentRouteIndex = 0; 
+    public ReactiveProperty<int> CurrentRouteIndex = new(0);  // ReactivePropertyで監視できるようになる。プロパティは参照型なので最初に初期値を代入する。
 
 
     void Start()
@@ -28,6 +30,9 @@ public class MainGameManager : MonoBehaviour
         LoadRouteDatas();
 
         GenerateEventButtons();
+
+        //監視。Startに1回書けば良い
+        CurrentRouteIndex.Subscribe(value => waveInfoView.UpdateWaveNo(value)).AddTo(this);
     }
 
     /// <summary>
@@ -84,7 +89,7 @@ public class MainGameManager : MonoBehaviour
                 // アイコンとフレームを表示する場合には利用する。(アイコンだけ設定する場合には不要)
                 //routeBrunch.GetComponent<RectTransform>().sizeDelta = new(100, 240);
 
-                //代わりにアイコンを中央に寄せる
+                // 代わりにアイコンを中央に寄せる
                 routeBrunch.transform.parent.GetComponent<VerticalLayoutGroup>().padding.top = 70;
             }
         }
@@ -96,10 +101,10 @@ public class MainGameManager : MonoBehaviour
     private void GenerateEventButtons()
     {
         // 次のイベント用のボタン生成
-        for (int i = 0; i < routeDataSO.routeList[currentRouteIndex].eventList.Count; i++)
+        for (int i = 0; i < routeDataSO.routeList[CurrentRouteIndex.Value].eventList.Count; i++)
         {
             int index = i;
-            EventBase eventButton = Instantiate(routeDataSO.routeList[currentRouteIndex].eventList[i], eventButtonTran, false);
+            EventBase eventButton = Instantiate(routeDataSO.routeList[CurrentRouteIndex.Value].eventList[i], eventButtonTran, false);
 
             // ボタンのイベントを購読
             eventButton.OnClickEventButtonObserbable
@@ -107,13 +112,13 @@ public class MainGameManager : MonoBehaviour
                 .Subscribe(async _ =>  // Subscribeは、Observableに対して、何らかのイベントが発生した時の処理を指定するためのメソッド。
                 {
                     // プレイヤーのアイコンの位置設定(子オブジェクトにする)
-                    SetPlayerLocation(routeList[currentRouteIndex].GetChild(index));
+                    SetPlayerLocation(routeList[CurrentRouteIndex.Value].GetChild(index));
 
                     await eventButton.ExecuteEvent();
 
                     HandleEventCompletion(index);
                 })
-                .AddTo(this);
+                .AddTo(this);  // AddToで監視処理を止める条件を引数で指定する
 
             currentEventList.Add(eventButton);
         }
@@ -140,7 +145,7 @@ public class MainGameManager : MonoBehaviour
     {
         DestroyEndEvents();
 
-        currentRouteIndex++;
+        CurrentRouteIndex.Value++;
 
         CheckRoute();
     }
@@ -156,7 +161,7 @@ public class MainGameManager : MonoBehaviour
             Destroy(currentEventList[i].gameObject);
         }
 
-        //前のイベントを削除
+        // 前のイベントを削除
         currentEventList.Clear();
     }
 
@@ -166,7 +171,7 @@ public class MainGameManager : MonoBehaviour
     private void CheckRoute()
     {
         // ルートが残っていない場合、ルートクリア
-        if (routeDataSO.routeList.Count <= currentRouteIndex)
+        if (routeDataSO.routeList.Count <= CurrentRouteIndex.Value)
         {
             Debug.Log("ルート終了");
 
