@@ -18,12 +18,12 @@ public class PopupBase : MonoBehaviour
     public virtual void SetUp()
     {
         canvasGroup.alpha = 0;
+        canvasGroup.blocksRaycasts = false;
 
         btnClose.OnClickAsObservable()
-            .ThrottleFirst(System.TimeSpan.FromSeconds(1))
-            .Subscribe(_ => HidePopUp()).AddTo(this);
-
-        ShowPopUp();
+            .ThrottleFirst(System.TimeSpan.FromSeconds(2))
+            .Subscribe(_ => HidePopUp())
+            .AddTo(this);
     }
 
     /// <summary>
@@ -33,6 +33,7 @@ public class PopupBase : MonoBehaviour
     {
         canvasGroup.DOFade(1, 0.5f)
             .SetEase(ease);
+        canvasGroup.blocksRaycasts = true;
     }
 
     /// <summary>
@@ -42,5 +43,6 @@ public class PopupBase : MonoBehaviour
     {
         canvasGroup.DOFade(0, 0.5f)
             .SetEase(ease);
+        canvasGroup.blocksRaycasts = false;
     }
 }
