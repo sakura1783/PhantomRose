@@ -6,4 +6,9 @@ using Cysharp.Threading.Tasks;
 public interface IEvent
 {
     UniTask ExecuteEvent();
+
+    /// <summary>
+    /// 初期設定
+    /// </summary>
+    //void SetUp();
 }

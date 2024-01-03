@@ -13,4 +13,9 @@ public abstract class EventBase : MonoBehaviour, IEvent
 
     [SerializeField] private Button btnEvent;
     public IObservable<Unit> OnClickEventButtonObserbable => btnEvent.OnClickAsObservable();  //ボタンがクリックされた時に通知を受け取るプロパティ。OnClickAsObservableでボタンのクリックイベントをIObservable<Unit>に変換する。
+
+    /// <summary>
+    /// 初期設定
+    /// </summary>
+    //public abstract void SetUp();
 }

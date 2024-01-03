@@ -87,10 +87,11 @@ public class MainGameManager : MonoBehaviour
             if (index == 0)
             {
                 // アイコンとフレームを表示する場合には利用する。(アイコンだけ設定する場合には不要)
-                //routeBrunch.GetComponent<RectTransform>().sizeDelta = new(100, 240);
+                routeBrunch.GetComponent<RectTransform>().sizeDelta = new(85, 200);
+                routeBrunch.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new(75, 190);
 
                 // 代わりにアイコンを中央に寄せる
-                routeBrunch.transform.parent.GetComponent<VerticalLayoutGroup>().padding.top = 70;
+                //routeBrunch.transform.parent.GetComponent<VerticalLayoutGroup>().padding.top = 50;
             }
         }
     }
