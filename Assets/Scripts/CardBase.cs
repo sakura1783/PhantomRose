@@ -5,13 +5,13 @@ using Cysharp.Threading.Tasks;
 [System.Serializable]
 public abstract class CardBase : ICommand
 {
-    protected CardDataSO.CardData cardData;
+    protected CardData cardData;
 
     /// <summary>
     /// コンストラクタ
     /// </summary>
     /// <param name="cardData"></param>
-    public CardBase(CardDataSO.CardData cardData)
+    public CardBase(CardData cardData)
     {
         this.cardData = cardData;
     }

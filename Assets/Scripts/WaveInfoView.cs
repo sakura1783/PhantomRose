@@ -12,6 +12,6 @@ public class WaveInfoView : MonoBehaviour
     /// <param name="no"></param>
     public void UpdateWaveNo(int no)
     {
-        txtWaveNo.text = $"現在 {no}";
+        txtWaveNo.text = no.ToString();
     }
 }

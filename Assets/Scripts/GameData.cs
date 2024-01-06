@@ -1,8 +1,15 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class GameData : MonoBehaviour
 {
     public static GameData instance;
+
+    public List<CardData> myCardList = new();
+
+    public List<CardData> attackCardList = new();
+    public List<CardData> magicCardList = new();
 
     private Character player;
     private Character opponent;
@@ -52,4 +59,14 @@ public class GameData : MonoBehaviour
     public Character GetOpponent() => opponent;
 
     //TODO カード管理用の処理を追加する
+
+    /// <summary>
+    /// 攻撃カードと魔法カードに分ける
+    /// </summary>
+    public void SortBattleCardList()
+    {
+        attackCardList = myCardList.Where(card => card.cardType == CardType.Attack).ToList();
+
+        magicCardList = myCardList.Where(card => card.cardType == CardType.Magic).ToList();
+    }
 }

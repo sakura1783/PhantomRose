@@ -17,7 +17,7 @@ public class Attack : CardBase
     /// コンストラクタ
     /// </summary>
     /// <param name="cardData"></param>
-    public Attack(CardDataSO.CardData cardData) : base(cardData)
+    public Attack(CardData cardData) : base(cardData)
     {
         //中身はなしでいい。その場合、親クラスでの処理が行われる
     }

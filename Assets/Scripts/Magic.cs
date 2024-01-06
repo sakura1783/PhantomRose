@@ -13,5 +13,5 @@ public class Magic : CardBase
     /// コンストラクタ
     /// </summary>
     /// <param name="cardData"></param>
-    public Magic(CardDataSO.CardData cardData) : base(cardData) { }
+    public Magic(CardData cardData) : base(cardData) { }
 }
