@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DataBaseManager : MonoBehaviour
 {
     public static DataBaseManager instance;
 
-    [SerializeField] private CardDataSO cardDataSO;
+    public CardDataSO cardDataSO;
 
 
     void Awake()
