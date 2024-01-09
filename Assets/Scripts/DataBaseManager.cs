@@ -21,7 +21,7 @@ public class DataBaseManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// TODO
     /// </summary>
     public void SetCardData()
     {
