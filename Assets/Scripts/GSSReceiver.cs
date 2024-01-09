@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 /// <summary>
 /// スプレッドシートからGSSReaderが取得した情報(SheetData配列変数内に格納されている)をシート単位で任意のスクリプタブルオブジェクトに値として取り込む。
@@ -9,29 +10,30 @@ using System.Linq;
 [RequireComponent(typeof(GSSReader))]
 public class GSSReceiver : MonoBehaviour
 {
-    public bool IsLoading { get; set; }  // プロパティだとインスペクターから確認できないため、一時的に変数にしても良い。
+    public bool IsLoading { get; set; }
 
 
     private void Awake()
     {
         // GSSのデータ取得準備
-        StartCoroutine(PrepareGSSLoadStart());
+        //StartCoroutine(PrepareGSSLoadStart());
+        PrepareGSSLoadStartAsync().Forget();
     }
 
     /// <summary>
     /// GSSのデータ取得準備
     /// </summary>
     /// <returns></returns>
-    private IEnumerator PrepareGSSLoadStart()
+    private async UniTask PrepareGSSLoadStartAsync()
     {
         IsLoading = true;
 
-        //TODO GSSを取得してスクリプタブルオブジェクトに取得。(この処理が終わるまでここで待機する)
-        yield return StartCoroutine(GetComponent<GSSReader>().GetFromWeb());
+        //TODO 読み込んでいない場合には、GSSを取得してスクリプタブルオブジェクトに取得。(この処理が終わるまでここで待機する)
+        //yield return StartCoroutine(GetComponent<GSSReader>().GetFromWeb());
+        await GetComponent<GSSReader>().GetFromWebAsync();
 
         IsLoading = false;
 
-        //TODO 確認
         Debug.Log("GSSデータをスクリプタブルオブジェクトに取得");
     }
 

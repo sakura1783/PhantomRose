@@ -1,9 +1,9 @@
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Events;
+using Cysharp.Threading.Tasks;
 
 /// <summary>
 /// シート名の登録用
@@ -40,14 +40,18 @@ public class GSSReader : MonoBehaviour
     public SheetData[] sheetDatas;
 
 
-    public void Reload() => StartCoroutine(GetFromWeb());
+    //public void Reload() => StartCoroutine(GetFromWeb());
+    public async UniTask Reload() => await GetFromWebAsync();
 
     /// <summary>
     /// スプレッドシートの取得
     /// </summary>
     /// <returns></returns>
-    public IEnumerator GetFromWeb()
+    public async UniTask GetFromWebAsync()
     {
+        // CancellationTokenの作成
+        var token = this.GetCancellationTokenOnDestroy();  // thisで、このクラスが破棄された時に処理をキャンセルする
+
         // 複数のシートの読み込み
         for (int i = 0; i < sheetDatas.Length; i++)
         {
@@ -58,7 +62,8 @@ public class GSSReader : MonoBehaviour
             UnityWebRequest request = UnityWebRequest.Get(url);
 
             // 取得できるまで待機
-            yield return request.SendWebRequest();  // SendWebRequest()で受信(サーバーとの通信)開始
+            //yield return request.SendWebRequest();  // SendWebRequest()で受信(サーバーとの通信)開始
+            await request.SendWebRequest().WithCancellation(token);  // CancellationTokenの設定も行い、非同期処理をキャンセルした場合には処理が停止するようにセットする
             Debug.Log(request.downloadHandler.text);
 
             // エラーが発生しているか確認
@@ -71,7 +76,8 @@ public class GSSReader : MonoBehaviour
                 // エラー表示を行い、処理を終了する
                 Debug.LogError(request.error);
 
-                yield break;
+                //yield break;
+                return;
             }
 
             // GSSの各シートごとのデータをList<string[]>の形で取得
