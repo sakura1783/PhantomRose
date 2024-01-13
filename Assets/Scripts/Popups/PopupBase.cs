@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -7,10 +8,33 @@ public class PopupBase : MonoBehaviour
 {
     [SerializeField] protected Button btnClose;
 
+    [SerializeField] protected Canvas canvas;
+
     [SerializeField] protected CanvasGroup canvasGroup;
 
     [SerializeField] protected Ease ease;
 
+
+    protected virtual void Reset()
+    {
+        if (TryGetComponent(out canvas))
+        {
+            Debug.Log($"{canvas} 取得しました");
+        }
+        else
+        {
+            Debug.Log($"{this} Canvasが取得できません");
+        }
+
+        if (TryGetComponent(out canvasGroup))
+        {
+            Debug.Log($"{canvasGroup} 取得しました");
+        }
+        else
+        {
+            Debug.Log($"{this} CanvasGroupが取得できません");
+        }
+    }
 
     /// <summary>
     /// 初期設定

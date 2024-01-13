@@ -11,12 +11,12 @@ public class TitlePop : PopupBase
     /// </summary>
     public override void ShowPopUp()
     {
-        canvasGroup.DOFade(1, 0.3f)
+        canvasGroup.DOFade(1, 0.5f)
             .SetEase(ease)
             .OnComplete(() =>
             {
                 canvasGroup.blocksRaycasts = true;
-                tapPromptGroup.DOFade(1, 0.5f).SetEase(ease).SetLoops(2, LoopType.Yoyo);
+                tapPromptGroup.DOFade(1, 1f).SetEase(ease).SetLoops(5, LoopType.Yoyo);
             });
     }
 }
