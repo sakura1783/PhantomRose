@@ -16,7 +16,7 @@ public class PopupChangeTester : MonoBehaviour
             .Where(_ => Input.GetKeyDown(KeyCode.O))
             .Subscribe(_ => PopupManager.instance.Show<CardDescriptionPop>());
 
-        // Iボタンを押したらTitlePopを表示
+        //Iボタンを押したらTitlePopを表示
         this.UpdateAsObservable()
             .Where(_ => Input.GetKeyDown(KeyCode.I))
             .Subscribe(_ => PopupManager.instance.Show<TitlePop>());

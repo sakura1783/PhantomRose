@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 
-public class CardPrefab : MonoBehaviour
+public class CardController : MonoBehaviour
 {
     [SerializeField] private Button cardPrefab;
 

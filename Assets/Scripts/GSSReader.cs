@@ -117,7 +117,7 @@ public class GSSReader : MonoBehaviour
                 // 文字列の最初と最後にある""を削除する
                 elements[i] = elements[i].TrimStart('"').TrimEnd('"');
 
-                Debug.Log(elements[i]);
+                //Debug.Log(elements[i]);
             }
 
             rows.Add(elements);

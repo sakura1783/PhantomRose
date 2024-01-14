@@ -1,20 +1,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UniRx;
 
 public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に指定したクラスがシングルトン化される
 {
-    [SerializeField] List<PopupBase> popupList = new();
+    [SerializeField] private List<PopupBase> popupList = new();
 
-    private PopupBase currentViewPop;
+    //private PopupBase currentViewPop;
+    public ReactiveProperty<PopupBase> currentViewPop = new();
+    //public PopupBase CurrentViewPop => currentViewPop;
 
     readonly Stack<PopupBase> history = new();  // 以前開いていたポップアップを保持するためのStack(スタック。新しい要素を追加し、最後に追加された要素を取り出す)
 
 
-    // デバッグ用
+    //TODO デバッグ用。終わったら消す
     void Start()
     {
         SetUp();
+
+        //TODO 監視処理。currentViewPopの値が変わったら、Debug.Logでコンソールに表示する
+        currentViewPop.Subscribe(_ =>
+        {
+            Debug.Log($"currentViewPopの値：{currentViewPop}");
+        });
     }
 
     /// <summary>
@@ -73,13 +82,13 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
     /// </summary>
     /// <typeparam name="T">検索対象のPopupBaseクラス</typeparam>
     /// <param name="keepInHistory">現在開いているポップアップを履歴スタックに追加するかどうか。trueで追加</param>
-    public void Show<T>(bool keepInHistory = true) where T : PopupBase
+    public void Show<T>(bool keepInHistory = true, bool closeCurrentPop = true) where T : PopupBase
     {
         foreach (var pop in popupList)
         {
             //if (pop is T)
             //{
-            //    Show(pop, keepInHistory);
+            //    OpenPopup(pop, keepInHistory);
 
             //    break;
             //}
@@ -96,7 +105,7 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
             }
 
             // すでに開いているポップアップの場合には処理しない
-            if (currentViewPop == targetPop)
+            if (currentViewPop.Value == targetPop)
             {
                 Debug.Log($"{targetPop}はすでに開いています。");
 
@@ -104,7 +113,7 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
             }
 
             // ポップアップを開く
-            OpenPopup(targetPop, keepInHistory);
+            OpenPopup(targetPop, keepInHistory, closeCurrentPop);
         }
     }
 
@@ -113,7 +122,7 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
     /// </summary>
     /// <param name="pop">表示するポップアップ/param>
     /// <param name="keepInHistory">現在開いているポップアップを履歴スタックに追加するかどうか。trueで追加</param>
-    private void OpenPopup(PopupBase pop, bool keepInHistory = true)
+    private void OpenPopup(PopupBase pop, bool keepInHistory = true, bool closeCurrentPop = true)
     {
         // 現在開いているポップアップが存在している場合
         if (currentViewPop != null)
@@ -122,18 +131,21 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
             if (keepInHistory)
             {
                 // StackにPushして保持
-                history.Push(currentViewPop);
+                history.Push(currentViewPop.Value);
             }
 
-            // 現在開いているポップアップを閉じる
-            currentViewPop.HidePopUp();
+            if (closeCurrentPop)
+            {
+                // 現在開いているポップアップを閉じる
+                currentViewPop.Value.HidePopUp();
+            }
         }
 
         // 新しいポップアップを開く
         pop.ShowPopUp();
 
         // 現在開いているポップアップを更新
-        currentViewPop = pop;
+        currentViewPop.Value = pop;
     }
 
     /// <summary>
@@ -147,5 +159,50 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
             // 前回のポップアップを再表示(これはStackに積む必要はないのでfalseで実行する)
             OpenPopup(history.Pop(), false);
         }
+    }
+
+    /// <summary>
+    /// 引数で受け取った値に応じて、それぞれのポップアップの表示、非表示を切り替える
+    /// バトル画面↔︎ホーム画面に移動したい時に使用する
+    /// </summary>
+    /// <param name="sceneName"></param>
+    public void SwitchToBattleOrHomeScene(string nextSceneName)
+    {
+        if (nextSceneName == "Battle")
+        {
+            ShowBattlePop();
+        }
+        else if (nextSceneName == "Home")
+        {
+            ShowHomePop();
+        }
+        else
+        {
+            Debug.Log("該当のシーンがありません。");
+        }
+    }
+
+    /// <summary>
+    /// ホーム画面のポップアップを全て非表示にして、バトル用のポップアップを表示する
+    /// </summary>
+    private void ShowBattlePop()
+    {
+        InitPopups();
+
+        // バトル用のポップアップを開く
+        Show<BattleBackgroundPop>(false);
+        Show<RoutePop>(false, false);
+        Show<BattleAlwaysPop>(false, false);
+    }
+
+    /// <summary>
+    /// バトル用のポップアップを全て非表示にして、ホーム画面のポップアップを表示する
+    /// </summary>
+    private void ShowHomePop()
+    {
+        InitPopups();
+
+        Show<HomeAlwaysPop>(false);
+        Show<MyRoomPop>(false, false);
     }
 }

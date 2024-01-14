@@ -34,10 +34,10 @@ public class CardData
     public CardData(string[] datas)
     {
         // 取得した情報の確認
-        for (int i = 0; i < datas.Length; i++)
-        {
-            Debug.Log(datas[i]);
-        }
+        //for (int i = 0; i < datas.Length; i++)
+        //{
+        //    Debug.Log(datas[i]);
+        //}
 
         // 取得した情報をキャストして代入
         id = int.Parse(datas[0]);

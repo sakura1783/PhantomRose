@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -46,7 +45,7 @@ public class PopupBase : MonoBehaviour
 
         btnClose.OnClickAsObservable()
             .ThrottleFirst(System.TimeSpan.FromSeconds(2))
-            .Subscribe(_ => HidePopUp())
+            .Subscribe(_ => PopupManager.instance.GoBack())
             .AddTo(this);
     }
 
@@ -55,7 +54,7 @@ public class PopupBase : MonoBehaviour
     /// </summary>
     public virtual void ShowPopUp()
     {
-        canvasGroup.DOFade(1, 0.3f)
+        canvasGroup.DOFade(1, 0.5f)
             .SetEase(ease)
             .OnComplete(() => canvasGroup.blocksRaycasts = true);
     }
@@ -65,7 +64,7 @@ public class PopupBase : MonoBehaviour
     /// </summary>
     public virtual void HidePopUp()
     {
-        canvasGroup.DOFade(0, 0.3f)
+        canvasGroup.DOFade(0, 0.5f)
             .SetEase(ease)
             .OnComplete(() => canvasGroup.blocksRaycasts = false);
     }
