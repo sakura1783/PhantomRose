@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UniRx;
+using Cysharp.Threading.Tasks;
 
 public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に指定したクラスがシングルトン化される
 {
@@ -18,29 +19,22 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
     void Start()
     {
         SetUp();
-
-        //TODO 監視処理。currentViewPopの値が変わったら、Debug.Logでコンソールに表示する
-        currentViewPop.Subscribe(_ =>
-        {
-            Debug.Log($"currentViewPopの値：{currentViewPop}");
-        });
     }
 
     /// <summary>
     /// 初期設定
     /// </summary>
-    public void SetUp()
+    public async void SetUp()
     {
         // インスペクターでアサインしない場合、ここで取得(その場合、対象としたい全てのポップアップをこのゲームオブジェクトの子にする必要がある)
         //popupList = m_Root.GetComponentsInChildren<PopupBase>(true).ToList();
+
+        await InitPopupsAsync();
 
         // 管理しているポップアップの初期設定
         //foreach (var pop in popupList) pop.SetUp();
         // 上記をLinqで書いた場合
         popupList.ForEach(pop => pop.SetUp());
-
-        // ポップアップの初期化
-        InitPopups();
 
         //TODO キャンバスのリサイズなど(その場合はメンバ変数を増やす)
     }
@@ -48,12 +42,14 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
     /// <summary>
     /// 管理しているポップアップの初期化(ここはポップアップの初期化を行いたい時に実行するので、実行回数は1回とは限らない)
     /// </summary>
-    private void InitPopups()
+    private async UniTask InitPopupsAsync()
     {
         popupList.ForEach(pop => pop.HidePopUp());
 
         // Stackをクリア
         history.Clear();
+
+        await UniTask.DelayFrame(1);
 
         Debug.Log("InitPopups End");
     }
@@ -185,9 +181,9 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
     /// <summary>
     /// ホーム画面のポップアップを全て非表示にして、バトル用のポップアップを表示する
     /// </summary>
-    private void ShowBattlePop()
+    private async void ShowBattlePop()
     {
-        InitPopups();
+        await InitPopupsAsync();
 
         // バトル用のポップアップを開く
         Show<BattleBackgroundPop>(false);
@@ -198,9 +194,9 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
     /// <summary>
     /// バトル用のポップアップを全て非表示にして、ホーム画面のポップアップを表示する
     /// </summary>
-    private void ShowHomePop()
+    private async void ShowHomePop()
     {
-        InitPopups();
+        await InitPopupsAsync();
 
         Show<HomeAlwaysPop>(false);
         Show<MyRoomPop>(false, false);

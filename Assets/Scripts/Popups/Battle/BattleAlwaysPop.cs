@@ -44,8 +44,16 @@ public class BattleAlwaysPop : PopupBase
             .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))
             .Subscribe(_ =>
             {
-                HideCurrentPop();
-                PopupManager.instance.Show<StorePop>(false, false);
+                // 現在開いているポップアップがストア、インベントリ、カード、状態のいずれかである場合、開かれている最新のポップアップを閉じる
+                if (hidePopNames.Contains(PopupManager.instance.currentViewPop.Value.name))
+                {
+                    PopupManager.instance.Show<StorePop>(false);
+                }
+                // それ以外の(バトル用のポップアップが開かれている)場合、それらは閉じない
+                else
+                {
+                    PopupManager.instance.Show<StorePop>(false, false);
+                }
             })
             .AddTo(this);
 
@@ -53,8 +61,14 @@ public class BattleAlwaysPop : PopupBase
             .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))
             .Subscribe(_ =>
             {
-                HideCurrentPop();
-                PopupManager.instance.Show<InventoryPop>(false, false);
+                if (hidePopNames.Contains(PopupManager.instance.currentViewPop.Value.name))
+                {
+                    PopupManager.instance.Show<InventoryPop>(false);
+                }
+                else
+                {
+                    PopupManager.instance.Show<InventoryPop>(false, false);
+                }
             })
             .AddTo(this);
 
@@ -62,22 +76,17 @@ public class BattleAlwaysPop : PopupBase
             .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))
             .Subscribe(_ =>
             {
-                HideCurrentPop();
-                PopupManager.instance.Show<CardDeckPop>(false, false);
+                if (hidePopNames.Contains(PopupManager.instance.currentViewPop.Value.name))
+                {
+                    PopupManager.instance.Show<CardDeckPop>(false);
+                }
+                else
+                {
+                    PopupManager.instance.Show<CardDeckPop>(false, false);
+                }
             })
             .AddTo(this);
 
         //btnToPlayerState
-    }
-
-    /// <summary>
-    /// 現在開いているポップアップがストア、インベントリ、カード、状態のいずれかである場合、そのポップアップを閉じる
-    /// </summary>
-    private void HideCurrentPop()
-    {
-        if (hidePopNames.Contains(PopupManager.instance.currentViewPop.Value.name))
-        {
-            PopupManager.instance.currentViewPop.Value.HidePopUp();
-        }
     }
 }
