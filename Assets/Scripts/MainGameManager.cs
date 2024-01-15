@@ -78,9 +78,9 @@ public class MainGameManager : MonoBehaviour
 
                 routeBrunch = Instantiate(routeDetailPrefab, routeBase, false);
 
-                IconType iconType = (IconType)Enum.Parse(typeof(IconType), routeDataSO.routeList[i].eventList[index].name);  // Enum.Parse(列挙型の型情報, 変換したい文字列)
+                EventIconType iconType = (EventIconType)Enum.Parse(typeof(EventIconType), routeDataSO.routeList[i].eventList[index].name);  // Enum.Parse(列挙型の型情報, 変換したい文字列)
 
-                routeBrunch.SetUp(IconManager.instance.GetIcon(iconType));
+                routeBrunch.SetUp(IconManager.instance.GetEventIcon(iconType));
             }
 
             // イベントが1つしかない場合には、マスの縦方向を広げる

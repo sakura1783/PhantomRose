@@ -21,11 +21,10 @@ public class CardController : MonoBehaviour
     {
         SetCardDetail(data);
 
-        //TODO カードをタップした際の処理
-        //cardPrefab.OnClickAsObservable()
-        //    .ThrottleFirst(System.TimeSpan.FromSeconds(2))
-        //    .Subscribe(_ => )
-        //    .AddTo(this);
+        cardPrefab.OnClickAsObservable()
+            .ThrottleFirst(System.TimeSpan.FromSeconds(2))
+            .Subscribe(_ => PopupManager.instance.Show<CardDescriptionPop>(false, false))  //TODO 修正する
+            .AddTo(this);
     }
 
     /// <summary>
@@ -33,9 +32,8 @@ public class CardController : MonoBehaviour
     /// </summary>
     private void SetCardDetail(CardData data)
     {
-        //CardData data = DataBaseManager.instance.cardDataSO.cardDataList[cardId];
-
         // 各値を設定
+        imgCard.sprite = IconManager.instance.GetCardIcon(data.spriteId);
         imgBase.color = data.cardColor;
         txtAttackPointOrInterval.text = data.attackPower <= 0 ? "" : data.attackPower.ToString();  //TODO 回復値、攻撃値、シールド値が別々に設定されているため、どうするか検討する。
     }

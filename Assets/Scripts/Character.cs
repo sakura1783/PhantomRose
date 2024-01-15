@@ -6,7 +6,6 @@ using UniRx;
 /// </summary>
 public enum OwnerStatus
 {
-    Free,
     Player,
     Opponent,  // 対戦相手
 }

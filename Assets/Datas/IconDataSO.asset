@@ -12,10 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ec721cf36114de5890e75f8818ee67, type: 3}
   m_Name: IconDataSO
   m_EditorClassIdentifier: 
-  iconDataList:
+  eventIconDataList:
   - iconType: 0
     iconSprite: {fileID: 1744151977, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   - iconType: 1
     iconSprite: {fileID: 1314314700, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   - iconType: 2
     iconSprite: {fileID: 37255795, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
+  cardIconDataList:
+  - iconId: 0
+    iconSprite: {fileID: 1502802138, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
+  - iconId: 1
+    iconSprite: {fileID: -1756047590, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
+  - iconId: 2
+    iconSprite: {fileID: -2081245629, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
+  - iconId: 3
+    iconSprite: {fileID: 623849741, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
+  - iconId: 4
+    iconSprite: {fileID: 798309987, guid: 132358e9bf26b60458b731bf001e31db, type: 3}

@@ -9883,6 +9883,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 1195291190}
   ease: 1
   cardPrefab: {fileID: 3015543612042787308, guid: 7cd02f3d9d4b7488cacf0c1a7e108015, type: 3}
+  cardTran: {fileID: 1270156166}
 --- !u!1 &1201369231
 GameObject:
   m_ObjectHideFlags: 0

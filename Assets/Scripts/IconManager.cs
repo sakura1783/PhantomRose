@@ -3,40 +3,35 @@ using UnityEngine;
 /// <summary>
 /// アイコンの種類
 /// </summary>
-public enum IconType
+public enum EventIconType
 {
     BattleEvent,
     SearchEvent,
     Player,
 }
 
-public class IconManager : MonoBehaviour
+public class IconManager : AbstractSingleton<IconManager>
 {
-    public static IconManager instance;
-
     [SerializeField] private IconDataSO iconDataSO;
 
 
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
     /// <summary>
-    /// アイコン用画像の取得
+    /// イベント用アイコン画像の取得
     /// </summary>
     /// <param name="searchIconType"></param>
     /// <returns></returns>
-    public Sprite GetIcon(IconType searchIconType)
+    public Sprite GetEventIcon(EventIconType searchIconType)
     {
-        return iconDataSO.iconDataList.Find(data => data.iconType == searchIconType).iconSprite;
+        return iconDataSO.eventIconDataList.Find(data => data.iconType == searchIconType).iconSprite;
+    }
+
+    /// <summary>
+    /// カード用アイコン画像の取得
+    /// </summary>
+    /// <param name="searchIconNo"></param>
+    /// <returns></returns>
+    public Sprite GetCardIcon(int searchIconNo)
+    {
+        return iconDataSO.cardIconDataList.Find(data => data.iconId == searchIconNo).iconSprite;
     }
 }
