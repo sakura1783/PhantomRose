@@ -8,9 +8,9 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
 {
     [SerializeField] private List<PopupBase> popupList = new();
 
-    //private PopupBase currentViewPop;
-    public ReactiveProperty<PopupBase> currentViewPop = new();
-    //public PopupBase CurrentViewPop => currentViewPop;
+    private PopupBase currentViewPop;
+    public PopupBase CurrentViewPop => currentViewPop;
+    //public ReactiveProperty<PopupBase> currentViewPop = new();  // テスト用。監視
 
     readonly Stack<PopupBase> history = new();  // 以前開いていたポップアップを保持するためのStack(スタック。新しい要素を追加し、最後に追加された要素を取り出す)
 
@@ -18,6 +18,8 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
     //TODO デバッグ用。終わったら消す
     void Start()
     {
+        //currentViewPop.Subscribe(_ => Debug.Log($"currentViewPopの値：{currentViewPop}"));
+
         SetUp();
     }
 
@@ -80,37 +82,38 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
     /// <param name="keepInHistory">現在開いているポップアップを履歴スタックに追加するかどうか。trueで追加</param>
     public void Show<T>(bool keepInHistory = true, bool closeCurrentPop = true) where T : PopupBase
     {
-        foreach (var pop in popupList)
-        {
+        //foreach (var pop in popupList)
+        //{
             //if (pop is T)
             //{
             //    OpenPopup(pop, keepInHistory);
 
             //    break;
             //}
+        //}
 
-            // 上記をLinqで書いた場合
-            var targetPop = popupList.OfType<T>().SingleOrDefault();  // FirstOrDefaultでも良い
+        // 上記をLinqで書いた場合
+        var targetPop = popupList.OfType<T>().SingleOrDefault();  // FirstOrDefaultでも良い
 
-            // 指定された型のポップアップが見つからない場合
-            if (targetPop == null)
-            {
-                Debug.Log("指定された型のポップアップが見つかりません。");
+        // 指定された型のポップアップが見つからない場合
+        if (targetPop == null)
+        {
+            Debug.Log("指定された型のポップアップが見つかりません。");
 
-                return;
-            }
-
-            // すでに開いているポップアップの場合には処理しない
-            if (currentViewPop.Value == targetPop)
-            {
-                Debug.Log($"{targetPop}はすでに開いています。");
-
-                return;
-            }
-
-            // ポップアップを開く
-            OpenPopup(targetPop, keepInHistory, closeCurrentPop);
+            return;
         }
+
+        // すでに開いているポップアップの場合には処理しない
+        if (currentViewPop == targetPop)
+        {
+            Debug.Log($"{targetPop}はすでに開いています。");
+
+            return;
+        }
+
+        // ポップアップを開く
+        OpenPopup(targetPop, keepInHistory, closeCurrentPop);
+
     }
 
     /// <summary>
@@ -127,13 +130,13 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
             if (keepInHistory)
             {
                 // StackにPushして保持
-                history.Push(currentViewPop.Value);
+                history.Push(currentViewPop);
             }
 
             if (closeCurrentPop)
             {
                 // 現在開いているポップアップを閉じる
-                currentViewPop.Value.HidePopUp();
+                currentViewPop.HidePopUp();
             }
         }
 
@@ -141,7 +144,7 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
         pop.ShowPopUp();
 
         // 現在開いているポップアップを更新
-        currentViewPop.Value = pop;
+        currentViewPop = pop;
     }
 
     /// <summary>

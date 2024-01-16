@@ -8,7 +8,10 @@ public class HomeAlwaysPop : PopupBase
     [SerializeField] private Button btnToBattle;
     [SerializeField] private Button btnToStore;
 
-    private bool isFirstSetUp = true;
+    [SerializeField] private Button[] buttons = new Button[3];
+
+    private Color32 brightColor = new (51, 42, 42, 0);
+    private Color32 darkColor = new (51, 42, 42, 255);
 
     //TODO 変数追加
 
@@ -21,48 +24,61 @@ public class HomeAlwaysPop : PopupBase
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
 
-        btnToMyRoom.image.color = new Color32(51, 42, 42, 0);
-        btnToBattle.image.color = new Color32(51, 42, 42, 255);
-        btnToStore.image.color = new Color32(51, 42, 42, 255);
+        // 各ボタンの設定
+        btnToMyRoom.OnClickAsObservable()
+            .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))
+            .Subscribe(_ =>
+            {
+                SetButtonsColor(btnToMyRoom);
+                PopupManager.instance.Show<MyRoomPop>(false);
+            })
+            .AddTo(this);
 
-        // 初回だけ以下の処理を行う
-        if (isFirstSetUp)
+        btnToBattle.OnClickAsObservable()
+            .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))
+            .Subscribe(_ =>
+            {
+                SetButtonsColor(btnToBattle);
+                PopupManager.instance.SwitchToBattleOrHomeScene("Battle");
+            })
+            .AddTo(this);
+
+        btnToStore.OnClickAsObservable()
+            .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))
+            .Subscribe(_ =>
+            {
+                SetButtonsColor(btnToStore);
+                PopupManager.instance.Show<StorePop>(false);
+            })
+            .AddTo(this);
+    }
+
+    /// <summary>
+    /// ポップアップの表示
+    /// </summary>
+    public override void ShowPopUp()
+    {
+        base.ShowPopUp();
+
+        SetButtonsColor(btnToMyRoom);
+    }
+
+    /// <summary>
+    /// ボタンの色を変更
+    /// </summary>
+    /// <param name="nextColor"></param>
+    private void SetButtonsColor(Button pressedButton)
+    {
+        foreach (var button in buttons)
         {
-            // 各ボタンの設定
-            btnToMyRoom.OnClickAsObservable()
-                .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))
-                .Subscribe(_ =>
-                {
-                    btnToMyRoom.image.color = new Color32(51, 42, 42, 0);
-                    btnToBattle.image.color = new Color32(51, 42, 42, 255);
-                    btnToStore.image.color = new Color32(51, 42, 42, 255);
-                    PopupManager.instance.Show<MyRoomPop>(false);
-                })
-                .AddTo(this);
-
-            btnToBattle.OnClickAsObservable()
-                .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))
-                .Subscribe(_ =>
-                {
-                    btnToMyRoom.image.color = new Color32(51, 42, 42, 255);
-                    btnToBattle.image.color = new Color32(51, 42, 42, 0);
-                    btnToStore.image.color = new Color32(51, 42, 42, 255);
-                    PopupManager.instance.SwitchToBattleOrHomeScene("Battle");
-                })
-                .AddTo(this);
-
-            btnToStore.OnClickAsObservable()
-                .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))
-                .Subscribe(_ =>
-                {
-                    btnToMyRoom.image.color = new Color32(51, 42, 42, 255);
-                    btnToBattle.image.color = new Color32(51, 42, 42, 255);
-                    btnToStore.image.color = new Color32(51, 42, 42, 0);
-                    PopupManager.instance.Show<StorePop>(false);
-                })
-                .AddTo(this);
-
-            isFirstSetUp = false;
+            if (button == pressedButton)
+            {
+                button.image.color = brightColor;
+            }
+            else
+            {
+                button.image.color = darkColor;
+            }
         }
     }
 }

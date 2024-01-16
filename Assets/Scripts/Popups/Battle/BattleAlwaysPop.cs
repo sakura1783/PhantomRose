@@ -37,7 +37,7 @@ public class BattleAlwaysPop : PopupBase
 
         btnReturn.OnClickAsObservable()
             .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))
-            .Subscribe(_ => PopupManager.instance.currentViewPop.Value.HidePopUp())
+            .Subscribe(_ => PopupManager.instance.CurrentViewPop.HidePopUp())
             .AddTo(this);
 
         btnToStore.OnClickAsObservable()
@@ -45,7 +45,7 @@ public class BattleAlwaysPop : PopupBase
             .Subscribe(_ =>
             {
                 // 現在開いているポップアップがストア、インベントリ、カード、状態のいずれかである場合、開かれている最新のポップアップを閉じる
-                if (hidePopNames.Contains(PopupManager.instance.currentViewPop.Value.name))
+                if (hidePopNames.Contains(PopupManager.instance.CurrentViewPop.name))
                 {
                     PopupManager.instance.Show<StorePop>(false);
                 }
@@ -61,7 +61,7 @@ public class BattleAlwaysPop : PopupBase
             .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))
             .Subscribe(_ =>
             {
-                if (hidePopNames.Contains(PopupManager.instance.currentViewPop.Value.name))
+                if (hidePopNames.Contains(PopupManager.instance.CurrentViewPop.name))
                 {
                     PopupManager.instance.Show<InventoryPop>(false);
                 }
@@ -76,7 +76,7 @@ public class BattleAlwaysPop : PopupBase
             .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))
             .Subscribe(_ =>
             {
-                if (hidePopNames.Contains(PopupManager.instance.currentViewPop.Value.name))
+                if (hidePopNames.Contains(PopupManager.instance.CurrentViewPop.name))
                 {
                     PopupManager.instance.Show<CardDeckPop>(false);
                 }

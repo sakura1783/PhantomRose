@@ -2152,9 +2152,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 337370776}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &337370782
 MonoBehaviour:
@@ -2822,8 +2822,6 @@ MonoBehaviour:
   - {fileID: 1467492983}
   - {fileID: 1760586516}
   - {fileID: 876986261}
-  currentViewPop:
-    value: {fileID: 0}
 --- !u!4 &485941378
 Transform:
   m_ObjectHideFlags: 0
@@ -5875,10 +5873,10 @@ RectTransform:
   m_Father: {fileID: 404319689}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1080, y: 2340}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &815508453
 Canvas:
@@ -6798,7 +6796,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!225 &927533684
 CanvasGroup:
@@ -6808,9 +6806,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 927533679}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &927533685
 MonoBehaviour:
@@ -6831,6 +6829,10 @@ MonoBehaviour:
   btnToMyRoom: {fileID: 569577347}
   btnToBattle: {fileID: 687142797}
   btnToStore: {fileID: 1254494413}
+  buttons:
+  - {fileID: 569577347}
+  - {fileID: 687142797}
+  - {fileID: 1254494413}
 --- !u!1 &930426865
 GameObject:
   m_ObjectHideFlags: 0
@@ -9111,9 +9113,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1115075931}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &1115075937
 MonoBehaviour:
@@ -9883,7 +9885,6 @@ MonoBehaviour:
   canvasGroup: {fileID: 1195291190}
   ease: 1
   cardPrefab: {fileID: 3015543612042787308, guid: 7cd02f3d9d4b7488cacf0c1a7e108015, type: 3}
-  cardTran: {fileID: 1270156166}
 --- !u!1 &1201369231
 GameObject:
   m_ObjectHideFlags: 0
@@ -14923,7 +14924,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -730, y: -67}
-  m_SizeDelta: {x: 70, y: 70}
+  m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1740629489
 MonoBehaviour:
@@ -15229,6 +15230,7 @@ MonoBehaviour:
   waveInfoView: {fileID: 1827243743}
   CurrentRouteIndex:
     value: 0
+  eventButton: {fileID: 1488221615298780620, guid: 4e209a412a9bc48ffb783502aa47aeb9, type: 3}
 --- !u!1 &1768068159
 GameObject:
   m_ObjectHideFlags: 0
@@ -17438,9 +17440,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1971642582}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &1971642588
 MonoBehaviour:

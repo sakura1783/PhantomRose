@@ -2,10 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public class GameData : MonoBehaviour
+public class GameData : AbstractSingleton<GameData>
 {
-    public static GameData instance;
-
     public List<CardData> myCardList = new();
 
     public List<CardData> attackCardList = new();
@@ -14,19 +12,6 @@ public class GameData : MonoBehaviour
     private Character player;
     private Character opponent;
 
-
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     /// <summary>
     /// キャラクターの生成

@@ -24,6 +24,9 @@ public class MainGameManager : MonoBehaviour
     //private int currentRouteIndex = 0; 
     public ReactiveProperty<int> CurrentRouteIndex = new(0);  // ReactivePropertyで監視できるようになる。プロパティは参照型なので最初に初期値を代入する。
 
+    //TODO ここからテスト
+    [SerializeField] private EventBase eventButton;
+
 
     void Start()
     {
@@ -105,16 +108,18 @@ public class MainGameManager : MonoBehaviour
         for (int i = 0; i < routeDataSO.routeList[CurrentRouteIndex.Value].eventList.Count; i++)
         {
             int index = i;
-            EventBase eventButton = Instantiate(routeDataSO.routeList[CurrentRouteIndex.Value].eventList[i], eventButtonTran, false);
+            //EventBase eventButton = Instantiate(routeDataSO.routeList[CurrentRouteIndex.Value].eventList[i], eventButtonTran, false);
+            EventBase eventButton = Instantiate(this.eventButton, eventButtonTran);
 
             // ボタンのイベントを購読
             eventButton.OnClickEventButtonObserbable
                 .ThrottleFirst(TimeSpan.FromSeconds(2f))  // ThrottleFirstで、指定された時間内に最初の要素のみを通過させ、それ以後の要素は無視する(ボタン連打防止を実現できる)
                 .Subscribe(async _ =>  // Subscribeは、Observableに対して、何らかのイベントが発生した時の処理を指定するためのメソッド。
                 {
-                    // プレイヤーのアイコンの位置設定(子オブジェクトにする)
+                    //TODO プレイヤーのアイコンの位置設定(子オブジェクトにする)
                     SetPlayerLocation(routeList[CurrentRouteIndex.Value].GetChild(index));
 
+                    //TODO どうやってボタンごとにイベントを変更する？
                     await eventButton.ExecuteEvent();
 
                     HandleEventCompletion(index);
@@ -132,7 +137,7 @@ public class MainGameManager : MonoBehaviour
     private void SetPlayerLocation(Transform nextParentObj)
     {
         playerIcon.SetParent(nextParentObj);
-        playerIcon.localPosition = new(0, 50, 0);
+        playerIcon.localPosition = new (0, 0, 0);
 
         //TODO マスの色を変える(UIごと差し替えなどの対応も可能)
         nextParentObj.GetComponent<RouteDetail>().ChangeRouteColor(Color.red);
