@@ -131,6 +131,8 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
             {
                 // StackにPushして保持
                 history.Push(currentViewPop);
+
+                Debug.Log($"{currentViewPop}をhistoryに追加しました : {history}");
             }
 
             if (closeCurrentPop)
@@ -156,7 +158,12 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
         if (history.Count != 0)
         {
             // 前回のポップアップを再表示(これはStackに積む必要はないのでfalseで実行する)
-            OpenPopup(history.Pop(), false);
+            //OpenPopup(history.Pop(), false);
+            OpenPopup(history.Peek(), false);  // Stackから取り除かないPeekに変更(RoutePopなど、何回も戻りたいポップアップもあるので)
+        }
+        else
+        {
+            Debug.Log("historyがありません");
         }
     }
 
@@ -191,7 +198,7 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
         // バトル用のポップアップを開く
         Show<BattleBackgroundPop>(false);
         Show<RoutePop>(false, false);
-        Show<BattleAlwaysPop>(false, false);
+        Show<BattleAlwaysPop>(true, false);
     }
 
     /// <summary>

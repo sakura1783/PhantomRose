@@ -5,9 +5,9 @@ public class SearchEvent : EventBase
 {
     public async override UniTask ExecuteEvent()
     {
-        // TODO サーチイベント用のポップアップウィンドウを開く
+        //TODO サーチイベント用のポップアップを開く
 
-        await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
+        await UniTask.DelayFrame(1);
 
         Debug.Log($"{this} : 終了");
     }

@@ -18,7 +18,7 @@ MonoBehaviour:
   - iconType: 1
     iconSprite: {fileID: 1314314700, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   - iconType: 2
-    iconSprite: {fileID: 37255795, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
+    iconSprite: {fileID: 1790055172, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   cardIconDataList:
   - iconId: 0
     iconSprite: {fileID: 1502802138, guid: 132358e9bf26b60458b731bf001e31db, type: 3}

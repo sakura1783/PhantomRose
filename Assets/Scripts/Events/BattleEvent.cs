@@ -4,19 +4,15 @@ using Cysharp.Threading.Tasks;
 public class BattleEvent : EventBase
 {
     /// <summary>
-    /// 初期設定
+    /// イベント処理
     /// </summary>
-    //public override void SetUp()
-    //{
-
-    //}
-
+    /// <returns></returns>
     public async override UniTask ExecuteEvent()
     {
-        // TODO バトルイベント用のポップアップを開く
+        //TODO PopupManager.instance.Show<BattleEventPop>(false);
 
-        await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
+        await UniTask.DelayFrame(1);
 
-        Debug.Log($"{this} : 終了");
+        Debug.Log($"{this}終了");
     }
 }

@@ -7,7 +7,8 @@ public enum EventIconType
 {
     BattleEvent,
     SearchEvent,
-    Player,
+    ShopEvent,
+    //Player,
 }
 
 public class IconManager : AbstractSingleton<IconManager>

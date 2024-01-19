@@ -424,7 +424,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -455,10 +455,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c97920714ebe48ddaf65532325ad73e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 3712407951279320589}
+  btnCard: {fileID: 3712407951279320589}
   imgCard: {fileID: 3712407951634472416}
   imgBase: {fileID: 3712407951279320579}
   txtAttackPointOrInterval: {fileID: 3712407951502308676}
+  cardData:
+    id: 0
+    name: 
+    cardType: 0
+    level: 0
+    attackPower: 0
+    shieldPower: 0
+    recoveryPower: 0
+    coolTime: 0
+    cardColor: {r: 0, g: 0, b: 0, a: 0}
+    spriteId: 0
+    description: 
+    price: 0
+  IsSelectable:
+    value: 0
 --- !u!1 &3712407951502308666
 GameObject:
   m_ObjectHideFlags: 0

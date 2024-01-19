@@ -23,6 +23,8 @@ public class CardData
 
     [Multiline] public string description;
 
+    public int price;  // ショップなどで買う際の値段
+
     // バフ、デバフ用のクラスの変数
 
 
@@ -51,5 +53,6 @@ public class CardData
         ColorUtility.TryParseHtmlString(datas[8], out cardColor);
         spriteId = int.Parse(datas[9]);
         description = datas[10];
+        price = int.Parse(datas[11]);
     }
 }

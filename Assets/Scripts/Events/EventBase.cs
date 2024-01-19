@@ -17,5 +17,6 @@ public abstract class EventBase : MonoBehaviour, IEvent
     /// <summary>
     /// 初期設定
     /// </summary>
-    //public abstract void SetUp();
+    /// <param name="eventType"></param>
+    //public abstract void SetUp(EventType eventType);
 }

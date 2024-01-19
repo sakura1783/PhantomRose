@@ -12,9 +12,9 @@ public class PopupChangeTester : MonoBehaviour
             .Subscribe(_ => PopupManager.instance.Show<StoreGoodsPop>());
 
         // Oボタンを押したらCardDescriptionPopを表示
-        this.UpdateAsObservable()
-            .Where(_ => Input.GetKeyDown(KeyCode.O))
-            .Subscribe(_ => PopupManager.instance.Show<CardDescriptionPop>());
+        //this.UpdateAsObservable()
+        //    .Where(_ => Input.GetKeyDown(KeyCode.O))
+            //TODO .Subscribe(_ => PopupManager.instance.Show<CardDescriptionPop>());
 
         //Iボタンを押したらTitlePopを表示
         this.UpdateAsObservable()

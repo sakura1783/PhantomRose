@@ -9,6 +9,6 @@ public class RouteDataSO : ScriptableObject
     [System.Serializable]
     public class RouteData
     {
-        public List<EventBase> eventList = new();  //バトル、探索などのイベントを登録するリスト 
+        public List<EventBase> eventList = new();  //バトル、探索などのイベントを登録するリスト
     }
 }

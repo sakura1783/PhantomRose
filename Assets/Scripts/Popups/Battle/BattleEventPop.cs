@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class BattlePop : PopupBase
+public class BattleEventPop : PopupBase
 {
     [SerializeField] private CardController cardPrefab;
 
-    //TODO 変数追加
-
     //TODO テスト。終わったら修正する
     //[SerializeField] private Transform cardTran;
+
+    //TODO 変数追加
 
 
     //TODO テスト用。終わったら消す
@@ -29,4 +29,6 @@ public class BattlePop : PopupBase
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
     }
+
+    //TODO ShowPopUpのオーバーライド
 }
