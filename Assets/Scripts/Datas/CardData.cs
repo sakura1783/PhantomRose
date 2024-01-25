@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -25,7 +26,7 @@ public class CardData
 
     public int price;  // ショップなどで買う際の値段
 
-    // バフ、デバフ用のクラスの変数
+    public List<StateData> stateList = new();  // 手動で値を設定する。これにより、状態の数や継続時間をカード個別に設定できる。
 
 
     /// <summary>

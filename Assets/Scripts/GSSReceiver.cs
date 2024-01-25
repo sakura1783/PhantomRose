@@ -27,7 +27,7 @@ public class GSSReceiver : MonoBehaviour
     {
         IsLoading = true;
 
-        //TODO 読み込んでいない場合には、GSSを取得してスクリプタブルオブジェクトに取得。(この処理が終わるまでここで待機する)
+        // 読み込んでいない場合には、GSSを取得してスクリプタブルオブジェクトに取得。(この処理が終わるまでここで待機する)
         //yield return StartCoroutine(GetComponent<GSSReader>().GetFromWeb());
         await GetComponent<GSSReader>().GetFromWebAsync();
 
@@ -52,6 +52,9 @@ public class GSSReceiver : MonoBehaviour
             // 各スクリプタブルオブジェクトに代入
             DataBaseManager.instance.cardDataSO.cardDataList =
                 new List<CardData>(sheetDatasList.Find(x => x.SheetName == SheetName.CardData).DatasList.Select(x => new CardData(x)).ToList());  //Find()で、SheetName.CardDataと一致するシートのデータを取得し、それをSelect()でCardData型に変換して、ToList()でCardData型の新しいリストを作成。
+
+            DataBaseManager.instance.stateDataSO.stateDataList =
+                new List<StateData>(sheetDatasList.Find(x => x.SheetName == SheetName.StateData).DatasList.Select(x => new StateData(x)).ToList());
 
             //TODO 他にもあれば追加
         }

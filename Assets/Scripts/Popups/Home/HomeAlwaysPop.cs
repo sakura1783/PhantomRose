@@ -56,7 +56,7 @@ public class HomeAlwaysPop : PopupBase
     /// <summary>
     /// ポップアップの表示
     /// </summary>
-    public override void ShowPopUp()
+    public override void ShowPopUp(CardData data = null)
     {
         base.ShowPopUp();
 

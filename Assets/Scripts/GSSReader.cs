@@ -12,6 +12,7 @@ public enum SheetName
 {
     None,
     CardData,
+    StateData,
     EventData,
 
     // その他にもあれば追加

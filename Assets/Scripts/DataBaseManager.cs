@@ -5,6 +5,7 @@ public class DataBaseManager : MonoBehaviour
     public static DataBaseManager instance;
 
     public CardDataSO cardDataSO;
+    public StateDataSO stateDataSO;
 
 
     void Awake()

@@ -59,7 +59,7 @@ public class ShopEventPop : PopupBase
     /// <summary>
     /// ポップアップの表示
     /// </summary>
-    public override void ShowPopUp()
+    public override void ShowPopUp(CardData data = null)
     {
         txtClerk.text = "いらっしゃいませ！\nゆっくり選んでいってくださいね。";
 
