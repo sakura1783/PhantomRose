@@ -55,3 +55,15 @@ public class StateData
     //TODO 追加する状態異常
     // Hpが相手よりも低い場合、残り時間に応じてシールドを獲得する
 }
+
+/// <summary>
+/// 状態異常データの簡易版
+/// カードごとに異なる情報を持たせたい場合に使う
+/// </summary>
+[System.Serializable]
+public class SimpleStateData
+{
+    public ConditionType stateName;
+    public int stateId;
+    public int duration;  // 同じ状態異常でもカードごとに継続時間を変更できる(性能差を持たせる)
+}

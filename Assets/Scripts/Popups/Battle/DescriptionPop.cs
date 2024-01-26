@@ -1,7 +1,11 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class DescriptionPop : PopupBase
 {
+    private bool isDisplayDescriptionPop = false;
+    public bool IsDisplayDescriptionPop => isDisplayDescriptionPop;
+
     [SerializeField] private CardDescriptionPopController cardDescriptionPopPrefab;
 
     [SerializeField] private StateDescriptionPopController stateDescriptionPopPrefab;
@@ -20,13 +24,28 @@ public class DescriptionPop : PopupBase
     /// ポップアップの表示
     /// </summary>
     /// <param name="data"></param>
-    public override void ShowPopUp(CardData data)
+    /// <param name="stateCount">カードが付与する状態異常の数。この値に応じてポップアップの生成数を変更する</param>
+    public override void ShowPopUp(CardData cardData)
     {
+        // 生成した子要素のポップアップを全て破棄
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // CardDescポップアップの生成と初期設定
         var cardDescPop = Instantiate(cardDescriptionPopPrefab, transform);
-        //cardDescPop.SetUp(data);
+        cardDescPop.SetUp(cardData);
 
-        //for (int i = 0; i < 
+        // StateDescポップアップの生成と初期設定
+        for (int i = 0; i < cardData.stateList.Count; i++)
+        {
+            var stateDescPop = Instantiate(stateDescriptionPopPrefab, transform);
+            stateDescPop.SetUp(DataBaseManager.instance.stateDataSO.stateDataList[cardData.stateList[i].stateId]);
+        }
 
-        base.ShowPopUp();
+        canvasGroup.DOFade(1, 0.5f)
+            .SetEase(ease)
+            .OnComplete(() => isDisplayDescriptionPop = true);
     }
 }

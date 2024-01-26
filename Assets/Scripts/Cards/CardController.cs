@@ -29,8 +29,6 @@ public class CardController : MonoBehaviour
     }
 
 
-    //TODO カードの情報を取得して、デバフ、バフのポップアップを何個用意すればいいか確認する。
-
     /// <summary>
     /// 初期設定。カード見た目と効果を別々に設定
     /// </summary>
@@ -40,7 +38,7 @@ public class CardController : MonoBehaviour
 
         btnCard.OnClickAsObservable()
             .ThrottleFirst(TimeSpan.FromSeconds(2))
-            .Subscribe(_ => PopupManager.instance.Show<DescriptionPop>(false, false))  //TODO 追加する
+            .Subscribe(_ => PopupManager.instance.Show<DescriptionPop>(false, false))
             .AddTo(this);
 
         cardData = data;

@@ -6,8 +6,8 @@ using UnityEngine;
 /// </summary>
 public enum CardType
 {
-    Attack,
-    Magic,
+    攻撃,
+    魔法,
 }
 
 [CreateAssetMenu(fileName = "CardDataSO", menuName = "Create CardDataSO")]

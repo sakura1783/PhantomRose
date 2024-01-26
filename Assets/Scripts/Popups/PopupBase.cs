@@ -52,7 +52,7 @@ public class PopupBase : MonoBehaviour
     /// <summary>
     /// ポップアップの表示
     /// </summary>
-    public virtual void ShowPopUp(CardData data = null)  // DescriptionPopでCardData型が必要なので、省略可能な引数を追加
+    public virtual void ShowPopUp(CardData cardData = null)  // DescriptionPopでCardData型が必要なので、省略可能な引数を追加
     {
         canvasGroup.DOFade(1, 0.5f)
             .SetEase(ease)

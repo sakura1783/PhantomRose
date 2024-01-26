@@ -15,12 +15,13 @@ public class ShopEventPop : PopupBase
     [SerializeField] private Button btnHideCardDescription;
 
     [SerializeField] private Text txtClerk;
+    [SerializeField] private Text txtSpendRuby;
 
     [SerializeField] private Transform productPlace;
 
     [SerializeField] private ShopCardController shopCardPrefab;
 
-    //TODO [SerializeField] private CardDescriptionPop cardDescriptionPop;  // isDisplayCardDescription取得用
+    [SerializeField] private DescriptionPop descriptionPop;
 
     //TODO
     //カード引き直しの回数更新
@@ -46,12 +47,11 @@ public class ShopEventPop : PopupBase
             .AddTo(this);
 
         btnHideCardDescription.OnClickAsObservable()
-            //TODO .Where(_ => cardDescriptionPop.IsDisplayCardDescriptionPop)
+            .Where(_ => descriptionPop.IsDisplayDescriptionPop)
             .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))
             .Subscribe(_ =>
             {
                 SwitchCardPurchasePopVisibility(false);
-                Debug.Log("タップされました");
             })
             .AddTo(this);
     }
@@ -59,7 +59,7 @@ public class ShopEventPop : PopupBase
     /// <summary>
     /// ポップアップの表示
     /// </summary>
-    public override void ShowPopUp(CardData data = null)
+    public override void ShowPopUp(CardData cardData = null)
     {
         txtClerk.text = "いらっしゃいませ！\nゆっくり選んでいってくださいね。";
 
@@ -129,21 +129,35 @@ public class ShopEventPop : PopupBase
     /// CardPurchaseポップアップの表示、非表示の切り替え
     /// </summary>
     /// <param name="alphaValue">trueでポップアップを表示</param>
-    public void SwitchCardPurchasePopVisibility(bool showPopup)
+    public void SwitchCardPurchasePopVisibility(bool showPopup, CardData cardData = null)
     {
         if (showPopup)
         {
-            cardPurchaseGroup.DOFade(1, 0.2f)
+            cardPurchaseGroup.DOFade(1, 0.5f)
                 .SetEase(ease)
                 .OnComplete(() => cardPurchaseGroup.blocksRaycasts = true);
+            SetUpCardPurchasePop(cardData);
 
-            //TODO ポップアップの初期設定
+            // カード説明ポップアップの表示
+            descriptionPop.ShowPopUp(cardData);
         }
         else
         {
-            cardPurchaseGroup.DOFade(0, 0.2f)
+            cardPurchaseGroup.DOFade(0, 0.5f)
                 .SetEase(ease)
                 .OnComplete(() => cardPurchaseGroup.blocksRaycasts = false);
+
+            // カード説明ポップアップの非表示
+            descriptionPop.HidePopUp();
         }
+    }
+
+    /// <summary>
+    /// CardPurchaseポップアップの初期設定
+    /// </summary>
+    /// <param name="cardData"></param>
+    private void SetUpCardPurchasePop(CardData cardData)
+    {
+        //TODO txtSpendRuby.text = 現在持っているルビー - cardData.price(値段)
     }
 }

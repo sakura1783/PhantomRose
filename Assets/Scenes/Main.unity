@@ -2855,6 +2855,7 @@ MonoBehaviour:
   - {fileID: 1882089828}
   - {fileID: 1467492983}
   - {fileID: 1760586516}
+  - {fileID: 1456102633}
 --- !u!4 &485941378
 Transform:
   m_ObjectHideFlags: 0
@@ -12601,6 +12602,7 @@ GameObject:
   - component: {fileID: 1456102628}
   - component: {fileID: 1456102631}
   - component: {fileID: 1456102632}
+  - component: {fileID: 1456102633}
   m_Layer: 5
   m_Name: DescriptionPop
   m_TagString: Untagged
@@ -12699,7 +12701,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 1
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &1456102632
 MonoBehaviour:
@@ -12727,6 +12729,24 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1456102633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456102626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f20be7bf0634f7a80683926e4c213f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClose: {fileID: 0}
+  canvas: {fileID: 1456102630}
+  canvasGroup: {fileID: 1456102631}
+  ease: 1
+  cardDescriptionPopPrefab: {fileID: 8307385307518402879, guid: 776bc4a685fa24742bceef0d040c33ae, type: 3}
+  stateDescriptionPopPrefab: {fileID: 7228946284246900028, guid: addee742f002141fdbde72c9a3ba6a5c, type: 3}
 --- !u!1 &1467492977
 GameObject:
   m_ObjectHideFlags: 0
@@ -17913,8 +17933,10 @@ MonoBehaviour:
   btnBuy: {fileID: 962466176}
   btnHideCardDescription: {fileID: 1884604812}
   txtClerk: {fileID: 1812881743}
+  txtSpendRuby: {fileID: 66211001}
   productPlace: {fileID: 11589515}
   shopCardPrefab: {fileID: 8696308866436072958, guid: 9f5e2f8832aff4c09ac0b68d536d258a, type: 3}
+  descriptionPop: {fileID: 1456102633}
 --- !u!1 &2012266276
 GameObject:
   m_ObjectHideFlags: 0
@@ -18725,7 +18747,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113556548}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0

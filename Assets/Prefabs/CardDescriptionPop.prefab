@@ -354,7 +354,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -75}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2813850619314752100
 CanvasRenderer:
@@ -405,6 +405,7 @@ GameObject:
   - component: {fileID: 2813850619370315752}
   - component: {fileID: 2813850619370315758}
   - component: {fileID: 2813850619370315753}
+  - component: {fileID: 8307385307518402879}
   m_Layer: 5
   m_Name: CardDescriptionPop
   m_TagString: Untagged
@@ -474,6 +475,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8307385307518402879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2813850619370315755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9529b3c8ef774475b9d1d08dc3f4338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imgCard: {fileID: 2813850619314752103}
+  txtCardType: {fileID: 2813850618949103364}
+  txtCardLevel: {fileID: 2813850619683579965}
+  txtCardName: {fileID: 2813850618033641394}
+  txtCardDescription: {fileID: 2813850617863735110}
 --- !u!1 &2813850619683579967
 GameObject:
   m_ObjectHideFlags: 0

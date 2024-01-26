@@ -10,46 +10,18 @@ public class CardDescriptionPopController : MonoBehaviour
     [SerializeField] private Text txtCardName;
     [SerializeField] private Text txtCardDescription;
 
-    private bool isDisplayCardDescriptionPop = false;
-    public bool IsDisplayCardDescriptionPop
+
+    /// <summary>
+    /// 初期設定
+    /// </summary>
+    /// <param name="data"></param>
+    public void SetUp(CardData data)
     {
-        get => isDisplayCardDescriptionPop;
-        set => isDisplayCardDescriptionPop = value;
-    }
-
-
-    //TODO ポップアップを開く処理は、カードのプレハブ側で行う。ここでは、Canvas下への生成と、ポップアップの設定だけ行う。
-
-    //TODO ポップアップ生成時、カード側から作る個数とそのカードの情報を渡してもらう。
-
-    //protected override void Reset()
-    //{
-    //    if (transform.parent.TryGetComponent(out canvas))
-    //    {
-    //        Debug.Log($"{canvas} 取得しました");
-    //    }
-    //    else
-    //    {
-    //        Debug.Log($"{this} Canvasが取得できません");
-    //    }
-
-    //    if (transform.parent.TryGetComponent(out canvasGroup))
-    //    {
-    //        Debug.Log($"{canvasGroup} 取得しました");
-    //    }
-    //    else
-    //    {
-    //        Debug.Log($"{this} CanvasGroupが取得できません");
-    //    }
-    //}
-
-    private void GeneratePop()
-    {
-
-    }
-
-    private void SetCardDetail()
-    {
-
+        // 各値を設定
+        imgCard.sprite = IconManager.instance.GetCardIcon(data.spriteId);
+        txtCardType.text = data.cardType.ToString();
+        txtCardLevel.text = $"LV {data.level}";
+        txtCardName.text = data.name;
+        txtCardDescription.text = data.description;
     }
 }

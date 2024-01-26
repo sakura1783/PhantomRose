@@ -27,7 +27,7 @@ public class TitlePop : PopupBase
     /// <summary>
     /// ポップアップの表示
     /// </summary>
-    public override void ShowPopUp(CardData data = null)
+    public override void ShowPopUp(CardData cardData = null)
     {
         canvasGroup.DOFade(1, 0.5f)
             .SetEase(ease)

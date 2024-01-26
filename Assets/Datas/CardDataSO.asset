@@ -12,4 +12,78 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb8b6ac5924c44b68329675619abef3, type: 3}
   m_Name: CardDataSO
   m_EditorClassIdentifier: 
-  cardDataList: []
+  cardDataList:
+  - id: 0
+    name: "\u30B9\u30C8\u30E9\u30A4\u30AF"
+    cardType: 0
+    level: 2
+    attackPower: 2
+    shieldPower: 0
+    recoveryPower: 0
+    coolTime: 2
+    cardColor: {r: 1, g: 1, b: 1, a: 1}
+    spriteId: 0
+    description: "\u57FA\u790E\u653B\u6483"
+    price: 3
+    stateList:
+    - stateName: 0
+      stateId: 0
+      duration: 2
+  - id: 1
+    name: "\u30D6\u30EC\u30FC\u30C9"
+    cardType: 0
+    level: 2
+    attackPower: 3
+    shieldPower: 0
+    recoveryPower: 0
+    coolTime: 3
+    cardColor: {r: 1, g: 1, b: 1, a: 1}
+    spriteId: 1
+    description: "\u57FA\u790E\u653B\u64832"
+    price: 4
+    stateList:
+    - stateName: 1
+      stateId: 1
+      duration: 2
+    - stateName: 3
+      stateId: 3
+      duration: 1
+  - id: 2
+    name: "\u30B7\u30FC\u30EB\u30C9"
+    cardType: 1
+    level: 2
+    attackPower: 0
+    shieldPower: 4
+    recoveryPower: 0
+    coolTime: 2
+    cardColor: {r: 1, g: 1, b: 1, a: 1}
+    spriteId: 2
+    description: "\u57FA\u790E\u9632\u5FA1"
+    price: 3
+    stateList: []
+  - id: 3
+    name: "\u30D2\u30FC\u30EB"
+    cardType: 1
+    level: 2
+    attackPower: 0
+    shieldPower: 0
+    recoveryPower: 4
+    coolTime: 3
+    cardColor: {r: 1, g: 1, b: 1, a: 1}
+    spriteId: 3
+    description: "\u57FA\u790E\u56DE\u5FA9"
+    price: 3
+    stateList: []
+  - id: 4
+    name: "\u30A2\u30B5\u30B7\u30CD\u30A4\u30C8"
+    cardType: 0
+    level: 4
+    attackPower: 4
+    shieldPower: 0
+    recoveryPower: 0
+    coolTime: 4
+    cardColor: {r: 0.8784314, g: 0.87058824, b: 0.47058824, a: 1}
+    spriteId: 4
+    description: "2\u56DE\u653B\u6483"
+    price: 7
+    stateList: []

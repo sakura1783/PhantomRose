@@ -33,7 +33,7 @@ public class ShopCardController : MonoBehaviour
 
         btnShopCard.OnClickAsObservable()
             .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))
-            .Subscribe(_ => shopEventPop.SwitchCardPurchasePopVisibility(true))
+            .Subscribe(_ => shopEventPop.SwitchCardPurchasePopVisibility(true, data))
             .AddTo(this);
     }
 }

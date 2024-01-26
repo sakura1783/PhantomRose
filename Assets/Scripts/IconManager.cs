@@ -8,6 +8,7 @@ public enum EventIconType
     BattleEvent,
     SearchEvent,
     ShopEvent,
+
     //Player,
 }
 
@@ -34,5 +35,15 @@ public class IconManager : AbstractSingleton<IconManager>
     public Sprite GetCardIcon(int searchIconNo)
     {
         return iconDataSO.cardIconDataList.Find(data => data.iconId == searchIconNo).iconSprite;
+    }
+
+    /// <summary>
+    /// 状態異常用アイコン画像の取得
+    /// </summary>
+    /// <param name="searchIconNo"></param>
+    /// <returns></returns>
+    public Sprite GetStateIcon(int searchIconNo)
+    {
+        return iconDataSO.stateIconDataList.Find(data => data.iconId == searchIconNo).iconSprite;
     }
 }

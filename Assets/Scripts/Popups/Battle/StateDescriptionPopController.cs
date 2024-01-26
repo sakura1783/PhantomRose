@@ -1,18 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StateDescriptionPopController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Image imgState;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private Text txtStateName;
+    [SerializeField] private Text txtBuffOrDebuff;
+    [SerializeField] private Text txtDescription;
+
+
+    /// <summary>
+    /// 初期設定
+    /// </summary>
+    /// <param name="data"></param>
+    public void SetUp(StateData data)
     {
-        
+        // 各値の設定
+        imgState.sprite = IconManager.instance.GetStateIcon(data.spriteId);
+        txtStateName.text = data.stateName + " 状態";
+        txtBuffOrDebuff.text = data.stateType.ToString();
+        txtBuffOrDebuff.color = Color.magenta;
+        // TODO txtBuffOrDebuffの色を変える
+        txtDescription.text = data.description;
     }
 }

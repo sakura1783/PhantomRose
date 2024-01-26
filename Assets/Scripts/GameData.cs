@@ -50,8 +50,8 @@ public class GameData : AbstractSingleton<GameData>
     /// </summary>
     public void SortBattleCardList()
     {
-        attackCardList = myCardList.Where(card => card.cardType == CardType.Attack).ToList();
+        attackCardList = myCardList.Where(card => card.cardType == CardType.攻撃).ToList();
 
-        magicCardList = myCardList.Where(card => card.cardType == CardType.Magic).ToList();
+        magicCardList = myCardList.Where(card => card.cardType == CardType.魔法).ToList();
     }
 }
