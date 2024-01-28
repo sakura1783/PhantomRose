@@ -10,9 +10,10 @@ public class ShopEvent : EventBase
     public override async UniTask ExecuteEvent()
     {
         // イベント用のポップアップを開く
-        PopupManager.instance.Show<ShopEventPop>(true);
+        PopupBase pop = PopupManager.instance.Show<ShopEventPop>(true);
 
-        await UniTask.DelayFrame(1);
+        // イベント終了を待つ
+        await UniTask.WaitUntil(() => pop.CanvasGroup.alpha <= 0);
 
         Debug.Log($"{this} 終了");
     }

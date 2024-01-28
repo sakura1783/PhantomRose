@@ -15,17 +15,17 @@ public class ShopEventPop : PopupBase
     [SerializeField] private Button btnHideCardDescription;
 
     [SerializeField] private Text txtClerk;
+    [SerializeField] private Text txtRedrawCount;
     [SerializeField] private Text txtSpendRuby;
 
     [SerializeField] private Transform productPlace;
 
     [SerializeField] private ShopCardController shopCardPrefab;
 
-    [SerializeField] private DescriptionPop descriptionPop;
+    [SerializeField] private int maxRedrawCount;
+    private ReactiveProperty<int> redrawCount = new();  // ReactivePropertyは参照型なので、宣言時は初期化が必要。初期化しなかった場合、Nullエラーになる
 
-    //TODO
-    //カード引き直しの回数更新
-    //cardPurchaseポップアップが開いたあと、最初のクリックでポップアップを非表示にする
+    [SerializeField] private DescriptionPop descriptionPop;
 
 
     /// <summary>
@@ -34,6 +34,15 @@ public class ShopEventPop : PopupBase
     public override void SetUp()
     {
         base.SetUp();
+
+        cardPurchaseGroup.alpha = 0;
+        cardPurchaseGroup.blocksRaycasts = false;
+
+        // 引き直し回数が0以下になったら、btnRedrawを非アクティブ化
+        redrawCount
+            .Where(_ => redrawCount.Value <= 0)
+            .Subscribe(_ => btnRedraw.interactable = false)
+            .AddTo(this);
 
         // 各ボタンの設定
         btnBuy.OnClickAsObservable()
@@ -61,6 +70,12 @@ public class ShopEventPop : PopupBase
     /// </summary>
     public override void ShowPopUp(CardData cardData = null)
     {
+        btnRedraw.interactable = true;
+
+        // カード引き直し回数の設定
+        redrawCount.Value = maxRedrawCount;
+        UpdateRedrawCount();
+
         txtClerk.text = "いらっしゃいませ！\nゆっくり選んでいってくださいね。";
 
         // カードの商品をランダムに生成し、初期設定
@@ -88,6 +103,10 @@ public class ShopEventPop : PopupBase
             var product = Instantiate(shopCardPrefab, productPlace);
             product.SetUp(data, this);
         }
+
+        // カード引き直し回数の更新
+        redrawCount.Value--;
+        UpdateRedrawCount();
     }
 
     /// <summary>
@@ -160,5 +179,13 @@ public class ShopEventPop : PopupBase
     private void SetUpCardPurchasePop(CardData cardData)
     {
         //TODO txtSpendRuby.text = 現在持っているルビー - cardData.price(値段)
+    }
+
+    /// <summary>
+    /// カード引き直し回数の更新
+    /// </summary>
+    private void UpdateRedrawCount()
+    {
+        txtRedrawCount.text = Mathf.Clamp(redrawCount.Value, 0, maxRedrawCount).ToString();
     }
 }

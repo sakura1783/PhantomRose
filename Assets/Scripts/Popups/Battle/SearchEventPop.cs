@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using UniRx;
-using UniRx.Triggers;
 
 /// <summary>
 /// 宝物の種類
@@ -19,6 +19,8 @@ public class SearchEventPop : PopupBase
     [SerializeField] private TreasureButtonController btnTreasurePrefab;
 
     [SerializeField] private Transform[] treasureButtonTrans;
+
+    [SerializeField] private CanvasGroup treasureDiscoveryPopGroup;
 
     private List<TreasureButtonController> treasureButtonList = new();
 
@@ -45,6 +47,9 @@ public class SearchEventPop : PopupBase
     {
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
+
+        treasureDiscoveryPopGroup.alpha = 0;
+        treasureDiscoveryPopGroup.blocksRaycasts = false;
     }
 
     /// <summary>

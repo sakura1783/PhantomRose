@@ -14,17 +14,6 @@ public class BattleEventPop : PopupBase
     //[SerializeField] private Transform cardTran;
 
 
-    //TODO テスト用。終わったら消す
-    //void Start()
-    //{
-    //    foreach (var data in DataBaseManager.instance.cardDataSO.cardDataList)
-    //    {
-    //        CardController card = Instantiate(cardPrefab, cardTran);
-
-    //        card.SetUp(data);
-    //    }
-    //}
-
     /// <summary>
     /// 初期設定
     /// </summary>

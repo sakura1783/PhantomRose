@@ -2402,7 +2402,7 @@ RectTransform:
   - {fileID: 310348414}
   - {fileID: 645944101}
   m_Father: {fileID: 404319689}
-  m_RootOrder: 9
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2492,6 +2492,7 @@ MonoBehaviour:
   - {fileID: 1736911422}
   - {fileID: 1967354873}
   - {fileID: 1424613481}
+  treasureDiscoveryPopGroup: {fileID: 645944102}
 --- !u!225 &346532952
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2850,12 +2851,12 @@ RectTransform:
   - {fileID: 815508450}
   - {fileID: 1029341018}
   - {fileID: 1195291186}
+  - {fileID: 346532947}
   - {fileID: 2001101643}
   - {fileID: 1816547716}
   - {fileID: 1882089823}
   - {fileID: 1467492978}
   - {fileID: 1456102627}
-  - {fileID: 346532947}
   - {fileID: 884937661}
   m_Father: {fileID: 550492359}
   m_RootOrder: 2
@@ -3148,6 +3149,7 @@ MonoBehaviour:
   - {fileID: 413692062}
   - {fileID: 815508455}
   - {fileID: 1195291191}
+  - {fileID: 346532951}
   - {fileID: 2001101648}
   - {fileID: 1816547721}
   - {fileID: 1882089828}
@@ -4949,7 +4951,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 645944100}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -13943,7 +13945,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 404319689}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -14107,7 +14109,7 @@ RectTransform:
   - {fileID: 278853246}
   - {fileID: 1760586511}
   m_Father: {fileID: 404319689}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -14928,7 +14930,7 @@ GameObject:
   - component: {fileID: 1568124701}
   - component: {fileID: 1568124700}
   m_Layer: 5
-  m_Name: txtRemainingCount
+  m_Name: txtRedrawCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14987,7 +14989,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2
+  m_Text: 0
 --- !u!222 &1568124701
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17391,7 +17393,7 @@ RectTransform:
   m_Children:
   - {fileID: 1786555749}
   m_Father: {fileID: 404319689}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -17911,7 +17913,7 @@ RectTransform:
   m_Children:
   - {fileID: 1305848552}
   m_Father: {fileID: 404319689}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -19420,7 +19422,7 @@ RectTransform:
   - {fileID: 1295819938}
   - {fileID: 1515435747}
   m_Father: {fileID: 404319689}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -19521,9 +19523,11 @@ MonoBehaviour:
   btnBuy: {fileID: 962466176}
   btnHideCardDescription: {fileID: 1884604812}
   txtClerk: {fileID: 1812881743}
+  txtRedrawCount: {fileID: 1568124700}
   txtSpendRuby: {fileID: 66211001}
   productPlace: {fileID: 11589515}
   shopCardPrefab: {fileID: 8696308866436072958, guid: 9f5e2f8832aff4c09ac0b68d536d258a, type: 3}
+  maxRedrawCount: 3
   descriptionPop: {fileID: 1456102633}
 --- !u!1 &2012266276
 GameObject:
@@ -20335,9 +20339,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113556548}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
-  m_BlocksRaycasts: 0
+  m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!1 &2119404784
 GameObject:
