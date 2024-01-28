@@ -7,9 +7,9 @@ public class PopupBase : MonoBehaviour
 {
     [SerializeField] protected Button btnClose;
 
-    [SerializeField] protected Canvas canvas;
+    public Canvas canvas;
 
-    [SerializeField] protected CanvasGroup canvasGroup;
+    public CanvasGroup canvasGroup;
 
     [SerializeField] protected Ease ease;
 
@@ -54,6 +54,7 @@ public class PopupBase : MonoBehaviour
     /// </summary>
     public virtual void ShowPopUp(CardData cardData = null)  // DescriptionPopでCardData型が必要なので、省略可能な引数を追加
     {
+        canvas.enabled = true;
         canvasGroup.DOFade(1, 0.5f)
             .SetEase(ease)
             .OnComplete(() => canvasGroup.blocksRaycasts = true);
@@ -66,6 +67,10 @@ public class PopupBase : MonoBehaviour
     {
         canvasGroup.DOFade(0, 0.5f)
             .SetEase(ease)
-            .OnComplete(() => canvasGroup.blocksRaycasts = false);
+            .OnComplete(() =>
+            {
+                canvasGroup.blocksRaycasts = false;
+                canvas.enabled = false;
+            });
     }
 }

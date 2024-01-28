@@ -80,7 +80,7 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
     /// </summary>
     /// <typeparam name="T">検索対象のPopupBaseクラス</typeparam>
     /// <param name="keepInHistory">現在開いているポップアップを履歴スタックに追加するかどうか。trueで追加</param>
-    public void Show<T>(bool keepInHistory = true, bool closeCurrentPop = true) where T : PopupBase
+    public PopupBase Show<T>(bool keepInHistory = true, bool closeCurrentPop = true) where T : PopupBase
     {
         //foreach (var pop in popupList)
         //{
@@ -100,7 +100,7 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
         {
             Debug.Log("指定された型のポップアップが見つかりません。");
 
-            return;
+            return null;
         }
 
         // すでに開いているポップアップの場合には処理しない
@@ -108,12 +108,13 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
         {
             Debug.Log($"{targetPop}はすでに開いています。");
 
-            return;
+            return null;
         }
 
         // ポップアップを開く
         OpenPopup(targetPop, keepInHistory, closeCurrentPop);
 
+        return targetPop;
     }
 
     /// <summary>

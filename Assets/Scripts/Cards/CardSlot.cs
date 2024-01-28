@@ -27,7 +27,7 @@ public class CardSlot : MonoBehaviour
     {
         this.slotIndex = slotIndex;
 
-        // デバッグ用
+        // TODO デバッグ用
         owner = OwnerStatus.Player;
     }
 
@@ -77,7 +77,7 @@ public class CardSlot : MonoBehaviour
     /// スロットに配置できる対象先の変更
     /// </summary>
     /// <param name="newOwner"></param>
-    public void CangeStatus(OwnerStatus newOwner)
+    public void ChangeStatus(OwnerStatus newOwner)
     {
         owner = newOwner;
     }

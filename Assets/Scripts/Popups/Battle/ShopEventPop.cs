@@ -80,7 +80,8 @@ public class ShopEventPop : PopupBase
             Destroy(child.gameObject);
         }
 
-        var generateCardList = GetRandom();
+        //var generateCardList = GetRandom();
+        List<CardData> generateCardList = DataBaseManager.instance.cardDataSO.cardDataList.OrderBy(_ => Random.value).Take(4).ToList();  // 上記をリファクタリング
 
         foreach (var data in generateCardList)
         {
@@ -93,22 +94,22 @@ public class ShopEventPop : PopupBase
     /// リストの中からランダムに複数のCardDataを重複なしで取得する
     /// </summary>
     /// <returns></returns>
-    private List<CardData> GetRandom()
-    {
-        List<CardData> selectedDataList = new();
+    //private List<CardData> GetRandom()
+    //{
+    //    List<CardData> selectedDataList = new();
 
-        while (selectedDataList.Count < 4)
-        {
-            int selectNo = Random.Range(0, DataBaseManager.instance.cardDataSO.cardDataList.Count);
+    //    while (selectedDataList.Count < 4)
+    //    {
+    //        int selectNo = Random.Range(0, DataBaseManager.instance.cardDataSO.cardDataList.Count);
 
-            if (!selectedDataList.Contains(DataBaseManager.instance.cardDataSO.cardDataList[selectNo]))
-            {
-                selectedDataList.Add(DataBaseManager.instance.cardDataSO.cardDataList[selectNo]);
-            }
-        }
+    //        if (!selectedDataList.Contains(DataBaseManager.instance.cardDataSO.cardDataList[selectNo]))
+    //        {
+    //            selectedDataList.Add(DataBaseManager.instance.cardDataSO.cardDataList[selectNo]);
+    //        }
+    //    }
 
-        return selectedDataList;
-    }
+    //    return selectedDataList;
+    //}
 
     /// <summary>
     /// TODO カードを買う際の処理

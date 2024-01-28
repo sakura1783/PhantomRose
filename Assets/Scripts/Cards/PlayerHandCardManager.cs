@@ -40,6 +40,21 @@ public class PlayerHandCardManager : HandCardManagerBase
         //}
 
         // 上記をLinqで
+        foreach (var card in cardList.Intersect(setCardList))  // Intersectメソッドは2つのリストの共通の要素を返す。そのため、cardListとsetCardListの共通の要素だけが処理の対象となる。
+        {
+            card.IsSelectable.Value = false;
+        }
 
+        // 更にLinqで書いた場合だが、これは通常のbool(値型)なら動くが、今回はReactiveProperty(参照型)なので、正常に動かない
+        //cardList.Intersect(setCardList).Select(card => card.IsSelectable.Value = false);
+    }
+
+    /// <summary>
+    /// カードを選択不可にする
+    /// </summary>
+    /// <param name="card"></param>
+    public void InactivateCard(CardController card)
+    {
+        cardList.Find(x => card).SetSelectable(true);
     }
 }

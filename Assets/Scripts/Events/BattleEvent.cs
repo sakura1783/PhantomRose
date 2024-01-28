@@ -9,9 +9,10 @@ public class BattleEvent : EventBase
     /// <returns></returns>
     public async override UniTask ExecuteEvent()
     {
-        //TODO PopupManager.instance.Show<BattleEventPop>(false);
+        PopupBase pop = PopupManager.instance.Show<BattleEventPop>(false);
 
-        await UniTask.DelayFrame(1);
+        // TODO イベント終了(Canvasが閉じる)を待つ
+        await UniTask.WaitUntil(() => pop.canvasGroup.alpha == 0);  // TODO きちんと動くか確認する。PopupBase修正する
 
         Debug.Log($"{this}終了");
     }

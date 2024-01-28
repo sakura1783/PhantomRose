@@ -7,8 +7,10 @@ public class DataBaseManager : MonoBehaviour
     public CardDataSO cardDataSO;
     public StateDataSO stateDataSO;
 
+    [SerializeField] private GSSReceiver gssReceiver;
 
-    void Awake()
+
+    async void Awake()
     {
         if (instance == null)
         {
@@ -19,6 +21,8 @@ public class DataBaseManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        await gssReceiver.PrepareGSSLoadStartAsync();
     }
 
     /// <summary>
