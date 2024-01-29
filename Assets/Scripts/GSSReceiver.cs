@@ -56,6 +56,9 @@ public class GSSReceiver : MonoBehaviour
             DataBaseManager.instance.stateDataSO.stateDataList =
                 new List<StateData>(sheetDatasList.Find(x => x.SheetName == SheetName.StateData).DatasList.Select(x => new StateData(x)).ToList());
 
+            DataBaseManager.instance.itemDataSO.itemDataList =
+                new List<ItemData>(sheetDatasList.Find(x => x.SheetName == SheetName.ItemData).DatasList.Select(x => new ItemData(x)).ToList());
+
             //TODO 他にもあれば追加
         }
     }

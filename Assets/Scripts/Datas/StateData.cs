@@ -18,6 +18,7 @@ public enum ConditionType
     集中,
     吸血,
     攻撃強化,
+    負傷,
 }
 
 [System.Serializable]
@@ -51,7 +52,6 @@ public class StateData
         description = datas[7];
     }
 
-
     //TODO 追加する状態異常
     // Hpが相手よりも低い場合、残り時間に応じてシールドを獲得する
 }
@@ -63,7 +63,7 @@ public class StateData
 [System.Serializable]
 public class SimpleStateData
 {
-    public ConditionType stateName;
+    //public ConditionType stateName;
     public int stateId;
     public int duration;  // 同じ状態異常でもカードごとに継続時間を変更できる(性能差を持たせる)
 }

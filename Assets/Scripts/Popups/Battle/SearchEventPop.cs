@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using DG.Tweening;
 
 /// <summary>
 /// 宝物の種類
@@ -20,25 +21,15 @@ public class SearchEventPop : PopupBase
 
     [SerializeField] private Transform[] treasureButtonTrans;
 
-    [SerializeField] private CanvasGroup treasureDiscoveryPopGroup;
+    [SerializeField] private CanvasGroup notFoundPopGroup;
+
+    [SerializeField] private TreasureDiscoveryPop treasureDiscoveryPop;
 
     private List<TreasureButtonController> treasureButtonList = new();
 
     // TODO 必要であれば変更する
     private TreasureType[] events = new TreasureType[4] { TreasureType.None, TreasureType.GetItem, TreasureType.GetItem, TreasureType.GetItem};
 
-
-    //TODO 消す
-    //void Start()
-    //{
-    //    this.UpdateAsObservable()
-    //        .Where(_ => Input.GetKeyDown(KeyCode.Return))
-    //        .Subscribe(_ => ShowPopUp());
-
-    //    this.UpdateAsObservable()
-    //        .Where(_ => Input.GetKeyDown(KeyCode.Backspace))
-    //        .Subscribe(_ => HidePopUp());
-    //}
 
     /// <summary>
     /// 初期設定
@@ -47,9 +38,6 @@ public class SearchEventPop : PopupBase
     {
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
-
-        treasureDiscoveryPopGroup.alpha = 0;
-        treasureDiscoveryPopGroup.blocksRaycasts = false;
     }
 
     /// <summary>
@@ -88,7 +76,36 @@ public class SearchEventPop : PopupBase
     {
         Debug.Log(treasureType);
 
-        //TODO switch文
+        // 各イベントへ分岐
+        switch (treasureType)
+        {
+            case TreasureType.None:
+                notFoundPopGroup.DOFade(1, 0.5f)
+                    .SetEase(ease)
+                    .OnComplete(() => notFoundPopGroup.blocksRaycasts = true);
+                break;
+
+            case TreasureType.GetItem:
+                treasureDiscoveryPop.ShowTreasureDiscoveryPop(GetRandomItem());
+                break;
+
+            // TODO case TreasureType.MiniGame:
+
+            default:
+                Debug.Log("該当のイベントがありません");
+                break;
+        }
+    }
+
+    /// <summary>
+    /// どのアイテムを獲得するかランダムに決定
+    /// </summary>
+    /// <returns></returns>
+    private ItemData GetRandomItem()
+    {
+        int randomNo = Random.Range(0, DataBaseManager.instance.itemDataSO.itemDataList.Count);
+
+        return DataBaseManager.instance.itemDataSO.itemDataList[randomNo];
     }
 
     /// <summary>

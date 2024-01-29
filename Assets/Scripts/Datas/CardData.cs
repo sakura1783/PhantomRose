@@ -53,7 +53,33 @@ public class CardData
         coolTime = int.Parse(datas[7]);
         ColorUtility.TryParseHtmlString(datas[8], out cardColor);
         spriteId = int.Parse(datas[9]);
-        description = datas[10];
-        price = int.Parse(datas[11]);
+        price = int.Parse(datas[10]);
+        description = datas[11];
+
+        // ""という文字列である場合、処理しない
+        if (datas[12] == "\"\"")  // \"\"でダブルクォート
+        {
+            return;
+        }
+
+        // stateListの作成
+        // Splitメソッドを利用し、'/"で分割してList用の個々のデータを文字列の配列(クラスごと)として取得
+        string[] stateInfo = datas[12].Split('/');
+        stateList = new();
+
+        foreach (string data in stateInfo)
+        {
+            // Splitメソッドを利用し、':'で分割して、クラス内の変数用のデータを文字列の配列として取得
+            string[] stateDetails = data.Split(':');
+
+            // クラスのインスタンス作成
+            SimpleStateData simpleState = new();
+
+            // クラス内の各変数に文字列をキャストして代入
+            simpleState.stateId = int.Parse(stateDetails[0]);
+            simpleState.duration = int.Parse(stateDetails[1]);
+
+            stateList.Add(simpleState);
+        }
     }
 }

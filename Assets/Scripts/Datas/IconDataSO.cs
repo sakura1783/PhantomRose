@@ -7,6 +7,7 @@ public class IconDataSO : ScriptableObject
     public List<EventIconData> eventIconDataList = new();
     public List<CardIconData> cardIconDataList = new();
     public List<StateIconData> stateIconDataList = new();
+    public List<ItemIconData> itemIconDataList = new();
 
 
     [System.Serializable]
@@ -25,6 +26,13 @@ public class IconDataSO : ScriptableObject
 
     [System.Serializable]
     public class StateIconData
+    {
+        public int iconId;
+        public Sprite iconSprite;
+    }
+
+    [System.Serializable]
+    public class ItemIconData
     {
         public int iconId;
         public Sprite iconSprite;

@@ -46,4 +46,14 @@ public class IconManager : AbstractSingleton<IconManager>
     {
         return iconDataSO.stateIconDataList.Find(data => data.iconId == searchIconNo).iconSprite;
     }
+
+    /// <summary>
+    /// アイテム用アイコン画像の取得
+    /// </summary>
+    /// <param name="searchIconNo"></param>
+    /// <returns></returns>
+    public Sprite GetItemIcon(int searchIconNo)
+    {
+        return iconDataSO.itemIconDataList.Find(data => data.iconId == searchIconNo).iconSprite;
+    }
 }

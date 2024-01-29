@@ -4,8 +4,10 @@ public class DataBaseManager : MonoBehaviour
 {
     public static DataBaseManager instance;
 
+    // 各スクリプタブルオブジェクト
     public CardDataSO cardDataSO;
     public StateDataSO stateDataSO;
+    public ItemDataSO itemDataSO;
 
     [SerializeField] private GSSReceiver gssReceiver;
 

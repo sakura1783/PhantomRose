@@ -14,6 +14,7 @@ public enum SheetName
     CardData,
     StateData,
     EventData,
+    ItemData,
 
     // その他にもあれば追加
 }
