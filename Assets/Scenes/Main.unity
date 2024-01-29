@@ -2378,8 +2378,8 @@ GameObject:
   - component: {fileID: 346532950}
   - component: {fileID: 346532949}
   - component: {fileID: 346532948}
-  - component: {fileID: 346532951}
   - component: {fileID: 346532952}
+  - component: {fileID: 346532951}
   m_Layer: 5
   m_Name: SearchEvent
   m_TagString: Untagged
@@ -2494,8 +2494,9 @@ MonoBehaviour:
   - {fileID: 1736911422}
   - {fileID: 1967354873}
   - {fileID: 1424613481}
-  notFoundPopGroup: {fileID: 0}
-  treasureDiscoveryPop: {fileID: 0}
+  notFoundPopGroup: {fileID: 1798542749}
+  treasureDiscoveryPop: {fileID: 645944108}
+  btnLeave: {fileID: 1503439275}
 --- !u!225 &346532952
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -3153,6 +3154,7 @@ MonoBehaviour:
   - {fileID: 815508455}
   - {fileID: 1195291191}
   - {fileID: 346532951}
+  - {fileID: 645944108}
   - {fileID: 2001101648}
   - {fileID: 1816547721}
   - {fileID: 1882089828}
@@ -5070,8 +5072,12 @@ GameObject:
   m_Component:
   - component: {fileID: 645944101}
   - component: {fileID: 645944104}
+  - component: {fileID: 645944107}
+  - component: {fileID: 645944106}
+  - component: {fileID: 645944105}
   - component: {fileID: 645944103}
   - component: {fileID: 645944102}
+  - component: {fileID: 645944108}
   m_Layer: 5
   m_Name: TreasureDiscoveryPop
   m_TagString: Untagged
@@ -5153,6 +5159,86 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 645944100}
   m_CullTransparentMesh: 1
+--- !u!114 &645944105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645944100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &645944106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645944100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &645944107
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645944100}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &645944108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645944100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e232bbf22d224469c8d1e7fc63a6c1a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClose: {fileID: 1203909579}
+  canvas: {fileID: 645944107}
+  canvasGroup: {fileID: 645944102}
+  ease: 1
+  imgTreasure: {fileID: 535811404}
+  txtTreasureName: {fileID: 786239044}
+  btnGet: {fileID: 1688333456}
 --- !u!1 &652350496
 GameObject:
   m_ObjectHideFlags: 0
@@ -17791,7 +17877,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1816547716
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18311,7 +18397,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1882089823
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19818,7 +19904,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2001101643
 RectTransform:
   m_ObjectHideFlags: 0

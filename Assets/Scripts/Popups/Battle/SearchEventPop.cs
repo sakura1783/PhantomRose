@@ -25,6 +25,8 @@ public class SearchEventPop : PopupBase
 
     [SerializeField] private TreasureDiscoveryPop treasureDiscoveryPop;
 
+    [SerializeField] private Button btnLeave;
+
     private List<TreasureButtonController> treasureButtonList = new();
 
     // TODO 必要であれば変更する
@@ -38,6 +40,14 @@ public class SearchEventPop : PopupBase
     {
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
+
+        notFoundPopGroup.alpha = 0;
+        notFoundPopGroup.blocksRaycasts = false;
+
+        btnLeave.OnClickAsObservable()
+            .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
+            .Subscribe(_ => PopupManager.instance.GoBack())
+            .AddTo(this);
     }
 
     /// <summary>
@@ -46,6 +56,12 @@ public class SearchEventPop : PopupBase
     /// <param name="cardData"></param>
     public override void ShowPopUp(CardData cardData = null)
     {
+        notFoundPopGroup.alpha = 0;
+        notFoundPopGroup.blocksRaycasts = false;
+
+        treasureDiscoveryPop.CanvasGroup.alpha = 0;
+        treasureDiscoveryPop.CanvasGroup.blocksRaycasts = false;
+
         // ボタンの生成と各イベントの設定
         GenerateTreasureButtons();
 
@@ -74,7 +90,7 @@ public class SearchEventPop : PopupBase
     /// <param name="treasureType"></param>
     private void OnClickTreasureButton(TreasureType treasureType)
     {
-        Debug.Log(treasureType);
+        Debug.Log($"探索イベント：{treasureType}");
 
         // 各イベントへ分岐
         switch (treasureType)

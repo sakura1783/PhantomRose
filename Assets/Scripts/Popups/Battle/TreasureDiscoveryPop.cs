@@ -6,8 +6,6 @@ using DG.Tweening;
 // このポップアップはShow<>では表示しない(currentPopが置き換わり、GoBack()した時にこのポップアップだけが閉じてSearchEventPopが閉じない)。
 public class TreasureDiscoveryPop : PopupBase
 {
-    [SerializeField] private Transform treasurePlace;
-
     [SerializeField] private Image imgTreasure;
 
     [SerializeField] private Text txtTreasureName;
@@ -39,7 +37,7 @@ public class TreasureDiscoveryPop : PopupBase
     public void ShowTreasureDiscoveryPop(ItemData itemData)
     {
         // 各値の設定
-        imgTreasure.sprite = IconManager.instance.GetItemIcon(itemData.id);
+        imgTreasure.sprite = IconManager.instance.GetItemIcon(itemData.spriteId);
         txtTreasureName.text = itemData.itemName;
 
         // ポップアップ表示
