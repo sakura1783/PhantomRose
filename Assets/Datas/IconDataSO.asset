@@ -30,6 +30,8 @@ MonoBehaviour:
     iconSprite: {fileID: 623849741, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   - iconId: 4
     iconSprite: {fileID: 798309987, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
+  - iconId: 5
+    iconSprite: {fileID: 1744151977, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   stateIconDataList:
   - iconId: 0
     iconSprite: {fileID: 887329969, guid: e63bb8487859641d3b087c8be5494413, type: 3}
