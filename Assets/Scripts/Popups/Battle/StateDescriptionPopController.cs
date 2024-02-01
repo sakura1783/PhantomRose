@@ -20,8 +20,7 @@ public class StateDescriptionPopController : MonoBehaviour
         imgState.sprite = IconManager.instance.GetStateIcon(data.spriteId);
         txtStateName.text = data.stateName + " 状態";
         txtBuffOrDebuff.text = data.stateType.ToString();
-        txtBuffOrDebuff.color = Color.magenta;
-        // TODO txtBuffOrDebuffの色を変える
+        txtBuffOrDebuff.color = data.stateType == StateType.バフ ? Color.cyan : Color.red;
         txtDescription.text = data.description;
     }
 }

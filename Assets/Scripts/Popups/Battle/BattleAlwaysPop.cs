@@ -63,7 +63,7 @@ public class BattleAlwaysPop : PopupBase
             .Subscribe(_ => EvaluatePopupsVisibility<CardDeckPop>())
             .AddTo(this);
 
-        //TODO btnToPlayerState
+        // TODO btnToPlayerState
     }
 
     /// <summary>
@@ -98,5 +98,12 @@ public class BattleAlwaysPop : PopupBase
         returnButtonGroup.DOFade(alphaValue, 0.3f)
             .SetEase(ease)
             .OnComplete(() => returnButtonGroup.blocksRaycasts = isActive);
+    }
+
+    public override void HidePopUp()
+    {
+        base.HidePopUp();
+
+        Debug.Log("BattleAlwaysPopが閉じました");
     }
 }

@@ -4,14 +4,18 @@ using UniRx;
 
 public class BattleEventPop : PopupBase
 {
-    [SerializeField] private Button btnHideCardDescription;
-
     [SerializeField] private CardController cardPrefab;
 
     [SerializeField] private DescriptionPop descriptionPop;
 
-    //TODO テスト。終わったら修正する
-    //[SerializeField] private Transform cardTran;
+    [SerializeField] private Transform attackCardTran;
+    [SerializeField] private Transform magicCardTran;
+
+    [SerializeField] private Button btnHideCardDescription;
+
+    [SerializeField] private Text txtStageNo;
+
+    [SerializeField] private BattleEventManager battleEventManager;
 
 
     /// <summary>
@@ -29,5 +33,17 @@ public class BattleEventPop : PopupBase
             .AddTo(this);
     }
 
-    //TODO ShowPopUpのオーバーライド
+    /// <summary>
+    /// ポップアップの表示
+    /// </summary>
+    /// <param name="cardData"></param>
+    public override void ShowPopUp(CardData cardData = null)
+    {
+        // 各カードデッキにカードを生成
+        //battleEventManager.Initialize();  // TODO 引数がわからない
+
+        // カードスロットの生成と、敵カードの配置
+
+        base.ShowPopUp();
+    }
 }

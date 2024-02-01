@@ -21,7 +21,6 @@ public class MainGameManager : MonoBehaviour
 
     private List<EventBase> currentEventList = new();
 
-    //private int currentRouteIndex = 0; 
     public ReactiveProperty<int> CurrentRouteIndex = new(0);  // ReactivePropertyで監視できるようになる。プロパティは参照型なので最初に初期値を代入する。
 
 
@@ -32,7 +31,11 @@ public class MainGameManager : MonoBehaviour
         GenerateEventButtons();
 
         //監視。Startに1回書けば良い
-        CurrentRouteIndex.Subscribe(value => waveInfoView.UpdateWaveNo(value)).AddTo(this);
+        CurrentRouteIndex
+            .Subscribe(value => waveInfoView.UpdateWaveNo(value))
+            .AddTo(this);
+
+        // TODO BattleEventManager.SetUp();
     }
 
     /// <summary>

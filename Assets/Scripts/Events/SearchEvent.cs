@@ -10,7 +10,7 @@ public class SearchEvent : EventBase
     public async override UniTask ExecuteEvent()
     {
         // イベント用のポップアップを開く
-        PopupBase pop = PopupManager.instance.Show<SearchEventPop>(false);
+        PopupBase pop = PopupManager.instance.Show<SearchEventPop>(false, false);
 
         // イベント終了を待つ
         await UniTask.WaitUntil(() => pop.CanvasGroup.alpha <= 0);

@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
+using UniRx;
 
 /// <summary>
 /// バトルの状態
@@ -42,14 +43,14 @@ public class BattleEventManager : MonoBehaviour
 
     void Start()
     {
-        // デバッグ用
+        // TODO デバッグ用
         //Initialize();
         SetUp();
     }
 
     void Update()
     {
-        // デバッグ用
+        // TODO デバッグ用
         if (Input.GetKeyDown(KeyCode.Space))
         {
             PrepareNextTurn();
@@ -77,7 +78,7 @@ public class BattleEventManager : MonoBehaviour
         cardHandler = new();
 
         // プレイヤー情報を生成
-        GameData.instance.InitCharacter(OwnerStatus.Player, 15);
+        GameData.instance.InitCharacter(OwnerStatus.Player, 25);
     }
 
     /// <summary>
@@ -107,10 +108,11 @@ public class BattleEventManager : MonoBehaviour
         opponentHandCardManager = new(handCardList, cardSlotManager);
 
         // TODO ハンドラの生成と購読
-        //cardHandler = new();
+        // cardHandler = new();
 
-        // カードの効果が全て終了したら購読する
-        // TODO cardHandler.CommandSubject.Subscribe(_ => PrepareNextTurn());
+        // カードの効果が全て終了したら購読する(コメント解除すれば動く)
+        //cardHandler.CommandSubject
+        //    .Subscribe(_ => PrepareNextTurn());
 
         // TODO デバッグ用にプレイヤーと対戦相手の生成(対戦相手はバトルのたびにインスタンスする)
         GameData.instance.InitCharacter(OwnerStatus.Opponent, 5);
@@ -215,8 +217,7 @@ public class BattleEventManager : MonoBehaviour
 
         Debug.Log("全てのカードを実行しました");
 
-        //TODO カード終了タイミングを購読してもいいが、ここにある方が処理が読みやすい
-        PrepareNextTurn();
+        PrepareNextTurn();  // (カード終了のタイミングを購読してもいいが、ここにある方が処理が読みやすい)
     }
 
     /// <summary>

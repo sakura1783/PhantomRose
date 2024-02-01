@@ -12,6 +12,10 @@ public class TreasureDiscoveryPop : PopupBase
 
     [SerializeField] private Button btnGet;
 
+    [SerializeField] private InventoryPop inventoryPop;
+
+    private ItemData getItemData;
+
 
     /// <summary>
     /// 初期設定
@@ -24,7 +28,9 @@ public class TreasureDiscoveryPop : PopupBase
             .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
             .Subscribe(_ =>
             {
-                // TODO インベントリにアイテムを追加(下記メソッド)
+                // インベントリにアイテムを追加
+                inventoryPop.AddBattleItem(getItemData);
+
                 PopupManager.instance.GoBack();
             })
             .AddTo(this);
@@ -36,6 +42,8 @@ public class TreasureDiscoveryPop : PopupBase
     /// <param name="itemData"></param>
     public void ShowTreasureDiscoveryPop(ItemData itemData)
     {
+        getItemData = itemData;
+
         // 各値の設定
         imgTreasure.sprite = IconManager.instance.GetItemIcon(itemData.spriteId);
         txtTreasureName.text = itemData.itemName;
@@ -45,6 +53,4 @@ public class TreasureDiscoveryPop : PopupBase
             .SetEase(ease)
             .OnComplete(() => canvasGroup.blocksRaycasts = true);
     }
-
-    // TODO インベントリにアイテムを追加するメソッド。インベントリを確認して、アイテムがいっぱいでなければアイテムを追加、いっぱいであればどれかを捨ててインベントリに追加する。
 }

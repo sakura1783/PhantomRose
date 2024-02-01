@@ -9,8 +9,15 @@ public class GameData : AbstractSingleton<GameData>
     public List<CardData> attackCardList = new();
     public List<CardData> magicCardList = new();
 
+    public int inventoryCapacity;
+    public List<ItemData> myItemList = new();
+
+    // TODO バトルのデータ。敵の種類、フェードカウント、置いたカード情報、キャラのHP、バフデバフなど
+
     private Character player;
     private Character opponent;
+
+    private bool hasSaveData = false;  // セーブデータがあるかどうか。ある場合、その情報を使って中断した部分から再開する。
 
 
     /// <summary>

@@ -21,7 +21,8 @@ public class Character
     public ReactiveProperty<int> Shield = new();
     public ReactiveProperty<int> AttackPower = new();
 
-    //TODO バフデバフ用のクラスの定義と変数の宣言
+    public ReactiveProperty<int> BuffDuration = new();
+    public ReactiveProperty<int> DebuffDuration = new();
 
 
     /// <summary>
@@ -53,7 +54,7 @@ public class Character
     public virtual void UpdateHp(int amount)
     {
         Hp.Value = Mathf.Clamp(Hp.Value += amount, 0, maxHp);
-        Debug.Log($"{owner} : {Hp.Value}");
+        Debug.Log($"{owner}のHP : {Hp.Value}");
     }
 
     /// <summary>
@@ -62,7 +63,27 @@ public class Character
     /// <param name="amount"></param>
     public void UpdateShield(int amount)
     {
-        Shield.Value += amount;
-        Debug.Log($"{owner} : {Shield.Value}");
+        Shield.Value = Mathf.Clamp(Shield.Value += amount, 0, int.MaxValue);
+        Debug.Log($"{owner}のシールド値 : {Shield.Value}");
+    }
+
+    /// <summary>
+    /// バフの継続時間の更新
+    /// </summary>
+    /// <param name="amount"></param>
+    public void UpdateBuffDuration(int amount)
+    {
+        BuffDuration.Value = Mathf.Clamp(BuffDuration.Value += amount, 0, int.MaxValue);
+        Debug.Log($"{owner}のバフ値 : {Shield.Value}");
+    }
+
+    /// <summary>
+    /// デバフの継続時間の更新
+    /// </summary>
+    /// <param name="amount"></param>
+    public void UpdateDebuffDuration(int amount)
+    {
+        DebuffDuration.Value = Mathf.Clamp(DebuffDuration.Value, 0, int.MaxValue);
+        Debug.Log($"{owner}のデバフ値 : {Shield.Value}");
     }
 }

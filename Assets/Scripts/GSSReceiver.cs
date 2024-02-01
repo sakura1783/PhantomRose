@@ -12,13 +12,6 @@ public class GSSReceiver : MonoBehaviour
     public bool IsLoading { get; set; }
 
 
-    //private void Awake()
-    //{
-    //    // GSSのデータ取得準備
-    //    //StartCoroutine(PrepareGSSLoadStart());
-    //    //PrepareGSSLoadStartAsync().Forget();
-    //}
-
     /// <summary>
     /// GSSのデータ取得準備
     /// </summary>
