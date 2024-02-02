@@ -19,6 +19,10 @@ MonoBehaviour:
     iconSprite: {fileID: 1314314700, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   - iconType: 2
     iconSprite: {fileID: 1790055172, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
+  - iconType: 3
+    iconSprite: {fileID: 21300000, guid: 953a846ccf1ad4a31b6e9440d75d8a97, type: 3}
+  - iconType: 4
+    iconSprite: {fileID: 1587339630, guid: 5a6cd60cefff84f7ea83d08fde2440ab, type: 3}
   cardIconDataList:
   - iconId: 0
     iconSprite: {fileID: 1502802138, guid: 132358e9bf26b60458b731bf001e31db, type: 3}

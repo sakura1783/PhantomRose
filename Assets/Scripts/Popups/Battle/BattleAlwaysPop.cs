@@ -22,8 +22,6 @@ public class BattleAlwaysPop : PopupBase
 
     private readonly string[] hidePopNames = new[] { "Store(Home)", "Inventory", "CardDeck", "PlayerState" };  // readonlyで、変数が一度初期化されたらその値を変更できなくする
 
-    //TODO 変数追加
-
 
     /// <summary>
     /// 初期設定
@@ -32,6 +30,8 @@ public class BattleAlwaysPop : PopupBase
     {
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
+
+        txtRubyCount.text = GameData.instance.RubyCount.ToString();
 
         // 各ボタンの設定
         btnMenu.OnClickAsObservable()
@@ -64,6 +64,11 @@ public class BattleAlwaysPop : PopupBase
             .AddTo(this);
 
         // TODO btnToPlayerState
+
+        // TODO 書く場所
+        GameData.instance.RubyCount
+            .Subscribe(value => txtRubyCount.text = Mathf.Clamp(value, 0, int.MaxValue).ToString())
+            .AddTo(this);
     }
 
     /// <summary>

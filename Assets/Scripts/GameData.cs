@@ -1,4 +1,5 @@
 using UnityEngine;
+using UniRx;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,6 +14,8 @@ public class GameData : AbstractSingleton<GameData>
     public List<ItemData> myItemList = new();
 
     // TODO バトルのデータ。敵の種類、フェードカウント、置いたカード情報、キャラのHP、バフデバフなど
+
+    public ReactiveProperty<int> RubyCount = new();
 
     private Character player;
     private Character opponent;

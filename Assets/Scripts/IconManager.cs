@@ -8,6 +8,8 @@ public enum EventIconType
     BattleEvent,
     SearchEvent,
     ShopEvent,
+    BreakEvent,
+    BossEvent,
 
     //Player,
 }

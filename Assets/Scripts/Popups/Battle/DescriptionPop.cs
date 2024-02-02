@@ -6,6 +6,9 @@ public class DescriptionPop : PopupBase
     private bool isDisplayDescriptionPop = false;
     public bool IsDisplayDescriptionPop => isDisplayDescriptionPop;
 
+    private CardData tapCardData;  // タップしたカードの情報。外部クラスで使用する
+    public CardData TapCardData => tapCardData;
+
     [SerializeField] private CardDescriptionPopController cardDescriptionPopPrefab;
 
     [SerializeField] private StateDescriptionPopController stateDescriptionPopPrefab;
@@ -27,6 +30,8 @@ public class DescriptionPop : PopupBase
     /// <param name="stateCount">カードが付与する状態異常の数。この値に応じてポップアップの生成数を変更する</param>
     public override void ShowPopUp(CardData cardData)
     {
+        tapCardData = cardData;
+
         // 生成した子要素のポップアップを全て破棄
         foreach (Transform child in transform)
         {

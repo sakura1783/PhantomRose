@@ -5,6 +5,11 @@ using UniRx;
 public class ShopCardController : MonoBehaviour
 {
     [SerializeField] private Button btnShopCard;
+    public Button BtnShopCard
+    {
+        get => btnShopCard;
+        set => btnShopCard = value;
+    }
 
     [SerializeField] private Text txtCardName;
     [SerializeField] private Text txtPrice;
@@ -30,6 +35,8 @@ public class ShopCardController : MonoBehaviour
         card.transform.rotation = Quaternion.Euler(0, 0, 0);
         card.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
         card.SetUp(data);
+
+        btnShopCard.interactable = GameData.instance.RubyCount.Value >= data.price;
 
         btnShopCard.OnClickAsObservable()
             .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))

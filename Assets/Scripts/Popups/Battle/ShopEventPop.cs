@@ -27,6 +27,11 @@ public class ShopEventPop : PopupBase
 
     [SerializeField] private DescriptionPop descriptionPop;
 
+    [SerializeField] private CardDeckPop cardDeckPop;
+
+    //private List<System.Tuple<ShopCardController, CardData>> shopCards = new();
+    private Dictionary<ShopCardController, CardData> shopCards = new();  // 上記でもできるが、こっちの方が簡単
+
 
     /// <summary>
     /// 初期設定
@@ -47,7 +52,7 @@ public class ShopEventPop : PopupBase
         // 各ボタンの設定
         btnBuy.OnClickAsObservable()
             .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
-            .Subscribe(_ => PurchaseCard())
+            .Subscribe(_ => PurchaseCard(descriptionPop.TapCardData))
             .AddTo(this);
 
         btnRedraw.OnClickAsObservable()
@@ -93,6 +98,7 @@ public class ShopEventPop : PopupBase
         foreach (Transform child in productPlace)
         {
             Destroy(child.gameObject);
+            shopCards.Clear();
         }
 
         //var generateCardList = GetRandom();
@@ -102,6 +108,9 @@ public class ShopEventPop : PopupBase
         {
             var product = Instantiate(shopCardPrefab, productPlace);
             product.SetUp(data, this);
+
+            //shopCards.Add(System.Tuple.Create(product, data));
+            shopCards.Add(product, data);
         }
 
         // カード引き直し回数の更新
@@ -131,13 +140,24 @@ public class ShopEventPop : PopupBase
     //}
 
     /// <summary>
-    /// TODO カードを買う際の処理
+    /// カードを買う
     /// </summary>
-    private void PurchaseCard()
+    private void PurchaseCard(CardData data)
     {
-        // ルビーを減らす
+        // 重複して買えないようにボタンを非アクティブ化
+        shopCards.Where(card => card.Value == data).FirstOrDefault().Key.BtnShopCard.interactable = false;
 
-        // カードデッキに買ったカードを追加 
+        // ルビー支払い
+        GameData.instance.RubyCount.Value -= data.price;
+
+        // 他の商品のボタンの制御
+        foreach (var card in shopCards)
+        {
+            card.Key.BtnShopCard.interactable = GameData.instance.RubyCount.Value >= card.Value.price;
+        }
+
+        // カードデッキに買ったカードを追加
+        cardDeckPop.AddCardToCardDeck(data);
 
         // CardPurchaseポップアップを非表示にする
         SwitchCardPurchasePopVisibility(false);
@@ -178,7 +198,7 @@ public class ShopEventPop : PopupBase
     /// <param name="cardData"></param>
     private void SetUpCardPurchasePop(CardData cardData)
     {
-        //TODO txtSpendRuby.text = 現在持っているルビー - cardData.price(値段)
+        txtSpendRuby.text = $"{GameData.instance.RubyCount}→{GameData.instance.RubyCount.Value - cardData.price}";
     }
 
     /// <summary>
