@@ -145,7 +145,9 @@ public class ShopEventPop : PopupBase
     private void PurchaseCard(CardData data)
     {
         // 重複して買えないようにボタンを非アクティブ化
-        shopCards.Where(card => card.Value == data).FirstOrDefault().Key.BtnShopCard.interactable = false;
+        var purchasedCard = shopCards.Where(card => card.Value == data).FirstOrDefault();
+        purchasedCard.Key.BtnShopCard.interactable = false;
+        shopCards.Remove(purchasedCard.Key);  // これをしないと再度、下の処理でボタンがアクティブになってしまう
 
         // ルビー支払い
         GameData.instance.RubyCount.Value -= data.price;

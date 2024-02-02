@@ -19,10 +19,10 @@ public class CardDeckPop : PopupBase
     // TODO テスト
     private void Start()
     {
-        foreach (var card in DataBaseManager.instance.cardDataSO.cardDataList)
-        {
-            GameData.instance.myCardList.Add(card);
-        }
+        //foreach (var card in DataBaseManager.instance.cardDataSO.cardDataList)
+        //{
+        //    GameData.instance.myCardList.Add(card);
+        //}
 
         // リストが変更されないように、リストをコピー
         //var copyList = GameData.instance.myCardList;  // TODO エラーになる。かといって新しくインスタンスするとデータの中身が2倍になってしまう
