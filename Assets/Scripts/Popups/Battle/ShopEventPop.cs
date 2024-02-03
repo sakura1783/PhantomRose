@@ -83,7 +83,7 @@ public class ShopEventPop : PopupBase
 
         txtClerk.text = "いらっしゃいませ！\nゆっくり選んでいってくださいね。";
 
-        // カードの商品をランダムに生成し、初期設定
+        // カードの商品をランダムに生成
         GenerateCardProduct();
 
         base.ShowPopUp();

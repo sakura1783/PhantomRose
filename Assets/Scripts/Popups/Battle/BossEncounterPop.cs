@@ -7,6 +7,8 @@ public class BossEncounterPop : PopupBase
     [SerializeField] private Button btnAssault;
     [SerializeField] private Button btnFight;
 
+    [SerializeField] private Text txtAssaultCost;
+
     [SerializeField] private int assaultCost;
 
 
@@ -18,11 +20,16 @@ public class BossEncounterPop : PopupBase
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
 
+        txtAssaultCost.color = (GameData.instance.RubyCount.Value >= assaultCost) ? ColorManager.instance.GetColor(ColorType.LightRed) : ColorManager.instance.GetColor(ColorType.Red);
+
         // TODO 監視処理
         btnAssault.OnClickAsObservable()
             .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
             .Subscribe(_ =>
             {
+                // ルビー支払い
+                GameData.instance.RubyCount.Value -= assaultCost;
+
                 // HPを満タン回復
 
                 // 敵のHPを10減らす

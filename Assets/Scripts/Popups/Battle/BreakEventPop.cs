@@ -94,10 +94,10 @@ public class BreakEventPop : PopupBase
     private void SwitchActivateButtons()
     {
         btnHeal.interactable = GameData.instance.RubyCount.Value >= healCost;
-        txtHealCost.color = GameData.instance.RubyCount.Value >= healCost ? Color.white : Color.red;
+        txtHealCost.color = GameData.instance.RubyCount.Value >= healCost ? ColorManager.instance.GetColor(ColorType.LightRed) : ColorManager.instance.GetColor(ColorType.Red);
 
         btnResetCoolDown.interactable = GameData.instance.RubyCount.Value >= resetCoolDownCost;
-        txtResetCoolDownCost.color = GameData.instance.RubyCount.Value >= resetCoolDownCost ? Color.white : Color.red;
+        txtResetCoolDownCost.color = GameData.instance.RubyCount.Value >= resetCoolDownCost ? ColorManager.instance.GetColor(ColorType.LightRed) : ColorManager.instance.GetColor(ColorType.Red);
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ public class BreakEventPop : PopupBase
             cardDismantlingPromptGroup.alpha = 1;
 
             // 文字色を赤にする
-            txtCardCount.color = Color.red;
+            txtCardCount.color = ColorManager.instance.GetColor(ColorType.Red);
 
             // 「立ち去る」ボタンを押せなくする
             btnClose.interactable = false;
@@ -122,7 +122,7 @@ public class BreakEventPop : PopupBase
         {
             cardDismantlingPromptGroup.alpha = 0;
 
-            txtCardCount.color = Color.white;
+            txtCardCount.color = ColorManager.instance.GetColor(ColorType.VeryLightRed);
 
             btnClose.interactable = true;
         }
