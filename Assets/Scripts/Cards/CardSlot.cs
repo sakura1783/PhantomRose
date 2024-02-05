@@ -43,8 +43,6 @@ public class CardSlot : MonoBehaviour
         if (size == Vector2.zero)
         {
             size = GetComponent<RectTransform>().sizeDelta;
-
-            Debug.Log($"size : {size}");
         }
 
         // 配置したカードの位置とサイズを調整

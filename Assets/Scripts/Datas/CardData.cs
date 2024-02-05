@@ -7,6 +7,7 @@ public class CardData
     public int id;
 
     public string name;
+    public string englishName;
 
     public CardType cardType;
 
@@ -45,26 +46,27 @@ public class CardData
         // 取得した情報をキャストして代入
         id = int.Parse(datas[0]);
         name = datas[1];
-        cardType = (CardType)System.Enum.Parse(typeof(CardType), datas[2]);
-        level = int.Parse(datas[3]);
-        attackPower = int.Parse(datas[4]);
-        shieldPower = int.Parse(datas[5]);
-        recoveryPower = int.Parse(datas[6]);
-        coolTime = int.Parse(datas[7]);
-        ColorUtility.TryParseHtmlString(datas[8], out cardColor);
-        spriteId = int.Parse(datas[9]);
-        price = int.Parse(datas[10]);
-        description = datas[11];
+        englishName = datas[2];
+        cardType = (CardType)System.Enum.Parse(typeof(CardType), datas[3]);
+        level = int.Parse(datas[4]);
+        attackPower = int.Parse(datas[5]);
+        shieldPower = int.Parse(datas[6]);
+        recoveryPower = int.Parse(datas[7]);
+        coolTime = int.Parse(datas[8]);
+        ColorUtility.TryParseHtmlString(datas[9], out cardColor);
+        spriteId = int.Parse(datas[10]);
+        price = int.Parse(datas[11]);
+        description = datas[12];
 
         // ""という文字列である場合、処理しない
-        if (datas[12] == "\"\"")  // \"\"でダブルクォート
+        if (datas[13] == "\"\"")  // \"\"でダブルクォート
         {
             return;
         }
 
         // stateListの作成
         // Splitメソッドを利用し、'/"で分割してList用の個々のデータを文字列の配列(クラスごと)として取得
-        string[] stateInfo = datas[12].Split('/');
+        string[] stateInfo = datas[13].Split('/');
         stateList = new();
 
         foreach (string data in stateInfo)

@@ -14,13 +14,16 @@ public class CardHandler
     /// カードの実処理。左端にセットされているカードから順番に1つずつ処理する
     /// </summary>
     /// <param name="commandList"></param>
-    /// <param name="statusList"></param>
+    /// <param name="ownerList"></param>
     /// <param name="token"></param>
     /// <returns></returns>
     public async UniTask<BattleState> ExecuteCommandsAsync(List<ICommand> commandList, List<OwnerStatus> ownerList, CancellationToken token)
     {
         for (int i = 0; i < commandList.Count; i++)
         {
+            UnityEngine.Debug.Log(ownerList.Count);
+            UnityEngine.Debug.Log(token);
+
             await commandList[i].ExecuteAsync(ownerList[i], token);
 
             // 仮の待機時間。本来はエフェクトなどの絡みがあるので、各ExecuteAsync内にかく

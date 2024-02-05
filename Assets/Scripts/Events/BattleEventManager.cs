@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -40,6 +41,10 @@ public class BattleEventManager : MonoBehaviour
 
     private UnityAction battleEndAction = null;
 
+    private List<CardController> handCardList = new();
+
+    private IDisposable subscription;
+
 
     void Start()
     {
@@ -66,7 +71,6 @@ public class BattleEventManager : MonoBehaviour
         for (int i = 0; i < slotCount; i++)
         {
             CardSlot slot = Instantiate(cardSlotPrefab, cardSlotTran);
-
             slot.SetUp(i);
 
             cardSlotList.Add(slot);
@@ -79,6 +83,10 @@ public class BattleEventManager : MonoBehaviour
 
         // プレイヤー情報を生成
         GameData.instance.InitCharacter(OwnerStatus.Player, 25);
+
+        // プレイヤーのCardDataListの購読処理。変更されたら、そのデータを持っているカードの表示を更新する
+        subscription = GameData.instance.GetPlayer().CopyCardDataList.ObserveReplace()
+            .Subscribe(data => handCardList.Where(card => card.CardData == data.NewValue).FirstOrDefault().SetUp(data.NewValue));
     }
 
     /// <summary>
@@ -93,7 +101,7 @@ public class BattleEventManager : MonoBehaviour
         battleEndAction = popCloseAction;
 
         // 手札のカード情報から、手札のオブジェクトの作成
-        List<CardController> handCardList = new();
+        //List<CardController> handCardList = new();
 
         for (int i = 0; i < GameData.instance.myCardList.Count; i++)
         {
@@ -115,7 +123,7 @@ public class BattleEventManager : MonoBehaviour
         //    .Subscribe(_ => PrepareNextTurn());
 
         // TODO デバッグ用にプレイヤーと対戦相手の生成(対戦相手はバトルのたびにインスタンスする)
-        GameData.instance.InitCharacter(OwnerStatus.Opponent, 5);
+        GameData.instance.InitCharacter(OwnerStatus.Opponent, 15);
 
         await UniTask.Delay(500, cancellationToken: token);  // 第一引数はミリ秒。1000ミリ秒で1秒
 
@@ -201,6 +209,10 @@ public class BattleEventManager : MonoBehaviour
             // バトル上にある双方の手札のゲームオブジェクトを削除
             playerHandCardManager.DestroyHandCards();
             opponentHandCardManager.DestroyHandCards();
+
+            // 購読の停止
+            subscription?.Dispose();
+            subscription = null;
 
             // このポップアップを閉じる
             battleEndAction?.Invoke();

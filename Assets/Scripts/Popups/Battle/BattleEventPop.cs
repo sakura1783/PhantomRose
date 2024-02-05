@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using Cysharp.Threading.Tasks;
 
 public class BattleEventPop : PopupBase
 {
@@ -39,8 +40,10 @@ public class BattleEventPop : PopupBase
     /// <param name="cardData"></param>
     public override void ShowPopUp(CardData cardData = null)
     {
+        var token = this.GetCancellationTokenOnDestroy();
+
         // 各カードデッキにカードを生成
-        //battleEventManager.Initialize();  // TODO 引数がわからない
+        battleEventManager.Initialize(token, HidePopUp).Forget();
 
         // カードスロットの生成と、敵カードの配置
 

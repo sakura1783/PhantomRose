@@ -30,6 +30,8 @@ public class DescriptionPop : PopupBase
     /// <param name="stateCount">カードが付与する状態異常の数。この値に応じてポップアップの生成数を変更する</param>
     public override void ShowPopUp(CardData cardData)
     {
+        Debug.Log($"CardData : {cardData}");
+
         tapCardData = cardData;
 
         // 生成した子要素のポップアップを全て破棄

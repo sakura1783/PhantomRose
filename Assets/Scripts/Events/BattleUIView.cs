@@ -26,6 +26,11 @@ public class BattleUIView : MonoBehaviour
     [SerializeField] private Text txtOpponentBuffDuration;
     [SerializeField] private Text txtOpponentDebuffDuration;
 
+    [SerializeField] private Image imgPlayerBuff;
+    [SerializeField] private Image imgPlayerDebuff;
+    [SerializeField] private Image imgOpponentBuff;
+    [SerializeField] private Image imgOpponentDebuff;
+
     [SerializeField] private CanvasGroup playerBuffGroup;
     [SerializeField] private CanvasGroup playerDebuffGroup;
     [SerializeField] private CanvasGroup opponentBuffGroup;
@@ -122,91 +127,97 @@ public class BattleUIView : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーのバフ継続時間の初期設定
+    /// プレイヤーのバフの初期設定
     /// </summary>
-    /// <param name="defaultDuration"></param>
-    public void SetUpPlayerBuffDuration(int defaultDuration)
+    public void SetUpPlayerBuff()
     {
-        SetCanvasAlpha(playerBuffGroup, defaultDuration);
+        SetCanvasAlpha(playerBuffGroup, 0);
 
-        txtPlayerBuffDuration.text = defaultDuration.ToString();
+        txtPlayerBuffDuration.text = "0";
+        imgPlayerBuff.sprite = null;
     }
 
     /// <summary>
-    /// プレイヤーのバフ継続時間の更新
+    /// プレイヤーのバフの更新
     /// </summary>
     /// <param name="currentDuration"></param>
-    public void UpdatePlayerBuffDuration(int currentDuration)
+    public void UpdatePlayerBuff(SimpleStateData newStateData)
     {
-        SetCanvasAlpha(playerBuffGroup, currentDuration);
+        SetCanvasAlpha(playerBuffGroup, newStateData.duration);
 
-        txtPlayerBuffDuration.text = currentDuration.ToString();
+        txtPlayerBuffDuration.text = newStateData.duration.ToString();
+        imgPlayerBuff.sprite = IconManager.instance.GetStateIcon(DataBaseManager.instance.stateDataSO.stateDataList[newStateData.stateId].spriteId);
     }
 
     /// <summary>
-    /// プレイヤーのデバフ継続時間の初期設定
+    /// プレイヤーのデバフの初期設定
     /// </summary>
-    /// <param name="defaultDuration"></param>
-    public void SetUpPlayerDebuffDuration(int defaultDuration)
+    public void SetUpPlayerDebuff()
     {
-        SetCanvasAlpha(playerDebuffGroup, defaultDuration);
+        SetCanvasAlpha(playerDebuffGroup, 0);
 
-        txtPlayerDebuffDuration.text = defaultDuration.ToString();
+        txtPlayerDebuffDuration.text = "0";
+        imgPlayerDebuff.sprite = null;
     }
 
     /// <summary>
     /// プレイヤーのデバフ継続時間の更新
     /// </summary>
     /// <param name="currentDuration"></param>
-    public void UpdatePlayerDebuffDuration(int currentDuration)
+    public void UpdatePlayerDebuff(SimpleStateData newStateData)
     {
-        SetCanvasAlpha(playerDebuffGroup, currentDuration);
+        SetCanvasAlpha(playerDebuffGroup, newStateData.duration);
 
-        txtPlayerDebuffDuration.text = currentDuration.ToString();
+        txtPlayerDebuffDuration.text = newStateData.duration.ToString();
+        imgPlayerDebuff.sprite = IconManager.instance.GetStateIcon(DataBaseManager.instance.stateDataSO.stateDataList[newStateData.stateId].spriteId);
     }
 
     /// <summary>
     /// 対戦相手のバフ継続時間の初期設定
     /// </summary>
     /// <param name="defaultDuration"></param>
-    public void SetUpOpponentBuffDuration(int defaultDuration)
+    public void SetUpOpponentBuff()
     {
-        SetCanvasAlpha(opponentBuffGroup, defaultDuration);
+        SetCanvasAlpha(opponentBuffGroup, 0);
 
-        txtOpponentBuffDuration.text = defaultDuration.ToString();
+        txtOpponentBuffDuration.text = "0";
+        imgOpponentBuff.sprite = null;
     }
 
     /// <summary>
     /// 対戦相手のバフ継続時間の更新
     /// </summary>
     /// <param name="currentDuration"></param>
-    public void UpdateOpponentBuffDuration(int currentDuration)
+    public void UpdateOpponentBuff(SimpleStateData newStateData)
     {
-        SetCanvasAlpha(opponentBuffGroup, currentDuration);
+        SetCanvasAlpha(opponentBuffGroup, newStateData.duration);
 
-        txtOpponentBuffDuration.text = currentDuration.ToString();
+        txtOpponentBuffDuration.text = newStateData.duration.ToString();
+        imgOpponentBuff.sprite = IconManager.instance.GetStateIcon(DataBaseManager.instance.stateDataSO.stateDataList[newStateData.stateId].spriteId);
     }
 
     /// <summary>
     /// 対戦相手のデバフ継続時間の初期設定
     /// </summary>
     /// <param name="defaultDuration"></param>
-    public void SetUpOpponentDebuffDuration(int defaultDuration)
+    public void SetUpOpponentDebuff()
     {
-        SetCanvasAlpha(opponentDebuffGroup, defaultDuration);
+        SetCanvasAlpha(opponentDebuffGroup, 0);
 
-        txtOpponentDebuffDuration.text = defaultDuration.ToString();
+        txtOpponentDebuffDuration.text = "0";
+        imgOpponentDebuff.sprite = null;
     }
 
     /// <summary>
     /// 対戦相手のデバフ継続時間の更新
     /// </summary>
     /// <param name="currentDuration"></param>
-    public void UpdateOpponentDebuffDuration(int currentDuration)
+    public void UpdateOpponentDebuff(SimpleStateData newStateData)
     {
-        SetCanvasAlpha(opponentDebuffGroup, currentDuration);
+        SetCanvasAlpha(opponentDebuffGroup, newStateData.duration);
 
-        txtOpponentDebuffDuration.text = currentDuration.ToString();
+        txtOpponentDebuffDuration.text = newStateData.duration.ToString();
+        imgOpponentDebuff.sprite = IconManager.instance.GetStateIcon(DataBaseManager.instance.stateDataSO.stateDataList[newStateData.stateId].spriteId);
     }
 
     /// <summary>

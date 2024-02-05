@@ -65,6 +65,11 @@ public class GameData : AbstractSingleton<GameData>
         magicCardList = myCardList.Where(card => card.cardType == CardType.魔法).ToList();
     }
 
+    /// <summary>
+    /// カード取得
+    /// </summary>
+    /// <param name="cardId"></param>
+    /// <returns></returns>
     public CardData GetCardData(int cardId)
     {
         return myCardList.Find(card => card.id == cardId);

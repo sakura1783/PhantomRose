@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
@@ -13,16 +14,23 @@ public enum OwnerStatus
 [System.Serializable]  // インスペクターにクラス内部が表示される
 public class Character
 {
-    private int maxHp;
-
-    private OwnerStatus owner;
+    public ReactiveCollection<CardData> CopyCardDataList = new();  // 攻撃力などの変更をキャラごとに設定。バトル終了後、破棄する
 
     public ReactiveProperty<int> Hp = new();
     public ReactiveProperty<int> Shield = new();
     public ReactiveProperty<int> AttackPower = new();
 
-    public ReactiveProperty<int> BuffDuration = new();
-    public ReactiveProperty<int> DebuffDuration = new();
+    public ReactiveProperty<SimpleStateData> Buff = new();
+    public ReactiveProperty<SimpleStateData> Debuff = new();
+
+    private int maxHp;
+
+    private OwnerStatus owner;
+
+    private bool replaceBuff = false;  // バフを置き換えるかどうか
+    public bool ReplaceBuff => replaceBuff;
+    private bool replaceDebuff = false;
+    public bool ReplaceDebuff => replaceDebuff;
 
 
     /// <summary>
@@ -35,16 +43,8 @@ public class Character
         Hp.Value = defaultHp;
         maxHp = Hp.Value;
         this.owner = owner;
-    }
 
-    /// <summary>
-    /// HP取得用プロパティ
-    /// </summary>
-    /// <returns></returns>
-    public int GetHp
-    {
-        get => Hp.Value;
-        set => Hp.Value = value;
+        CopyCardDataList = new ReactiveCollection<CardData>(DataBaseManager.instance.cardDataSO.cardDataList);  // ReactiveCollectionのコンストラクタを使用して、CopyDataListを置き換え
     }
 
     /// <summary>
@@ -54,6 +54,7 @@ public class Character
     public virtual void UpdateHp(int amount)
     {
         Hp.Value = Mathf.Clamp(Hp.Value += amount, 0, maxHp);
+
         Debug.Log($"{owner}のHP : {Hp.Value}");
     }
 
@@ -64,6 +65,7 @@ public class Character
     public void UpdateShield(int amount)
     {
         Shield.Value = Mathf.Clamp(Shield.Value += amount, 0, int.MaxValue);
+
         Debug.Log($"{owner}のシールド値 : {Shield.Value}");
     }
 
@@ -71,19 +73,25 @@ public class Character
     /// バフの継続時間の更新
     /// </summary>
     /// <param name="amount"></param>
-    public void UpdateBuffDuration(int amount)
+    public void UpdateBuff(SimpleStateData newStateData)
     {
-        BuffDuration.Value = Mathf.Clamp(BuffDuration.Value += amount, 0, int.MaxValue);
-        Debug.Log($"{owner}のバフ値 : {Shield.Value}");
+        replaceBuff = Buff.Value != newStateData;
+
+        Buff.Value = newStateData;
+
+        Debug.Log($"{owner}のバフ : {Buff.Value}");
     }
 
     /// <summary>
     /// デバフの継続時間の更新
     /// </summary>
     /// <param name="amount"></param>
-    public void UpdateDebuffDuration(int amount)
+    public void UpdateDebuff(SimpleStateData newStateData)
     {
-        DebuffDuration.Value = Mathf.Clamp(DebuffDuration.Value, 0, int.MaxValue);
-        Debug.Log($"{owner}のデバフ値 : {Shield.Value}");
+        replaceDebuff = Debuff.Value != newStateData;
+
+        Debuff.Value = newStateData;
+
+        Debug.Log($"{owner}のデバフ : {Debuff.Value}");
     }
 }

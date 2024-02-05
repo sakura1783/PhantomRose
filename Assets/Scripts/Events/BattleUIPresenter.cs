@@ -30,7 +30,7 @@ public class BattleUIPresenter : MonoBehaviour
     /// </summary>
     public void SubscribePlayerHp()
     {
-        battleUIView.SetUpPlayerHp(GameData.instance.GetPlayer().GetHp);
+        battleUIView.SetUpPlayerHp(GameData.instance.GetPlayer().Hp.Value);
 
         // プレイヤーのHPの購読処理(HPSlider更新用にprevValueも使う場合)
         //GameData.instance.GetPlayer().Hp
@@ -47,7 +47,7 @@ public class BattleUIPresenter : MonoBehaviour
     /// </summary>
     private void SubscribeOpponentHp()
     {
-        battleUIView.SetUpOpponentHp(GameData.instance.GetOpponent().GetHp);
+        battleUIView.SetUpOpponentHp(GameData.instance.GetOpponent().Hp.Value);
 
         // 対戦相手のHPの購読処理(対戦相手が変わるたびに購読するので、AddToではなく、対戦相手がいなくなるたびに毎回購読を止める必要がある)
         GameData.instance.GetOpponent().Hp
@@ -85,10 +85,10 @@ public class BattleUIPresenter : MonoBehaviour
     /// </summary>
     private void SubscribePlayerBuffDuration()
     {
-        battleUIView.SetUpPlayerBuffDuration(0);
+        battleUIView.SetUpPlayerBuff();
 
-        GameData.instance.GetPlayer().BuffDuration
-            .Subscribe(value => battleUIView.UpdatePlayerBuffDuration(value))
+        GameData.instance.GetPlayer().Buff
+            .Subscribe(data => battleUIView.UpdatePlayerBuff(data))
             .AddTo(subscriptions);
     }
 
@@ -97,10 +97,10 @@ public class BattleUIPresenter : MonoBehaviour
     /// </summary>
     private void SubscribePlayerDebuffDuration()
     {
-        battleUIView.SetUpPlayerDebuffDuration(0);
+        battleUIView.SetUpPlayerDebuff();
 
-        GameData.instance.GetPlayer().DebuffDuration
-            .Subscribe(value => battleUIView.UpdatePlayerDebuffDuration(value))
+        GameData.instance.GetPlayer().Debuff
+            .Subscribe(data => battleUIView.UpdatePlayerDebuff(data))
             .AddTo(subscriptions);
     }
 
@@ -109,10 +109,10 @@ public class BattleUIPresenter : MonoBehaviour
     /// </summary>
     private void SubscribeOpponentBuffDuration()
     {
-        battleUIView.SetUpOpponentBuffDuration(0);
+        battleUIView.SetUpOpponentBuff();
 
-        GameData.instance.GetOpponent().BuffDuration
-            .Subscribe(value => battleUIView.UpdateOpponentBuffDuration(value))
+        GameData.instance.GetOpponent().Buff
+            .Subscribe(data => battleUIView.UpdateOpponentBuff(data))
             .AddTo(subscriptions);
     }
 
@@ -121,10 +121,10 @@ public class BattleUIPresenter : MonoBehaviour
     /// </summary>
     private void SubscribeOpponentDebuffDuration()
     {
-        battleUIView.SetUpOpponentDebuffDuration(0);
+        battleUIView.SetUpOpponentDebuff();
 
-        GameData.instance.GetOpponent().DebuffDuration
-            .Subscribe(value => battleUIView.UpdateOpponentDebuffDuration(value))
+        GameData.instance.GetOpponent().Debuff
+            .Subscribe(data => battleUIView.UpdateOpponentDebuff(data))
             .AddTo(subscriptions);
     }
 
@@ -133,7 +133,7 @@ public class BattleUIPresenter : MonoBehaviour
     /// </summary>
     public void EndBattle()
     {
-        // 対戦相手のHPの購読を停止(ここで停止しておかないと、次の対戦相手のHPの購読が重複して発生してしまう)
+        // 購読を停止(ここで停止しておかないと、次の対戦相手のHPの購読が重複して発生してしまう)
         subscriptions?.Dispose();
 
         // 処理自体は変数内に残っているので、nullにすることで残っている処理も削除する

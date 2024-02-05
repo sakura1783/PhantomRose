@@ -52,8 +52,6 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
         history.Clear();
 
         await UniTask.DelayFrame(1);
-
-        Debug.Log("InitPopups End");
     }
 
     /// <summary>

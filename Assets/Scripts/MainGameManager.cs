@@ -36,6 +36,8 @@ public class MainGameManager : MonoBehaviour
             .AddTo(this);
 
         // TODO BattleEventManager.SetUp();
+
+        DataBaseManager.instance.SetCardData();
     }
 
     /// <summary>

@@ -15,8 +15,6 @@ public class CardController : MonoBehaviour
 
     [SerializeField] private Text txtAttackPointOrInterval;
 
-    [SerializeField] private CardData cardData;
-
     public IObservable<Unit> OnClickAsObservable => btnCard.OnClickAsObservable();
 
     public ReactiveProperty<bool> IsSelectable = new();
@@ -28,6 +26,9 @@ public class CardController : MonoBehaviour
         set => cardEffect = value;
     }
 
+    private CardData cardData;
+    public CardData CardData => cardData;
+
 
     /// <summary>
     /// 初期設定。カード見た目と効果を別々に設定
@@ -35,11 +36,6 @@ public class CardController : MonoBehaviour
     public void SetUp(CardData data)
     {
         SetCardDetail(data);
-
-        btnCard.OnClickAsObservable()
-            .ThrottleFirst(TimeSpan.FromSeconds(2))
-            .Subscribe(_ => PopupManager.instance.Show<DescriptionPop>(false, false))
-            .AddTo(this);
 
         cardData = data;
 

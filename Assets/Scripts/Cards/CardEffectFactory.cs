@@ -14,7 +14,7 @@ public static class CardEffectFactory
     public static CardEffectBase CreateCardEffect(CardData cardData)
     {
         // stringからTypeを取得(nameSpaceがある場合には、nameSpaceからの正式名称でクラス名を指定する)
-        Type type = Type.GetType(cardData.name);
+        Type type = Type.GetType(cardData.englishName);
 
         // クラスが見つからないか、CardEffectBaseを継承していない場合
         if (type == null || !typeof(CardEffectBase).IsAssignableFrom(type))
