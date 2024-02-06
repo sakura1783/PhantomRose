@@ -79,7 +79,7 @@ public class BattleEventManager : MonoBehaviour
         cardSlotManager = new(this, cardSlotList);
 
         // ハンドラの生成と購読
-        cardHandler = new();
+        cardHandler = new();  // これによって、CardHandlerクラスが利用できるようになる
 
         // プレイヤー情報を生成
         GameData.instance.InitCharacter(OwnerStatus.Player, 25);
@@ -100,10 +100,7 @@ public class BattleEventManager : MonoBehaviour
         // デリゲートに登録
         battleEndAction = popCloseAction;
 
-        // 手札のカード情報から、手札のオブジェクトの作成
-        //List<CardController> handCardList = new();
-
-        for (int i = 0; i < GameData.instance.myCardList.Count; i++)
+        for (int i = 0; i < GameData.instance.GetPlayer().CopyCardDataList.Count; i++)
         {
             CardController card = Instantiate(cardPrefab, playerHandCardTran);
             card.SetUp(GameData.instance.GetCardData(i));  // TODO 適切なidで生成されるか、確認
@@ -115,10 +112,7 @@ public class BattleEventManager : MonoBehaviour
         playerHandCardManager = new(handCardList, SelectCard);
         opponentHandCardManager = new(handCardList, cardSlotManager);
 
-        // TODO ハンドラの生成と購読
-        // cardHandler = new();
-
-        // カードの効果が全て終了したら購読する(コメント解除すれば動く)
+        // カードの効果が全て終了したら購読する
         //cardHandler.CommandSubject
         //    .Subscribe(_ => PrepareNextTurn());
 

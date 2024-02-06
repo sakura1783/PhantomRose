@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// CardEffectBaseを継承しているカードの効果用サブクラスを生成するファクトリークラス
 /// </summary>
-public static class CardEffectFactory
+public static class CardEffectFactory  // staticクラスなので、ゲーム実行時に、見えないが自動生成される。どのクラスからでもアクセスできる
 {
     /// <summary>
     /// カードの効果を作成

@@ -56,7 +56,7 @@ public class CardSlot : MonoBehaviour
         //TODO cardClone.SetInactive();
 
         // Cloneされた新しいオブジェクトはClone元の参照情報が失われるので、再度設定する
-        //TODO cardClone.CardEffect = newCard.CardEffect;
+        cardClone.CardEffect = newCard.CardEffect;
 
         cardController = cardClone;
     }

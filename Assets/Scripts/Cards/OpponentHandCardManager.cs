@@ -14,8 +14,6 @@ public class OpponentHandCardManager : HandCardManagerBase
     /// <param name="cardSlotManager"></param>
     public OpponentHandCardManager(List<CardController> newCardList, CardSlotManager cardSlotManager) : base(newCardList)
     {
-        Debug.Log($"mewCardList : {newCardList.Count}");
-
         if (cardSlotManager != null)
         {
             this.cardSlotManager = cardSlotManager;
