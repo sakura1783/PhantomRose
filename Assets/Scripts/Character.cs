@@ -24,6 +24,7 @@ public class Character
     public ReactiveProperty<SimpleStateData> Debuff = new();
 
     private int maxHp;
+    public int MaxHp => maxHp;
 
     private OwnerStatus owner;
 
@@ -44,7 +45,7 @@ public class Character
         maxHp = Hp.Value;
         this.owner = owner;
 
-        CopyCardDataList = new ReactiveCollection<CardData>(DataBaseManager.instance.cardDataSO.cardDataList);  // ReactiveCollectionのコンストラクタを使用して、CopyDataListを置き換え
+        CopyCardDataList = new ReactiveCollection<CardData>(GameData.instance.myCardList);  // ReactiveCollectionのコンストラクタを使用して、CopyDataListを置き換え
     }
 
     /// <summary>

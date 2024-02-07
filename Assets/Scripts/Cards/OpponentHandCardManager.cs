@@ -20,8 +20,6 @@ public class OpponentHandCardManager : HandCardManagerBase
         }
     }
 
-    //TODO 対戦相手のカードをセットする処理
-
     /// <summary>
     /// 対戦相手用のスロットにランダムなカードを配置
     /// </summary>

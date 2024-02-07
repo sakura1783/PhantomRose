@@ -47,7 +47,9 @@ public class BattleUIView : MonoBehaviour
     /// <param name="maxHp"></param>
     public void SetUpPlayerHp(int maxHp)
     {
+        txtPlayerMaxHp.text = "/" + maxHp;
         playerSlider.value = maxHp;
+
         UpdatePlayerHp(maxHp);  // 第1引数を0にすると、0 → maxHpへのアニメができる
     }
 
@@ -57,7 +59,9 @@ public class BattleUIView : MonoBehaviour
     /// <param name="maxHp"></param>
     public void SetUpOpponentHp(int maxHp)
     {
+        txtOpponentMaxHp.text = "/" + maxHp;
         opponentSlider.value = maxHp;
+
         UpdateOpponentHp(maxHp);
     }
 
@@ -68,7 +72,7 @@ public class BattleUIView : MonoBehaviour
     public void UpdatePlayerHp(int currentHp)
     {
         txtPlayerHp.text = currentHp.ToString();
-        playerSlider.DOValue(currentHp, animDuration).SetEase(animEase);
+        playerSlider.DOValue((float)currentHp / GameData.instance.GetPlayer().MaxHp, animDuration).SetEase(animEase);
     }
 
     /// <summary>
@@ -78,19 +82,7 @@ public class BattleUIView : MonoBehaviour
     public void UpdateOpponentHp(int currentHp)
     {
         txtOpponentHp.text = currentHp.ToString();
-        opponentSlider.DOValue(currentHp, animDuration).SetEase(animEase);
-    }
-
-    /// <summary>
-    /// プレイヤーのシールド値の初期設定
-    /// </summary>
-    /// <param name="defaultValue"></param>
-    public void SetUpPlayerShieldValue(int defaultValue)
-    {
-        // Canvasの表示設定
-        SetCanvasAlpha(playerShieldGroup, defaultValue);
-
-        txtPlayerShieldValue.text = defaultValue.ToString();
+        opponentSlider.DOValue((float)currentHp / GameData.instance.GetOpponent().MaxHp, animDuration).SetEase(animEase);
     }
 
     /// <summary>
@@ -99,20 +91,10 @@ public class BattleUIView : MonoBehaviour
     /// <param name="currentValue"></param>
     public void UpdatePlayerShieldValue(int currentValue)
     {
+        // Canvasの表示設定
         SetCanvasAlpha(playerShieldGroup, currentValue);
 
         txtPlayerShieldValue.text = currentValue.ToString();
-    }
-
-    /// <summary>
-    /// 対戦相手のシールド値の初期設定
-    /// </summary>
-    /// <param name="defaultValue"></param>
-    public void SetUpOpponentShieldValue(int defaultValue)
-    {
-        SetCanvasAlpha(opponentShieldGroup, defaultValue);
-
-        txtOpponentShieldValue.text = defaultValue.ToString();
     }
 
     /// <summary>
@@ -143,6 +125,12 @@ public class BattleUIView : MonoBehaviour
     /// <param name="currentDuration"></param>
     public void UpdatePlayerBuff(SimpleStateData newStateData)
     {
+        // カードにバフデバフ効果がない場合、リストの中身が空になる(データがない)ので、newStateDataがない場合は処理を行わない
+        if (newStateData == null)
+        {
+            return;
+        }
+
         SetCanvasAlpha(playerBuffGroup, newStateData.duration);
 
         txtPlayerBuffDuration.text = newStateData.duration.ToString();
@@ -166,6 +154,11 @@ public class BattleUIView : MonoBehaviour
     /// <param name="currentDuration"></param>
     public void UpdatePlayerDebuff(SimpleStateData newStateData)
     {
+        if (newStateData == null)
+        {
+            return;
+        }
+
         SetCanvasAlpha(playerDebuffGroup, newStateData.duration);
 
         txtPlayerDebuffDuration.text = newStateData.duration.ToString();
@@ -190,6 +183,11 @@ public class BattleUIView : MonoBehaviour
     /// <param name="currentDuration"></param>
     public void UpdateOpponentBuff(SimpleStateData newStateData)
     {
+        if (newStateData == null)
+        {
+            return;
+        }
+
         SetCanvasAlpha(opponentBuffGroup, newStateData.duration);
 
         txtOpponentBuffDuration.text = newStateData.duration.ToString();
@@ -214,6 +212,11 @@ public class BattleUIView : MonoBehaviour
     /// <param name="currentDuration"></param>
     public void UpdateOpponentDebuff(SimpleStateData newStateData)
     {
+        if (newStateData == null)
+        {
+            return;
+        }
+
         SetCanvasAlpha(opponentDebuffGroup, newStateData.duration);
 
         txtOpponentDebuffDuration.text = newStateData.duration.ToString();

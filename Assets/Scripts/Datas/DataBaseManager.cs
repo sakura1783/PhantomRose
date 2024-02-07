@@ -28,7 +28,7 @@ public class DataBaseManager : MonoBehaviour
     }
 
     /// <summary>
-    /// TODO
+    /// myCardListの設定
     /// </summary>
     public void SetCardData()
     {

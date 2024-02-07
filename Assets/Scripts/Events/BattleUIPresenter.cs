@@ -19,10 +19,10 @@ public class BattleUIPresenter : MonoBehaviour
         SubscribePlayerShieldValue();
         SubscribeOpponentShieldValue();
 
-        SubscribePlayerBuffDuration();
-        SubscribePlayerDebuffDuration();
-        SubscribeOpponentBuffDuration();
-        SubscribeOpponentDebuffDuration();
+        SubscribePlayerBuff();
+        SubscribePlayerDebuff();
+        SubscribeOpponentBuff();
+        SubscribeOpponentDebuff();
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public class BattleUIPresenter : MonoBehaviour
     /// </summary>
     private void SubscribePlayerShieldValue()
     {
-        battleUIView.SetUpPlayerShieldValue(0);
+        battleUIView.UpdatePlayerShieldValue(0);
 
         // バトルが終わるたびに毎回購読を止める(シールド値は毎バトル0からスタート)
         GameData.instance.GetPlayer().Shield
@@ -73,7 +73,7 @@ public class BattleUIPresenter : MonoBehaviour
     /// </summary>
     private void SubscribeOpponentShieldValue()
     {
-        battleUIView.SetUpOpponentShieldValue(0);
+        battleUIView.UpdateOpponentShieldValue(0);
 
         GameData.instance.GetOpponent().Shield
             .Subscribe(value => battleUIView.UpdateOpponentShieldValue(value))
@@ -83,7 +83,7 @@ public class BattleUIPresenter : MonoBehaviour
     /// <summary>
     /// プレイヤーのバフ継続時間の初期設定と購読処理
     /// </summary>
-    private void SubscribePlayerBuffDuration()
+    private void SubscribePlayerBuff()
     {
         battleUIView.SetUpPlayerBuff();
 
@@ -95,7 +95,7 @@ public class BattleUIPresenter : MonoBehaviour
     /// <summary>
     /// プレイヤーのデバフ継続時間の初期設定と購読処理
     /// </summary>
-    private void SubscribePlayerDebuffDuration()
+    private void SubscribePlayerDebuff()
     {
         battleUIView.SetUpPlayerDebuff();
 
@@ -107,7 +107,7 @@ public class BattleUIPresenter : MonoBehaviour
     /// <summary>
     /// 対戦相手のバフ継続時間の初期設定と購読処理
     /// </summary>
-    private void SubscribeOpponentBuffDuration()
+    private void SubscribeOpponentBuff()
     {
         battleUIView.SetUpOpponentBuff();
 
@@ -119,7 +119,7 @@ public class BattleUIPresenter : MonoBehaviour
     /// <summary>
     /// 対戦相手のデバフ継続時間の初期設定と購読処理
     /// </summary>
-    private void SubscribeOpponentDebuffDuration()
+    private void SubscribeOpponentDebuff()
     {
         battleUIView.SetUpOpponentDebuff();
 

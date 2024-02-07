@@ -30,6 +30,10 @@ public class BattleEventManager : MonoBehaviour
 
     [SerializeField] private List<CardSlot> cardSlotList = new();
 
+    [SerializeField] private BattleUIPresenter battleUIPresenter;
+
+    [SerializeField] private TurnStartDialog turnStartDialog;
+
     private CardSlotManager cardSlotManager;
 
     private readonly int slotCount = 4;
@@ -51,15 +55,6 @@ public class BattleEventManager : MonoBehaviour
         // TODO デバッグ用
         //Initialize();
         SetUp();
-    }
-
-    void Update()
-    {
-        // TODO デバッグ用
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            PrepareNextTurn();
-        }
     }
 
     /// <summary>
@@ -84,9 +79,17 @@ public class BattleEventManager : MonoBehaviour
         // プレイヤー情報を生成
         GameData.instance.InitCharacter(OwnerStatus.Player, 25);
 
-        // プレイヤーのCardDataListの購読処理。変更されたら、そのデータを持っているカードの表示を更新する
+        // プレイヤーのHP購読処理
+        battleUIPresenter.SubscribePlayerHp();
+
+        // TODO プレイヤーのCardDataListの購読処理。変更されたら、そのデータを持っているカードの表示を更新する
         subscription = GameData.instance.GetPlayer().CopyCardDataList.ObserveReplace()
-            .Subscribe(data => handCardList.Where(card => card.CardData == data.NewValue).FirstOrDefault().SetUp(data.NewValue));
+            .Subscribe(data =>
+            {
+                handCardList.Where(card => card.CardData == data.NewValue).FirstOrDefault().SetUp(data.NewValue);
+
+                Debug.Log("表示を更新しました");
+            });
     }
 
     /// <summary>
@@ -100,6 +103,9 @@ public class BattleEventManager : MonoBehaviour
         // デリゲートに登録
         battleEndAction = popCloseAction;
 
+        // プレイヤーのカードは毎回初期化(前バトルで変更された攻撃力など)
+        GameData.instance.GetPlayer().CopyCardDataList = new ReactiveCollection<CardData>(GameData.instance.myCardList);
+
         for (int i = 0; i < GameData.instance.GetPlayer().CopyCardDataList.Count; i++)
         {
             CardController card = Instantiate(cardPrefab, playerHandCardTran);
@@ -112,12 +118,15 @@ public class BattleEventManager : MonoBehaviour
         playerHandCardManager = new(handCardList, SelectCard);
         opponentHandCardManager = new(handCardList, cardSlotManager);
 
-        // カードの効果が全て終了したら購読する
+        //カードの効果が全て終了したら購読する
         //cardHandler.CommandSubject
         //    .Subscribe(_ => PrepareNextTurn());
 
         // TODO デバッグ用にプレイヤーと対戦相手の生成(対戦相手はバトルのたびにインスタンスする)
         GameData.instance.InitCharacter(OwnerStatus.Opponent, 15);
+
+        // キャラのHP、Shield、バフデバフなどの購読処理
+        battleUIPresenter.SubscribeEveryBattle();
 
         await UniTask.Delay(500, cancellationToken: token);  // 第一引数はミリ秒。1000ミリ秒で1秒
 
@@ -144,7 +153,7 @@ public class BattleEventManager : MonoBehaviour
     }
 
     /// <summary>
-    /// カード選択  // TODO 何のためのメソッド？
+    /// カード選択時の処理
     /// </summary>
     /// <param name="chooseCard"></param>
     public void SelectCard(CardController chooseCard)
@@ -179,10 +188,8 @@ public class BattleEventManager : MonoBehaviour
     {
         Debug.Log("全てのスロットにカードがセットされました");
 
-        // TODO ターン開始ダイアログ生成
-
-        // カード実行
-        PrepareExecuteAsync().Forget();
+        // ターン開始ダイアログ表示
+        turnStartDialog.ShowPopUp();  // PopupManager.Showだと、currentViewPopに引っかかって2回目以降、表示されない
     }
 
     /// <summary>
@@ -197,16 +204,17 @@ public class BattleEventManager : MonoBehaviour
 
         if (currentBattleStateResult == BattleState.Win)
         {
-            // バトル終了
-            ResetBattleField();
-
             // バトル上にある双方の手札のゲームオブジェクトを削除
             playerHandCardManager.DestroyHandCards();
             opponentHandCardManager.DestroyHandCards();
 
-            // 購読の停止
+            // 購読の停止  // TODO 場所変える？
+            battleUIPresenter.EndBattle();
+
             subscription?.Dispose();
             subscription = null;
+
+            // TODO 勝利ポップアップを開く
 
             // このポップアップを閉じる
             battleEndAction?.Invoke();
@@ -216,6 +224,12 @@ public class BattleEventManager : MonoBehaviour
 
         if (currentBattleStateResult == BattleState.Lose)
         {
+            // 購読の停止
+            battleUIPresenter.EndBattle();
+
+            subscription?.Dispose();
+            subscription = null;
+
             // TODO ゲームオーバーのポップアップを開く
 
             return;
@@ -229,28 +243,35 @@ public class BattleEventManager : MonoBehaviour
     /// <summary>
     /// 盤面のリセット
     /// </summary>
-    private void ResetBattleField()
+    public void ResetBattleField()
     {
         // スロットに配置したプレイヤーのカードだけ、再度利用できる状態にする
         playerHandCardManager.ActivateSelectedCards(cardSlotManager.setPlayerCardList);
 
-        // Characterのカードだけ破棄
+        // 全てのカードを破棄
         cardSlotManager.DeleteAllCardsFromSlots();
 
         Debug.Log("盤面をリセットしました");
     }
 
-    // TODO ダイアログから実行されるメソッド2つ(決定とキャンセル)用意
-
+    /// <summary>
+    /// ターン開始
+    /// </summary>
     public void SubmitCards()
     {
-
+        // カード実行
+        PrepareExecuteAsync().Forget();
     }
 
+    /// <summary>
+    /// プレイヤーのカードをキャンセル
+    /// </summary>
     public void CancelCards()
     {
+        // スロットに配置したプレイヤーのカードを再度利用できる状態にする
+        playerHandCardManager.ActivateSelectedCards(cardSlotManager.setPlayerCardList);
 
+        //プレイヤーのカードだけ破棄
+        cardSlotManager.DeleteCardsFromSlots(OwnerStatus.Player);
     }
-
-    // TODO カードの実行準備用のメソッドを用意
 }
