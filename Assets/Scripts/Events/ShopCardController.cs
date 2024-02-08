@@ -34,7 +34,7 @@ public class ShopCardController : MonoBehaviour
         card.SetInactive();
         card.transform.rotation = Quaternion.Euler(0, 0, 0);
         card.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
-        card.SetUp(data);
+        card.SetUp(data, shopEventPop.DescriptionPop);
 
         btnShopCard.interactable = GameData.instance.RubyCount.Value >= data.price;
 

@@ -7,8 +7,6 @@ public class BattleEventPop : PopupBase
 {
     [SerializeField] private CardController cardPrefab;
 
-    [SerializeField] private DescriptionPop descriptionPop;
-
     [SerializeField] private Transform attackCardTran;
     [SerializeField] private Transform magicCardTran;
 
@@ -43,9 +41,7 @@ public class BattleEventPop : PopupBase
         var token = this.GetCancellationTokenOnDestroy();
 
         // 各カードデッキにカードを生成
-        battleEventManager.Initialize(token, HidePopUp).Forget();
-
-        // カードスロットの生成と、敵カードの配置
+        battleEventManager.Initialize(token).Forget(); //HidePopUp)
 
         base.ShowPopUp();
     }

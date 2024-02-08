@@ -25,3 +25,5 @@ MonoBehaviour:
     hexadecimalColor: '#9A093A'
   - colorType: 5
     hexadecimalColor: '#198B9A'
+  - colorType: 6
+    hexadecimalColor: '#F6FF4E'

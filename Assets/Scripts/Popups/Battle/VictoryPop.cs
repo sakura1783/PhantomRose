@@ -56,7 +56,7 @@ public class VictoryPop : PopupBase
         int randomNo = Random.Range(0, DataBaseManager.instance.cardDataSO.cardDataList.Count);
         var cardData = DataBaseManager.instance.cardDataSO.cardDataList[randomNo];
         var card = Instantiate(cardPrefab, rewardTran);
-        card.SetUp(cardData);
+        card.SetUp(cardData, descriptionPop);
         card.transform.localScale = new Vector2(1.3f, 1.3f);
     }
 }

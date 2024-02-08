@@ -10,7 +10,7 @@ public class BattleEvent : EventBase
     public async override UniTask ExecuteEvent()
     {
         // イベント用のポップアップを開く
-        PopupBase pop = PopupManager.instance.Show<BattleEventPop>(false);
+        PopupBase pop = PopupManager.instance.Show<BattleEventPop>(false, false);
 
         // イベント終了(Canvasが閉じる)を待つ
         await UniTask.WaitUntil(() => pop.CanvasGroup.alpha <= 0);

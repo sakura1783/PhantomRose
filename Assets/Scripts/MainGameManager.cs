@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UniRx;
 
 public class MainGameManager : MonoBehaviour
@@ -26,18 +25,35 @@ public class MainGameManager : MonoBehaviour
 
     void Start()
     {
-        LoadRouteDatas();
+        PopupManager.instance.SetUp();
 
-        GenerateEventButtons();
+        DataBaseManager.instance.SetCardData();
 
         //監視。Startに1回書けば良い
         CurrentRouteIndex
             .Subscribe(value => waveInfoView.UpdateWaveNo(value))
             .AddTo(this);
+    }
 
-        // TODO BattleEventManager.SetUp();
+    /// <summary>
+    /// ルートとイベントボタンの作成
+    /// </summary>
+    public void GenerateRoute()
+    {
+        // セーブデータが存在しない場合だけ、新しくルートを作成
+        if (GameData.instance.HasSaveData)
+        {
+            return;
+        }
 
-        DataBaseManager.instance.SetCardData();
+        // 前回作ったルートのゲームオブジェクトを破棄
+        foreach (Transform child in routeBaseSetTran)
+        {
+            Destroy(child.gameObject);
+        }
+
+        LoadRouteDatas();
+        GenerateEventButtons();
     }
 
     /// <summary>
@@ -49,12 +65,6 @@ public class MainGameManager : MonoBehaviour
         {
             // ルート配置用のベース作成
             Transform routeBase = Instantiate(routeBasePrefab, routeBaseSetTran, false);
-
-            // デバッグ。ボタン配置
-            //for (int eventCount = 0; eventCount < routeDataSO.routeList[i].eventList.Count; eventCount++)
-            //{
-            //    EventBase eventData = Instantiate(routeDataSO.routeList[i].eventList[eventCount], eventSet.transform, false);
-            //}
 
             routeList.Add(routeBase);
 

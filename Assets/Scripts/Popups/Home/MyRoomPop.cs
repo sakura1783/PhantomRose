@@ -7,8 +7,6 @@ public class MyRoomPop : PopupBase
     [SerializeField] private Button btnCard;
     [SerializeField] private Button btnTask;
 
-    //TODO デイリーミッション用の変数を追加する
-
 
     /// <summary>
     /// 初期設定

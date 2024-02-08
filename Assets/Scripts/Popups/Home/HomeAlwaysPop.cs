@@ -13,8 +13,6 @@ public class HomeAlwaysPop : PopupBase
     private Color32 brightColor = new (51, 42, 42, 0);
     private Color32 darkColor = new (51, 42, 42, 255);
 
-    //TODO 変数追加
-
 
     /// <summary>
     /// 初期設定

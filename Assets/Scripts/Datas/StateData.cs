@@ -51,9 +51,6 @@ public class StateData
         recoveryPower = int.Parse(datas[6]);
         description = datas[7];
     }
-
-    //TODO 追加する状態異常
-    // Hpが相手よりも低い場合、残り時間に応じてシールドを獲得する
 }
 
 /// <summary>

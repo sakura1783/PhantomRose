@@ -31,6 +31,7 @@ public class BossEncounterPop : PopupBase
                 GameData.instance.RubyCount.Value -= assaultCost;
 
                 // HPを満タン回復
+                GameData.instance.GetPlayer().Hp.Value = GameData.instance.GetPlayer().MaxHp;
 
                 // 敵のHPを10減らす
 
@@ -43,6 +44,7 @@ public class BossEncounterPop : PopupBase
             .Subscribe(_ =>
             {
                 // HPを20回復
+                GameData.instance.GetPlayer().Hp.Value += 20;
 
                 PopupManager.instance.Show<BattleEventPop>(false);
             })

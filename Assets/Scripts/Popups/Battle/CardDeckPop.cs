@@ -61,7 +61,7 @@ public class CardDeckPop : PopupBase
         int index = sortedList.FindIndex(x => x == data);
 
         var cardObj = Instantiate(cardPrefab, cardTran);
-        cardObj.SetUp(data);
+        cardObj.SetUp(data, descriptionPop);
         cardObj.transform.SetSiblingIndex(index);  // 指定したインデックスの位置にカードを生成
 
         cardCount.Value++;

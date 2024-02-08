@@ -34,6 +34,10 @@ public class BattleEventManager : MonoBehaviour
 
     [SerializeField] private TurnStartDialog turnStartDialog;
 
+    [SerializeField] private GameUpPop gameUpPop;
+
+    [SerializeField] private DescriptionPop descriptionPop;
+
     private CardSlotManager cardSlotManager;
 
     private readonly int slotCount = 4;
@@ -43,7 +47,7 @@ public class BattleEventManager : MonoBehaviour
 
     private CardHandler cardHandler;
 
-    private UnityAction battleEndAction = null;
+    //private UnityAction battleEndAction = null;
 
     private List<CardController> handCardList = new();
 
@@ -77,19 +81,19 @@ public class BattleEventManager : MonoBehaviour
         cardHandler = new();  // これによって、CardHandlerクラスが利用できるようになる
 
         // プレイヤー情報を生成
-        GameData.instance.InitCharacter(OwnerStatus.Player, 25);
+        GameData.instance.InitCharacter(OwnerStatus.Player, 10);
 
         // プレイヤーのHP購読処理
         battleUIPresenter.SubscribePlayerHp();
 
         // TODO プレイヤーのCardDataListの購読処理。変更されたら、そのデータを持っているカードの表示を更新する
-        subscription = GameData.instance.GetPlayer().CopyCardDataList.ObserveReplace()
-            .Subscribe(data =>
-            {
-                handCardList.Where(card => card.CardData == data.NewValue).FirstOrDefault().SetUp(data.NewValue);
+        //subscription = GameData.instance.GetPlayer().CopyCardDataList.ObserveReplace()
+        //    .Subscribe(data =>
+        //    {
+        //        handCardList.Where(card => card.CardData == data.NewValue).FirstOrDefault().SetUp(data.NewValue);
 
-                Debug.Log("表示を更新しました");
-            });
+        //        Debug.Log("表示を更新しました");
+        //    });
     }
 
     /// <summary>
@@ -98,10 +102,10 @@ public class BattleEventManager : MonoBehaviour
     /// <param name="token"></param>
     /// <param name="popCloseAction"></param>
     /// <returns></returns>
-    public async UniTask Initialize(CancellationToken token, UnityAction popCloseAction)
+    public async UniTask Initialize(CancellationToken token) //UnityAction popCloseAction)
     {
         // デリゲートに登録
-        battleEndAction = popCloseAction;
+        //battleEndAction = popCloseAction;
 
         // プレイヤーのカードは毎回初期化(前バトルで変更された攻撃力など)
         GameData.instance.GetPlayer().CopyCardDataList = new ReactiveCollection<CardData>(GameData.instance.myCardList);
@@ -109,7 +113,7 @@ public class BattleEventManager : MonoBehaviour
         for (int i = 0; i < GameData.instance.GetPlayer().CopyCardDataList.Count; i++)
         {
             CardController card = Instantiate(cardPrefab, playerHandCardTran);
-            card.SetUp(GameData.instance.GetCardData(i));  // TODO 適切なidで生成されるか、確認
+            card.SetUp(GameData.instance.GetCardData(i), descriptionPop);
 
             handCardList.Add(card);
         }
@@ -118,12 +122,12 @@ public class BattleEventManager : MonoBehaviour
         playerHandCardManager = new(handCardList, SelectCard);
         opponentHandCardManager = new(handCardList, cardSlotManager);
 
-        //カードの効果が全て終了したら購読する
+        // カードの効果が全て終了したら購読する
         //cardHandler.CommandSubject
         //    .Subscribe(_ => PrepareNextTurn());
 
         // TODO デバッグ用にプレイヤーと対戦相手の生成(対戦相手はバトルのたびにインスタンスする)
-        GameData.instance.InitCharacter(OwnerStatus.Opponent, 15);
+        GameData.instance.InitCharacter(OwnerStatus.Opponent, 5);
 
         // キャラのHP、Shield、バフデバフなどの購読処理
         battleUIPresenter.SubscribeEveryBattle();
@@ -214,10 +218,11 @@ public class BattleEventManager : MonoBehaviour
             subscription?.Dispose();
             subscription = null;
 
-            // TODO 勝利ポップアップを開く
+            // 勝利ポップアップを開く
+            PopupManager.instance.Show<VictoryPop>(false);
 
             // このポップアップを閉じる
-            battleEndAction?.Invoke();
+            //battleEndAction?.Invoke();
 
             return;
         }
@@ -230,7 +235,8 @@ public class BattleEventManager : MonoBehaviour
             subscription?.Dispose();
             subscription = null;
 
-            // TODO ゲームオーバーのポップアップを開く
+            // ゲームオーバーのポップアップを開く
+            gameUpPop.ShowPopUp(false);
 
             return;
         }

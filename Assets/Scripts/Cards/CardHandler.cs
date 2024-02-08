@@ -29,7 +29,7 @@ public class CardHandler
             // 仮の待機時間。本来はエフェクトなどの絡みがあるので、各ExecuteAsync内にかく
             await UniTask.Delay(1000, cancellationToken: token);
 
-            // TODO HPのチェック。いずれかが0になったら、以降の処理はキャンセルする
+            // HPのチェック。いずれかが0になったら、以降の処理はキャンセルする
             if (GameData.instance.GetPlayer().Hp.Value <= 0)
             {
                 return BattleState.Lose;

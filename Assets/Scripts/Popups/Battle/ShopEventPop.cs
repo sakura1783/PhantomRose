@@ -25,9 +25,9 @@ public class ShopEventPop : PopupBase
     [SerializeField] private int maxRedrawCount;
     private ReactiveProperty<int> redrawCount = new();  // ReactivePropertyは参照型なので、宣言時は初期化が必要。初期化しなかった場合、Nullエラーになる
 
-    [SerializeField] private DescriptionPop descriptionPop;
-
     [SerializeField] private CardDeckPop cardDeckPop;
+
+    public DescriptionPop DescriptionPop => descriptionPop;
 
     //private List<System.Tuple<ShopCardController, CardData>> shopCards = new();
     private Dictionary<ShopCardController, CardData> shopCards = new();  // 上記でもできるが、こっちの方が簡単

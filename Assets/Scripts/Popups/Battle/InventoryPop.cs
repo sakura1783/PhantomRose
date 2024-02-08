@@ -110,7 +110,6 @@ public class InventoryPop : PopupBase
             // すでにExchangePopが閉じられている場合は処理しない
             if (!isDisplayExchangePop)
             {
-                Debug.Log("ExchangePopはすでに閉じられています");
                 return;
             }
 

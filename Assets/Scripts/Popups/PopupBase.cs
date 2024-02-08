@@ -14,6 +14,8 @@ public class PopupBase : MonoBehaviour
 
     [SerializeField] protected Ease ease;
 
+    [SerializeField] protected DescriptionPop descriptionPop;
+
 
     protected virtual void Reset()
     {
@@ -65,6 +67,12 @@ public class PopupBase : MonoBehaviour
     /// </summary>
     public virtual void HidePopUp()
     {
+        // カード説明ポップアップを閉じる
+        if (descriptionPop.IsDisplayDescriptionPop)
+        {
+            descriptionPop.HidePopUp();
+        }
+
         canvasGroup.DOFade(0, 0.5f)
             .SetEase(ease)
             .OnComplete(() => canvasGroup.blocksRaycasts = false);

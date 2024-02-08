@@ -33,14 +33,20 @@ public class CardController : MonoBehaviour
     /// <summary>
     /// 初期設定。カード見た目と効果を別々に設定
     /// </summary>
-    public void SetUp(CardData data)
+    public void SetUp(CardData data, DescriptionPop descriptionPop)
     {
-        SetCardDetail(data);
-
         cardData = data;
+
+        SetCardDetail(data);
 
         // リフレクションを利用し、カードから同名のカード効果を持つクラス・インスタンスを生成
         cardEffect = CardEffectFactory.CreateCardEffect(cardData);
+
+        // ボタンの購読処理
+        btnCard.OnClickAsObservable()
+            .ThrottleFirst(TimeSpan.FromSeconds(0.5f))
+            .Subscribe(_ => descriptionPop.ShowPopUp(data))
+            .AddTo(this);
     }
 
     /// <summary>

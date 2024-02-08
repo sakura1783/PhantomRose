@@ -6,8 +6,6 @@ public class StorePop : PopupBase
     [SerializeField] private Button btnToCardProduct;
     [SerializeField] private Button btnToSpecialProduct;
 
-    //TODO 変数追加
-
 
     /// <summary>
     /// 初期設定

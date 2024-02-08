@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using DG.Tweening;
 
 public class GameUpPop : PopupBase
 {
@@ -8,6 +9,13 @@ public class GameUpPop : PopupBase
 
     [SerializeField] private Text txtStageNo;
     [SerializeField] private Text txtWinOrLose;
+
+    [SerializeField] private Image imgGameUp;
+
+    [SerializeField] private Sprite victoryImage;
+    [SerializeField] private Sprite defeatImage;
+
+    [SerializeField] private MainGameManager mainGameManager;
 
 
     /// <summary>
@@ -27,10 +35,21 @@ public class GameUpPop : PopupBase
             .AddTo(this);
     }
 
-    public override void ShowPopUp(CardData cardData = null)
+    /// <summary>
+    /// ポップアップの表示
+    /// </summary>
+    /// <param name="isVictorious"></param>
+    public void ShowPopUp(bool isVictorious)
     {
-        // TODO 各値の設定
+        // 各値の設定
+        txtStageNo.text = mainGameManager.CurrentRouteIndex.ToString();
 
-        base.ShowPopUp(cardData);
+        txtWinOrLose.text = isVictorious ? "勝利" : "敗北";
+        txtWinOrLose.color = isVictorious ? ColorManager.instance.GetColor(ColorType.Yellow) : ColorManager.instance.GetColor(ColorType.DarkRed);
+
+        imgGameUp.sprite = isVictorious ? victoryImage : defeatImage;
+
+        // Canvasの表示
+        canvasGroup.DOFade(1, 0.5f).SetEase(ease).OnComplete(() => canvasGroup.blocksRaycasts = true);
     }
 }

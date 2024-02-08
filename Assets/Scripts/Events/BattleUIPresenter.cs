@@ -136,7 +136,7 @@ public class BattleUIPresenter : MonoBehaviour
         // 購読を停止(ここで停止しておかないと、次の対戦相手のHPの購読が重複して発生してしまう)
         subscriptions?.Dispose();
 
-        // 処理自体は変数内に残っているので、nullにすることで残っている処理も削除する
-        subscriptions = null;
+        // TODO 処理自体は変数内に残っているので、nullにすることで残っている処理も削除する
+        //subscriptions = null;
     }
 }

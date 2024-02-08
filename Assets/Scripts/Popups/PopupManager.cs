@@ -8,20 +8,14 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
 {
     [SerializeField] private List<PopupBase> popupList = new();
 
+    [SerializeField] private MainGameManager mainGameManager;
+
     private PopupBase currentViewPop;
     public PopupBase CurrentViewPop => currentViewPop;
     //public ReactiveProperty<PopupBase> currentViewPop = new();  // テスト用。監視
 
     readonly Stack<PopupBase> history = new();  // 以前開いていたポップアップを保持するためのStack(スタック。新しい要素を追加し、最後に追加された要素を取り出す)
 
-
-    //TODO デバッグ用。終わったら消す
-    void Start()
-    {
-        //currentViewPop.Subscribe(_ => Debug.Log($"currentViewPopの値：{currentViewPop}"));
-
-        SetUp();
-    }
 
     /// <summary>
     /// 初期設定
@@ -192,6 +186,9 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
     /// </summary>
     private async void ShowBattlePop()
     {
+        //ルート作成
+        mainGameManager.GenerateRoute();
+
         await InitPopupsAsync();
 
         // バトル用のポップアップを開く

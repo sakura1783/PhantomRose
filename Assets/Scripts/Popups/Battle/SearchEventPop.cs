@@ -90,8 +90,6 @@ public class SearchEventPop : PopupBase
     /// <param name="treasureType"></param>
     private void OnClickTreasureButton(TreasureType treasureType)
     {
-        Debug.Log($"探索イベント：{treasureType}");
-
         // 各イベントへ分岐
         switch (treasureType)
         {

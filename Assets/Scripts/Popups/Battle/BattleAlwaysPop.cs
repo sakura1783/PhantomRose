@@ -104,11 +104,4 @@ public class BattleAlwaysPop : PopupBase
             .SetEase(ease)
             .OnComplete(() => returnButtonGroup.blocksRaycasts = isActive);
     }
-
-    public override void HidePopUp()
-    {
-        base.HidePopUp();
-
-        Debug.Log("BattleAlwaysPopが閉じました");
-    }
 }

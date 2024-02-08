@@ -21,6 +21,7 @@ public class GameData : AbstractSingleton<GameData>
     private Character opponent;
 
     private bool hasSaveData = false;  // セーブデータがあるかどうか。ある場合、その情報を使って中断した部分から再開する。
+    public bool HasSaveData => hasSaveData;
 
 
     /// <summary>
