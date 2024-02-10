@@ -10,6 +10,8 @@ public class VictoryPop : PopupBase
 
     [SerializeField] private Transform rewardTran;
 
+    [SerializeField] private DescriptionPop descriptionPop;
+
 
     /// <summary>
     /// 初期設定
@@ -39,6 +41,15 @@ public class VictoryPop : PopupBase
         GenerateRandomCard();
 
         base.ShowPopUp();
+    }
+
+    /// <summary>
+    /// ポップアップの非表示
+    /// </summary>
+    public override void HidePopUp()
+    {
+        descriptionPop.HidePopUp();
+        base.HidePopUp();
     }
 
     /// <summary>

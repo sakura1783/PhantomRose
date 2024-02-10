@@ -16,6 +16,8 @@ public class BattleEventPop : PopupBase
 
     [SerializeField] private BattleEventManager battleEventManager;
 
+    [SerializeField] private DescriptionPop descriptionPop;
+
 
     /// <summary>
     /// 初期設定
@@ -44,5 +46,14 @@ public class BattleEventPop : PopupBase
         battleEventManager.Initialize(token).Forget(); //HidePopUp)
 
         base.ShowPopUp();
+    }
+
+    /// <summary>
+    /// ポップアップの非表示
+    /// </summary>
+    public override void HidePopUp()
+    {
+        descriptionPop.HidePopUp();
+        base.HidePopUp();
     }
 }

@@ -69,6 +69,8 @@ public class CardData
         string[] stateInfo = datas[13].Split('/');
         stateList = new();
 
+        Debug.Log($"stateInfo : {stateInfo.Length}");
+
         foreach (string data in stateInfo)
         {
             // Splitメソッドを利用し、':'で分割して、クラス内の変数用のデータを文字列の配列として取得

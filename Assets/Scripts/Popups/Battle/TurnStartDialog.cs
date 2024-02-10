@@ -21,7 +21,9 @@ public class TurnStartDialog : PopupBase
 
     [SerializeField] private BattleEventManager battleEventManager;
 
-    private CanvasGroup currentGroup;  // 現在表示されているCanvas  
+    [SerializeField] private DescriptionPop descriptionPop;
+
+    private CanvasGroup currentGroup;  // 現在表示されているCanvas
 
 
     /// <summary>
@@ -55,7 +57,6 @@ public class TurnStartDialog : PopupBase
             .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
             .Subscribe(_ =>
             {
-                descriptionPop.HidePopUp();
                 HidePopUp();
 
                 // ターン開始
@@ -67,7 +68,6 @@ public class TurnStartDialog : PopupBase
             .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
             .Subscribe(_ =>
             {
-                descriptionPop.HidePopUp();
                 HidePopUp();
 
                 // ルビー支払い
@@ -92,6 +92,15 @@ public class TurnStartDialog : PopupBase
         }
 
         base.ShowPopUp();
+    }
+
+    /// <summary>
+    /// ポップアップの非表示
+    /// </summary>
+    public override void HidePopUp()
+    {
+        descriptionPop.HidePopUp();
+        base.HidePopUp();
     }
 
     /// <summary>

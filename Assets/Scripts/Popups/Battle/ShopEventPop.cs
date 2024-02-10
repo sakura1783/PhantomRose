@@ -27,6 +27,7 @@ public class ShopEventPop : PopupBase
 
     [SerializeField] private CardDeckPop cardDeckPop;
 
+    [SerializeField] private DescriptionPop descriptionPop;
     public DescriptionPop DescriptionPop => descriptionPop;
 
     //private List<System.Tuple<ShopCardController, CardData>> shopCards = new();

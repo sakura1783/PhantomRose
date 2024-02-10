@@ -18,6 +18,8 @@ public class MainGameManager : MonoBehaviour
 
     [SerializeField] private BattleEventManager battleEventManager;
 
+    [SerializeField] private GSSReceiver gssReceiver;
+
     private List<Transform> routeList = new();
 
     private List<EventBase> currentEventList = new();
@@ -25,11 +27,17 @@ public class MainGameManager : MonoBehaviour
     public ReactiveProperty<int> CurrentRouteIndex = new(0);  // ReactivePropertyで監視できるようになる。プロパティは参照型なので最初に初期値を代入する。
 
 
-    void Start()
+    async void Start()
     {
+        await gssReceiver.PrepareGSSLoadStartAsync();
+
+        Debug.Log("SOに取り込みました");
+
         PopupManager.instance.SetUp();
 
         DataBaseManager.instance.SetCardData();
+
+        Debug.Log("カードセット");
 
         //監視。Startに1回書けば良い
         CurrentRouteIndex

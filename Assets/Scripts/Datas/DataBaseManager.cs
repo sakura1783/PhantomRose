@@ -9,10 +9,8 @@ public class DataBaseManager : MonoBehaviour
     public StateDataSO stateDataSO;
     public ItemDataSO itemDataSO;
 
-    [SerializeField] private GSSReceiver gssReceiver;
 
-
-    async void Awake()
+    void Awake()
     {
         if (instance == null)
         {
@@ -23,8 +21,6 @@ public class DataBaseManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        await gssReceiver.PrepareGSSLoadStartAsync();
     }
 
     /// <summary>

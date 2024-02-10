@@ -13,6 +13,8 @@ public class CardDeckPop : PopupBase
 
     [SerializeField] private Text txtCardCount;
 
+    [SerializeField] private DescriptionPop descriptionPop;
+
     public ReactiveProperty<int> cardCount = new();
 
 
@@ -65,5 +67,14 @@ public class CardDeckPop : PopupBase
         cardObj.transform.SetSiblingIndex(index);  // 指定したインデックスの位置にカードを生成
 
         cardCount.Value++;
+    }
+
+    /// <summary>
+    /// ポップアップの非表示
+    /// </summary>
+    public override void HidePopUp()
+    {
+        descriptionPop.HidePopUp();
+        base.HidePopUp();
     }
 }

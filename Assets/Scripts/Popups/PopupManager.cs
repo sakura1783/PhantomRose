@@ -16,6 +16,9 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
 
     readonly Stack<PopupBase> history = new();  // 以前開いていたポップアップを保持するためのStack(スタック。新しい要素を追加し、最後に追加された要素を取り出す)
 
+    private PopupBase descriptionPop;
+    public PopupBase DescriptionPop => descriptionPop;
+
 
     /// <summary>
     /// 初期設定
@@ -31,6 +34,8 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
         //foreach (var pop in popupList) pop.SetUp();
         // 上記をLinqで書いた場合
         popupList.ForEach(pop => pop.SetUp());
+
+        descriptionPop = popupList.OfType<DescriptionPop>().SingleOrDefault();
 
         //TODO キャンバスのリサイズなど(その場合はメンバ変数を増やす)
     }
@@ -206,5 +211,21 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
 
         Show<HomeAlwaysPop>(false);
         Show<MyRoomPop>(false, false);
+    }
+
+    /// <summary>
+    /// カード詳細ポップアップを開く
+    /// </summary>
+    public void ShowDescription()
+    {
+        OpenPopup(descriptionPop);
+    }
+
+    /// <summary>
+    /// カード詳細ポップアップを閉じる
+    /// </summary>
+    public void HideDescription()
+    {
+        descriptionPop.HidePopUp();
     }
 }

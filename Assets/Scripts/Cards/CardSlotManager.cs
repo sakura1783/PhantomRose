@@ -42,6 +42,8 @@ public class CardSlotManager
                     // 選択していたカードを解除
                     battleEventManager.RemoveCard();
 
+                    PopupManager.instance.HideDescription();
+
                     // 全てのスロットにカードがセットされているか確認
                     if (CardSlotList.All(slot => slot.cardController != null))
                     {
