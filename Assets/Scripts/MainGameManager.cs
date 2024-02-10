@@ -16,6 +16,8 @@ public class MainGameManager : MonoBehaviour
 
     [SerializeField] private WaveInfoView waveInfoView;
 
+    [SerializeField] private BattleEventManager battleEventManager;
+
     private List<Transform> routeList = new();
 
     private List<EventBase> currentEventList = new();
@@ -33,6 +35,8 @@ public class MainGameManager : MonoBehaviour
         CurrentRouteIndex
             .Subscribe(value => waveInfoView.UpdateWaveNo(value))
             .AddTo(this);
+
+        battleEventManager.SetUp();
     }
 
     /// <summary>

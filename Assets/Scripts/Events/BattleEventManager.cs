@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Events;
 using UniRx;
 
 /// <summary>
@@ -53,13 +52,6 @@ public class BattleEventManager : MonoBehaviour
 
     private IDisposable subscription;
 
-
-    void Start()
-    {
-        // TODO デバッグ用
-        //Initialize();
-        SetUp();
-    }
 
     /// <summary>
     /// 初期設定。最初に1回だけ行う

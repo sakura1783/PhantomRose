@@ -55,6 +55,7 @@ public class TurnStartDialog : PopupBase
             .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
             .Subscribe(_ =>
             {
+                descriptionPop.HidePopUp();
                 HidePopUp();
 
                 // ターン開始
@@ -66,6 +67,7 @@ public class TurnStartDialog : PopupBase
             .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
             .Subscribe(_ =>
             {
+                descriptionPop.HidePopUp();
                 HidePopUp();
 
                 // ルビー支払い
