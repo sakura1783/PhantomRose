@@ -20,31 +20,40 @@ public class MainGameManager : MonoBehaviour
 
     [SerializeField] private GSSReceiver gssReceiver;
 
+    [SerializeField] private Transform playerIconCanvas;
+
     private List<Transform> routeList = new();
 
     private List<EventBase> currentEventList = new();
+
+    private CompositeDisposable disposableList = new();
+
+    private Vector3 defaultPlayerIconPos;
+
+    private IDisposable subscription;
 
     public ReactiveProperty<int> CurrentRouteIndex = new(0);  // ReactivePropertyで監視できるようになる。プロパティは参照型なので最初に初期値を代入する。
 
 
     async void Start()
     {
+        // 各スクリプタブルオブジェクトにGSSの情報を代入
         await gssReceiver.PrepareGSSLoadStartAsync();
 
-        Debug.Log("SOに取り込みました");
-
+        // 各ポップアップの初期設定
         PopupManager.instance.SetUp();
 
+        // 手札のカードをセット
         DataBaseManager.instance.SetCardData();
 
-        Debug.Log("カードセット");
-
         //監視。Startに1回書けば良い
-        CurrentRouteIndex
-            .Subscribe(value => waveInfoView.UpdateWaveNo(value))
-            .AddTo(this);
+        subscription = CurrentRouteIndex
+            .Subscribe(value => waveInfoView.UpdateWaveNo(value));
 
         battleEventManager.SetUp();
+
+        // プレイヤーアイコンの位置を記憶
+        defaultPlayerIconPos = playerIcon.position;
     }
 
     /// <summary>
@@ -128,6 +137,8 @@ public class MainGameManager : MonoBehaviour
     /// </summary>
     private void GenerateEventButtons()
     {
+        disposableList?.Clear();  // Compositeを使う時はClearで購読を停止する。Disposeをすると、二度と購読してくれなくなる
+
         // 次のイベント用のボタン生成
         for (int i = 0; i < routeDataSO.routeList[CurrentRouteIndex.Value].eventList.Count; i++)
         {
@@ -146,7 +157,7 @@ public class MainGameManager : MonoBehaviour
 
                     HandleEventCompletion(index);
                 })
-                .AddTo(this);  // AddToで監視処理を止める条件を引数で指定する
+                .AddTo(disposableList);  // AddToで監視処理を止める条件を引数で指定する
 
             currentEventList.Add(eventButton);
         }
@@ -208,5 +219,19 @@ public class MainGameManager : MonoBehaviour
 
         // ルートが残っている場合、次の分岐用ボタンを作成
         GenerateEventButtons();
+    }
+
+    /// <summary>
+    /// プレイヤーアイコンの親子関係と位置をもとに戻す
+    /// </summary>
+    public void ResetPlayerIconTran()
+    {
+        playerIcon.SetParent(playerIconCanvas);
+
+        playerIcon.position = defaultPlayerIconPos;
+
+        // ついでにルート番号(CurrentRouteIndex)の購読も止める
+        subscription?.Dispose();
+        subscription = null;
     }
 }

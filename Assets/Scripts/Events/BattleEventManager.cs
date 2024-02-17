@@ -37,6 +37,8 @@ public class BattleEventManager : MonoBehaviour
 
     [SerializeField] private DescriptionPop descriptionPop;
 
+    [SerializeField] private MainGameManager mainGameManager;
+
     private CardSlotManager cardSlotManager;
 
     private readonly int slotCount = 4;
@@ -49,8 +51,6 @@ public class BattleEventManager : MonoBehaviour
     //private UnityAction battleEndAction = null;
 
     private List<CardController> handCardList = new();
-
-    private IDisposable subscription;
 
 
     /// <summary>
@@ -109,6 +109,8 @@ public class BattleEventManager : MonoBehaviour
 
             handCardList.Add(card);
         }
+
+        Debug.Log($"handCardList : {handCardList.Count}");
 
         // TODO GameDataへ移行予定
         playerHandCardManager = new(handCardList, SelectCard);
@@ -204,11 +206,14 @@ public class BattleEventManager : MonoBehaviour
             playerHandCardManager.DestroyHandCards();
             opponentHandCardManager.DestroyHandCards();
 
-            // 購読の停止  // TODO 場所変える？
+            // 購読の停止
             battleUIPresenter.EndBattle();
 
-            subscription?.Dispose();
-            subscription = null;
+            // プレイヤーアイコンの位置と親子関係を初期化
+            mainGameManager.ResetPlayerIconTran();
+
+            // ルート番号を初期化
+            mainGameManager.CurrentRouteIndex.Value = 0;
 
             // 勝利ポップアップを開く
             PopupManager.instance.Show<VictoryPop>(false);
@@ -221,11 +226,11 @@ public class BattleEventManager : MonoBehaviour
 
         if (currentBattleStateResult == BattleState.Lose)
         {
-            // 購読の停止
             battleUIPresenter.EndBattle();
 
-            subscription?.Dispose();
-            subscription = null;
+            mainGameManager.ResetPlayerIconTran();
+
+            mainGameManager.CurrentRouteIndex.Value = 0;
 
             // ゲームオーバーのポップアップを開く
             gameUpPop.ShowPopUp(false);

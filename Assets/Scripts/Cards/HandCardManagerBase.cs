@@ -25,6 +25,6 @@ public class HandCardManagerBase
             UnityEngine.MonoBehaviour.Destroy(cardList[i].gameObject);
         }
 
-        cardList.Clear();
+        //cardList.Clear();
     }
 }

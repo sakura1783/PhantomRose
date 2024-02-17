@@ -16000,6 +16000,7 @@ MonoBehaviour:
   turnStartDialog: {fileID: 2038993504}
   gameUpPop: {fileID: 884937665}
   descriptionPop: {fileID: 1456102633}
+  mainGameManager: {fileID: 1761976028}
 --- !u!1 &1198810792
 GameObject:
   m_ObjectHideFlags: 0
@@ -24111,6 +24112,7 @@ MonoBehaviour:
   waveInfoView: {fileID: 1827243743}
   battleEventManager: {fileID: 1195291194}
   gssReceiver: {fileID: 209896891}
+  playerIconCanvas: {fileID: 1029341018}
   CurrentRouteIndex:
     value: 0
 --- !u!1 &1768068159
