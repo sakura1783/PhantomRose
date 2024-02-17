@@ -99,6 +99,13 @@ public class BattleEventManager : MonoBehaviour
         // デリゲートに登録
         //battleEndAction = popCloseAction;
 
+        for (int i = 0; i < handCardList.Count; i++)
+        {
+            Destroy(handCardList[i].gameObject);
+        }
+
+        handCardList.Clear();
+
         // プレイヤーのカードは毎回初期化(前バトルで変更された攻撃力など)
         GameData.instance.GetPlayer().CopyCardDataList = new ReactiveCollection<CardData>(GameData.instance.myCardList);
 
@@ -203,8 +210,8 @@ public class BattleEventManager : MonoBehaviour
         if (currentBattleStateResult == BattleState.Win)
         {
             // バトル上にある双方の手札のゲームオブジェクトを削除
-            playerHandCardManager.DestroyHandCards();
-            opponentHandCardManager.DestroyHandCards();
+            //playerHandCardManager.DestroyHandCards();
+            //opponentHandCardManager.DestroyHandCards();
 
             // 購読の停止
             battleUIPresenter.EndBattle();
