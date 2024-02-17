@@ -67,11 +67,15 @@ public class MainGameManager : MonoBehaviour
             return;
         }
 
+        CurrentRouteIndex.Value = 0;
+
         // 前回作ったルートのゲームオブジェクトを破棄
         foreach (Transform child in routeBaseSetTran)
         {
             Destroy(child.gameObject);
         }
+
+        DestroyEndEvents();
 
         LoadRouteDatas();
         GenerateEventButtons();
@@ -82,6 +86,12 @@ public class MainGameManager : MonoBehaviour
     /// </summary>
     private void LoadRouteDatas()
     {
+        for (int i = 0; i < routeList.Count; i++)
+        {
+            Destroy(routeList[i].gameObject);
+        }
+        routeList.Clear();
+
         for (int i = 0; i < routeDataSO.routeList.Count; i++)
         {
             // ルート配置用のベース作成
@@ -150,6 +160,9 @@ public class MainGameManager : MonoBehaviour
                 .ThrottleFirst(TimeSpan.FromSeconds(2f))  // ThrottleFirstで、指定された時間内に最初の要素のみを通過させ、それ以後の要素は無視する(ボタン連打防止を実現できる)
                 .Subscribe(async _ =>  // Subscribeは、Observableに対して、何らかのイベントが発生した時の処理を指定するためのメソッド。
                 {
+                    Debug.Log(routeList[CurrentRouteIndex.Value]);
+                    Debug.Log(routeList[CurrentRouteIndex.Value].GetChild(index));
+
                     // プレイヤーのアイコンの位置設定(子オブジェクトにする)
                     SetPlayerLocation(routeList[CurrentRouteIndex.Value].GetChild(index));
 
@@ -231,7 +244,7 @@ public class MainGameManager : MonoBehaviour
         playerIcon.position = defaultPlayerIconPos;
 
         // ついでにルート番号(CurrentRouteIndex)の購読も止める
-        subscription?.Dispose();
-        subscription = null;
+        //subscription?.Dispose();
+        //subscription = null;
     }
 }

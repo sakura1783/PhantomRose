@@ -219,9 +219,6 @@ public class BattleEventManager : MonoBehaviour
             // プレイヤーアイコンの位置と親子関係を初期化
             mainGameManager.ResetPlayerIconTran();
 
-            // ルート番号を初期化
-            mainGameManager.CurrentRouteIndex.Value = 0;
-
             // 勝利ポップアップを開く
             PopupManager.instance.Show<VictoryPop>(false);
 
