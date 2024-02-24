@@ -56,3 +56,12 @@ MonoBehaviour:
     iconSprite: {fileID: 288219501, guid: b97ce7627a65643659b9462faf8df208, type: 3}
   - iconId: 3
     iconSprite: {fileID: 21300000, guid: e3779741d4ed44715b6563d673bd83b3, type: 3}
+  gemSpriteDataList:
+  - gemType: 0
+    gemSprite: {fileID: 1652486530, guid: c40f478d5cf554b36a627f073b20447c, type: 3}
+  - gemType: 1
+    gemSprite: {fileID: -1229828508, guid: c40f478d5cf554b36a627f073b20447c, type: 3}
+  - gemType: 2
+    gemSprite: {fileID: -1939312805, guid: c40f478d5cf554b36a627f073b20447c, type: 3}
+  - gemType: 3
+    gemSprite: {fileID: 1314332242, guid: c40f478d5cf554b36a627f073b20447c, type: 3}

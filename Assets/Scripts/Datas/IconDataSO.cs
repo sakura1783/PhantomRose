@@ -9,6 +9,8 @@ public class IconDataSO : ScriptableObject
     public List<StateIconData> stateIconDataList = new();
     public List<ItemIconData> itemIconDataList = new();
 
+    public List<GemSpriteData> gemSpriteDataList = new();
+
 
     [System.Serializable]
     public class EventIconData
@@ -36,5 +38,12 @@ public class IconDataSO : ScriptableObject
     {
         public int iconId;
         public Sprite iconSprite;
+    }
+
+    [System.Serializable]
+    public class GemSpriteData
+    {
+        public GemType gemType;
+        public Sprite gemSprite;
     }
 }

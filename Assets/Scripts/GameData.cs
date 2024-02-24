@@ -17,11 +17,15 @@ public class GameData : AbstractSingleton<GameData>
 
     public ReactiveProperty<int> RubyCount = new();
 
+    public ReactiveProperty<int> PurpleGemCount = new();
+    public ReactiveProperty<int> GoldGemCount = new();
+    public ReactiveProperty<int> DiamondGemCount = new();
+    public ReactiveProperty<int> RubyGemCount = new();
+
+    public ReactiveProperty<bool> HasSaveData = new();  // セーブデータがあるかどうか。ある場合、その情報を使って中断した部分から再開する。
+
     private Character player;
     private Character opponent;
-
-    private bool hasSaveData = false;  // セーブデータがあるかどうか。ある場合、その情報を使って中断した部分から再開する。
-    public bool HasSaveData => hasSaveData;
 
 
     /// <summary>
@@ -74,5 +78,35 @@ public class GameData : AbstractSingleton<GameData>
     public CardData GetCardData(int cardId)
     {
         return myCardList.Find(card => card.id == cardId);
+    }
+
+    /// <summary>
+    /// ジェムの更新
+    /// </summary>
+    /// <param name="data"></param>
+    public void UpdateGemCount(GemType gemType, int value)
+    {
+        switch (gemType)
+        {
+            case GemType.Purple:
+                PurpleGemCount.Value += value;
+                break;
+
+            case GemType.Gold:
+                GoldGemCount.Value += value;
+                break;
+
+            case GemType.Diamond:
+                DiamondGemCount.Value += value;
+                break;
+
+            case GemType.Ruby:
+                RubyGemCount.Value += value;
+                break;
+
+            default:
+                Debug.Log("該当のGemTypeがありません");
+                break;
+        }
     }
 }

@@ -62,7 +62,7 @@ public class MainGameManager : MonoBehaviour
     public void GenerateRoute()
     {
         // セーブデータが存在しない場合だけ、新しくルートを作成
-        if (GameData.instance.HasSaveData)
+        if (GameData.instance.HasSaveData.Value)
         {
             return;
         }

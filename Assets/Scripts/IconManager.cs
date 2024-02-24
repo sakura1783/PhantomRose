@@ -58,4 +58,14 @@ public class IconManager : AbstractSingleton<IconManager>
     {
         return iconDataSO.itemIconDataList.Find(data => data.iconId == searchIconNo).iconSprite;
     }
+
+    /// <summary>
+    /// 宝石用画像の取得
+    /// </summary>
+    /// <param name="searchSpriteNo"></param>
+    /// <returns></returns>
+    public Sprite GetGemSprite(GemType searchGemType)
+    {
+        return iconDataSO.gemSpriteDataList.Find(data => data.gemType == searchGemType).gemSprite;
+    }
 }

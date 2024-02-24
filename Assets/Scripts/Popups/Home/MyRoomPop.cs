@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UniRx;
 
 public class MyRoomPop : PopupBase
 {
-    [SerializeField] private Button btnUpgrade;
-    [SerializeField] private Button btnCard;
-    [SerializeField] private Button btnTask;
+    [SerializeField] private Button btnToUpgradePop;
+    [SerializeField] private Button btnToCardGalleryPop;
+    [SerializeField] private Button btnToChallengeTaskPop;
 
 
     /// <summary>
@@ -16,6 +17,10 @@ public class MyRoomPop : PopupBase
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
 
-        //TODO 各ボタンの設定
+        //TODO 各ボタンの購読処理
+        btnToUpgradePop.OnClickAsObservable()
+            .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
+            .Subscribe(_ => PopupManager.instance.Show<UpgradePop>(true))
+            .AddTo(this);
     }
 }

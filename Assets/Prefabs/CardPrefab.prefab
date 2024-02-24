@@ -459,19 +459,6 @@ MonoBehaviour:
   imgCard: {fileID: 3712407951634472416}
   imgBase: {fileID: 3712407951279320579}
   txtAttackPointOrInterval: {fileID: 3712407951502308676}
-  cardData:
-    id: 0
-    name: 
-    cardType: 0
-    level: 0
-    attackPower: 0
-    shieldPower: 0
-    recoveryPower: 0
-    coolTime: 0
-    cardColor: {r: 0, g: 0, b: 0, a: 0}
-    spriteId: 0
-    description: 
-    price: 0
   IsSelectable:
     value: 0
 --- !u!1 &3712407951502308666
