@@ -57,4 +57,28 @@ public class PlayerHandCardManager : HandCardManagerBase
     {
         cardList.Find(x => card).SetSelectable(true);
     }
+
+    /// <summary>
+    /// 今回利用したカードにクールタイムを設定
+    /// </summary>
+    /// <param name="setCardList"></param>
+    public void SetCoolTimeCards(List<CardController> setCardList)
+    {
+        foreach (CardController card in cardList.Intersect(setCardList))
+        {
+            card.SetCoolTime();
+        }
+    }
+
+    /// <summary>
+    /// カードのクールタイムを更新
+    /// </summary>
+    /// <param name="setCardList"></param>
+    public void UpdateCoolTimeCards(List<CardController> setCardList)
+    {
+        foreach (CardController card in cardList.Except(setCardList))  // 共通していないものを取り出す
+        {
+            card.UpdateCoolTime();
+        }
+    }
 }

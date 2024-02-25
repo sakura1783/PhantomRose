@@ -29,6 +29,10 @@ public class CardController : MonoBehaviour
     private CardData cardData;
     public CardData CardData => cardData;
 
+    public int currentCoolTime;
+
+    public bool IsCoolTime => currentCoolTime != 0;  // get専門のプロパティ
+
 
     /// <summary>
     /// 初期設定。カード見た目と効果を別々に設定
@@ -75,5 +79,40 @@ public class CardController : MonoBehaviour
     public void SetInactive()
     {
         btnCard.enabled = false;
+    }
+
+    /// <summary>
+    /// クールタイムの設定
+    /// カードをスロットにセットした後に実行させる
+    /// </summary>
+    public void SetCoolTime()
+    {
+        currentCoolTime = cardData.coolTime;
+
+        Debug.Log($"{cardData.name} : {currentCoolTime}");
+    }
+
+    /// <summary>
+    /// クールタイムの更新
+    /// </summary>
+    public void UpdateCoolTime()
+    {
+        // クールタイムが0なら、処理しない
+        if (currentCoolTime == 0)
+        {
+            return;
+        }
+
+        currentCoolTime--;
+
+        if (currentCoolTime == 0)
+        {
+            // もう一度このカードを選べるようにする
+            SetSelectable(false);
+        }
+
+        Debug.Log($"クールタイム更新{cardData.name} : {currentCoolTime}");
+
+        // TODO カードの絵を変える、クールタイム表示の更新
     }
 }

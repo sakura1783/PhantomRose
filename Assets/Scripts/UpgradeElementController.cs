@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using UniRx.Triggers;
 
 public class UpgradeElementController : MonoBehaviour
 {
@@ -60,6 +61,11 @@ public class UpgradeElementController : MonoBehaviour
                 revertButtonGroup.blocksRaycasts = false;
             })
             .AddTo(this);
+
+        // TODO テストする
+        this.UpdateAsObservable()
+            .Where(_ => Input.GetKeyDown(KeyCode.Space))
+            .Subscribe(_ => GameData.instance.HasSaveData.Value = !GameData.instance.HasSaveData.Value);
     }
 
     /// <summary>

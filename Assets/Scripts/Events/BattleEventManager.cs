@@ -253,7 +253,13 @@ public class BattleEventManager : MonoBehaviour
     public void ResetBattleField()
     {
         // スロットに配置したプレイヤーのカードだけ、再度利用できる状態にする
-        playerHandCardManager.ActivateSelectedCards(cardSlotManager.setPlayerCardList);
+        //playerHandCardManager.ActivateSelectedCards(cardSlotManager.setPlayerCardList);
+
+        // スロットに配置したカードのクールタイムを設定
+        playerHandCardManager.SetCoolTimeCards(cardSlotManager.setPlayerCardList);
+
+        // それ以外のクールタイムがあるカードのクールタイムを減少
+        playerHandCardManager.UpdateCoolTimeCards(cardSlotManager.setPlayerCardList);
 
         // 全てのカードを破棄
         cardSlotManager.DeleteAllCardsFromSlots();
