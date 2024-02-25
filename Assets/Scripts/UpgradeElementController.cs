@@ -27,7 +27,7 @@ public class UpgradeElementController : MonoBehaviour
         txtCost.text = data.cost.ToString();
         imgGem.sprite = IconManager.instance.GetGemSprite(data.gemType);
 
-        // TODO ゲーム進行中はボタンを押せない
+        // ゲーム進行中はボタンを押せない
         GameData.instance.HasSaveData
             .Subscribe(value =>
             {
@@ -62,10 +62,10 @@ public class UpgradeElementController : MonoBehaviour
             })
             .AddTo(this);
 
-        // TODO テストする
-        this.UpdateAsObservable()
-            .Where(_ => Input.GetKeyDown(KeyCode.Space))
-            .Subscribe(_ => GameData.instance.HasSaveData.Value = !GameData.instance.HasSaveData.Value);
+        // テスト用
+        //this.UpdateAsObservable()
+        //    .Where(_ => Input.GetKeyDown(KeyCode.Space))
+        //    .Subscribe(_ => GameData.instance.HasSaveData.Value = !GameData.instance.HasSaveData.Value);
     }
 
     /// <summary>

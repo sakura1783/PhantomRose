@@ -69,12 +69,6 @@ public class MainGameManager : MonoBehaviour
 
         CurrentRouteIndex.Value = 0;
 
-        // 前回作ったルートのゲームオブジェクトを破棄
-        foreach (Transform child in routeBaseSetTran)
-        {
-            Destroy(child.gameObject);
-        }
-
         DestroyEndEvents();
 
         LoadRouteDatas();
@@ -86,6 +80,7 @@ public class MainGameManager : MonoBehaviour
     /// </summary>
     private void LoadRouteDatas()
     {
+        // 前回作ったルートを削除
         for (int i = 0; i < routeList.Count; i++)
         {
             Destroy(routeList[i].gameObject);
@@ -160,9 +155,6 @@ public class MainGameManager : MonoBehaviour
                 .ThrottleFirst(TimeSpan.FromSeconds(2f))  // ThrottleFirstで、指定された時間内に最初の要素のみを通過させ、それ以後の要素は無視する(ボタン連打防止を実現できる)
                 .Subscribe(async _ =>  // Subscribeは、Observableに対して、何らかのイベントが発生した時の処理を指定するためのメソッド。
                 {
-                    Debug.Log(routeList[CurrentRouteIndex.Value]);
-                    Debug.Log(routeList[CurrentRouteIndex.Value].GetChild(index));
-
                     // プレイヤーのアイコンの位置設定(子オブジェクトにする)
                     SetPlayerLocation(routeList[CurrentRouteIndex.Value].GetChild(index));
 
