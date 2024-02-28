@@ -13,6 +13,8 @@ public class GameData : AbstractSingleton<GameData>
     public int inventoryCapacity;
     public List<ItemData> myItemList = new();
 
+    public List<int> achievedChallengeTaskList = new();
+
     // TODO バトルのデータ。敵の種類、フェードカウント、置いたカード情報、キャラのHP、バフデバフなど
 
     public ReactiveProperty<int> RubyCount = new();

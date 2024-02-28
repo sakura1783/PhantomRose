@@ -18,6 +18,8 @@ public class UpgradePop : PopupBase
     [SerializeField] private Transform diamondElementTran;
     [SerializeField] private Transform rubyElementTran;
 
+    [SerializeField] private VerticalLayoutGroup verticalLayoutGroup;  // ScrollViewのContentのLayoutGroup
+
     [SerializeField] private UpgradeElementController upgradeElementPrefab;
 
     [SerializeField] private GameObject upgradeDisabledDialog;
@@ -54,9 +56,14 @@ public class UpgradePop : PopupBase
             .Subscribe(value => txtRubyGemCount.text = Mathf.Clamp(value, 0, int.MaxValue).ToString())
             .AddTo(this);
 
+        // ゲーム実行中にスクリプトからLayoutGroup内に子オブジェクトを生成してScrollView内のサイズが可変すると正しく表示されないので、以下の1、2、3で修正 (これはCanvasの画面表示更新のタイミングとLayoutGroup内のサイズ変更のタイミングがずれているために生じる)
+        //Canvas.ForceUpdateCanvases();  // 1.Canvas内の表示更新
+
         // アップグレード要素の生成。種類ごとに適切な場所に生成する
         foreach (var data in upgradeDataSO.upgradeDataList)
         {
+            Canvas.ForceUpdateCanvases();  // 1
+
             switch (data.gemType)
             {
                 case GemType.Purple:
@@ -83,7 +90,16 @@ public class UpgradePop : PopupBase
                     Debug.Log("該当のアップグレード要素が見つかりません");
                     break;
             }
+
+            verticalLayoutGroup.CalculateLayoutInputVertical();  // 2
+            verticalLayoutGroup.SetLayoutVertical();  // 3
         }
+
+        // 2.LayoutGroup内の入力値を再計算
+        //verticalLayoutGroup.CalculateLayoutInputVertical();
+
+        // 3.レイアウト再設定(表示更新)
+        //verticalLayoutGroup.SetLayoutVertical();
     }
 
     /// <summary>

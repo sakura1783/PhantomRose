@@ -12,6 +12,9 @@ public enum ColorType
     Magenta,
     Cyan,
     Yellow,
+    LightBrown,
+    Brown,
+    DarkBrown,
 }
 
 public class ColorManager : AbstractSingleton<ColorManager>
