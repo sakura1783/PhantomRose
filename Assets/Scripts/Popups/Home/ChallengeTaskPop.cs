@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ChallengeTaskPop : PopupBase
@@ -18,6 +16,7 @@ public class ChallengeTaskPop : PopupBase
     {
         base.SetUp();
 
+        // タスクのゲームオブジェクトを生成
         foreach (var data in challengeTaskDataSO.challengeTaskDataList)
         {
             var task = Instantiate(challengeTaskPrefab, taskTran);

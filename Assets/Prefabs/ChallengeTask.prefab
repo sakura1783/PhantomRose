@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6064857275106576629}
   - component: {fileID: 6064857275106576631}
   - component: {fileID: 6064857275106576630}
+  - component: {fileID: 5124906038486056282}
   m_Layer: 5
   m_Name: ChallengeTask
   m_TagString: Untagged
@@ -79,6 +80,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5124906038486056282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064857275106576628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ab54bc8d08e4fe9866aa65530e797a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imgTask: {fileID: 6064857275779191789}
+  imgBackground: {fileID: 6064857275106576630}
+  txtReward: {fileID: 6064857275515695340}
+  txtTaskName: {fileID: 6064857276052722203}
+  txtTaskDetail: {fileID: 6064857276519010940}
 --- !u!1 &6064857275324261229
 GameObject:
   m_ObjectHideFlags: 0

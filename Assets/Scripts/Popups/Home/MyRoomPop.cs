@@ -20,7 +20,12 @@ public class MyRoomPop : PopupBase
         //TODO 各ボタンの購読処理
         btnToUpgradePop.OnClickAsObservable()
             .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
-            .Subscribe(_ => PopupManager.instance.Show<UpgradePop>(true))
+            .Subscribe(_ => PopupManager.instance.Show<UpgradePop>())
+            .AddTo(this);
+
+        btnToChallengeTaskPop.OnClickAsObservable()
+            .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
+            .Subscribe(_ => PopupManager.instance.Show<ChallengeTaskPop>())
             .AddTo(this);
     }
 }
