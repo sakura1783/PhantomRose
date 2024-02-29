@@ -23,15 +23,19 @@ public class Blade : CardEffectBase
         {
             // 対戦相手のHPを減らす
             GameData.instance.GetOpponent().UpdateHp(-cardData.attackPower);
+            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Opponent);
 
             // このカードの攻撃力を1増加
             GameData.instance.GetPlayer().CopyCardDataList.Where(data => data == cardData).FirstOrDefault().attackPower++;
+            FloatingMessageManager.instance.GenerateFloatingMessage(1, 3, OwnerStatus.Player);  // TODO 第二引数、数を使わない
         }
         else
         {
             GameData.instance.GetPlayer().UpdateHp(-cardData.attackPower);
+            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Player);
 
             GameData.instance.GetOpponent().CopyCardDataList.Where(data => data == cardData).FirstOrDefault().attackPower++;
+            FloatingMessageManager.instance.GenerateFloatingMessage(1, 3, OwnerStatus.Opponent);
         }
 
         await UniTask.DelayFrame(1);

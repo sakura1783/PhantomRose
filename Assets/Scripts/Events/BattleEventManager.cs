@@ -73,7 +73,7 @@ public class BattleEventManager : MonoBehaviour
         cardHandler = new();  // これによって、CardHandlerクラスが利用できるようになる
 
         // プレイヤー情報を生成
-        GameData.instance.InitCharacter(OwnerStatus.Player, 10);
+        GameData.instance.InitCharacter(OwnerStatus.Player, 40);
 
         // プレイヤーのHP購読処理
         battleUIPresenter.SubscribePlayerHp();
@@ -117,8 +117,6 @@ public class BattleEventManager : MonoBehaviour
             handCardList.Add(card);
         }
 
-        Debug.Log($"handCardList : {handCardList.Count}");
-
         // TODO GameDataへ移行予定
         playerHandCardManager = new(handCardList, SelectCard);
         opponentHandCardManager = new(handCardList, cardSlotManager);
@@ -128,7 +126,7 @@ public class BattleEventManager : MonoBehaviour
         //    .Subscribe(_ => PrepareNextTurn());
 
         // TODO デバッグ用にプレイヤーと対戦相手の生成(対戦相手はバトルのたびにインスタンスする)
-        GameData.instance.InitCharacter(OwnerStatus.Opponent, 5);
+        GameData.instance.InitCharacter(OwnerStatus.Opponent, 25);
 
         // キャラのHP、Shield、バフデバフなどの購読処理
         battleUIPresenter.SubscribeEveryBattle();

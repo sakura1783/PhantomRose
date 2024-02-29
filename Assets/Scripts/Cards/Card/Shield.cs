@@ -21,10 +21,12 @@ public class Shield : CardEffectBase
         if (owner == OwnerStatus.Player)
         {
             GameData.instance.GetPlayer().UpdateShield(cardData.shieldPower);
+            FloatingMessageManager.instance.GenerateFloatingMessage(cardData.shieldPower, 102, OwnerStatus.Player);
         }
         else
         {
             GameData.instance.GetOpponent().UpdateShield(cardData.shieldPower);
+            FloatingMessageManager.instance.GenerateFloatingMessage(cardData.shieldPower, 102, OwnerStatus.Opponent);
         }
 
         await UniTask.DelayFrame(1);

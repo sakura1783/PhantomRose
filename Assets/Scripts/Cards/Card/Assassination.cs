@@ -23,6 +23,7 @@ public class Assassination : CardEffectBase
             for (int i = 0; i < 2; i++)
             {
                 GameData.instance.GetOpponent().UpdateHp(-cardData.attackPower);
+                FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Opponent);
             }
         }
         else
@@ -30,6 +31,7 @@ public class Assassination : CardEffectBase
             for (int i = 0; i < 2; i++)
             {
                 GameData.instance.GetPlayer().UpdateHp(-cardData.attackPower);
+                FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Player);
             }
         }
 

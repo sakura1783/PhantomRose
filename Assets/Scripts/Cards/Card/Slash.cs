@@ -21,15 +21,20 @@ public class Slash : CardEffectBase
         if (owner == OwnerStatus.Player)
         {
             GameData.instance.GetOpponent().UpdateHp(-cardData.attackPower);
+            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Opponent);
 
             // 相手にデバフを付与
             GameData.instance.GetOpponent().UpdateDebuff(cardData.stateList[0]);
+            FloatingMessageManager.instance.GenerateFloatingMessage(cardData.stateList[0].duration, DataBaseManager.instance.stateDataSO.stateDataList[cardData.stateList[0].stateId].spriteId, OwnerStatus.Opponent);
         }
         else
         {
             GameData.instance.GetPlayer().UpdateHp(-cardData.attackPower);
+            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Player);
 
             GameData.instance.GetPlayer().UpdateDebuff(cardData.stateList[0]);
+            FloatingMessageManager.instance.GenerateFloatingMessage(cardData.stateList[0].duration, DataBaseManager.instance.stateDataSO.stateDataList[cardData.stateList[0].stateId].spriteId, OwnerStatus.Player);
+
         }
 
         await UniTask.DelayFrame(1);

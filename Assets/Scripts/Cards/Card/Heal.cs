@@ -21,10 +21,12 @@ public class Heal : CardEffectBase
         if (owner == OwnerStatus.Player)
         {
             GameData.instance.GetPlayer().UpdateHp(cardData.recoveryPower);
+            FloatingMessageManager.instance.GenerateFloatingMessage(cardData.recoveryPower, 101, OwnerStatus.Player);
         }
         else
         {
             GameData.instance.GetOpponent().UpdateHp(cardData.recoveryPower);
+            FloatingMessageManager.instance.GenerateFloatingMessage(cardData.recoveryPower, 101, OwnerStatus.Opponent);
         }
 
         await UniTask.DelayFrame(1);

@@ -19,6 +19,9 @@ public enum ConditionType
     吸血,
     攻撃強化,
     負傷,
+
+    回復,
+    シールド,
 }
 
 [System.Serializable]

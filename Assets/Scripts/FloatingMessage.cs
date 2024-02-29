@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using Cysharp.Threading.Tasks;
 
 public class FloatingMessage : MonoBehaviour
 {
@@ -12,23 +11,27 @@ public class FloatingMessage : MonoBehaviour
     /// <summary>
     /// 初期設定
     /// </summary>
-    public async UniTask SetUp(Sprite effectImage, int effectValue)
+    /// <param name="effectValue"></param>
+    /// <param name="spriteId"></param>
+    /// <param name="childCount">親の下に生成されているフロート表示の数</param>
+    public void SetUp(int effectValue, int spriteId, int childCount)
     {
-        imgEffect.sprite = effectImage;
+        if (spriteId >= 0)
+        {
+            // 画像がある場合だけ設定
+            imgEffect.sprite = IconManager.instance.GetStateIcon(spriteId);
+        }
         txtEffectValue.text = effectValue.ToString();
 
         // 画像がない場合は効果の量だけ表示
-        if (!effectImage)
+        if (spriteId < 0)
         {
             imgEffect.enabled = false;
         }
 
         // 生成位置が重ならないようにする
-        transform.localPosition = new Vector2(transform.localPosition.x + Random.Range(-10, 30), transform.localPosition.y);
+        transform.localPosition = new Vector2(transform.localPosition.x + Random.Range(-10, 10), transform.localPosition.y + 70 * (childCount - 1));
 
-        // 1秒待つ
-        await UniTask.Delay(1000);
-
-        Destroy(gameObject);
+        Destroy(gameObject, 1f);
     }
 }

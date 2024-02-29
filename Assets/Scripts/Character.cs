@@ -55,8 +55,6 @@ public class Character
     public virtual void UpdateHp(int amount)
     {
         Hp.Value = Mathf.Clamp(Hp.Value += amount, 0, maxHp);
-
-        Debug.Log($"{owner}のHP : {Hp.Value}");
     }
 
     /// <summary>
