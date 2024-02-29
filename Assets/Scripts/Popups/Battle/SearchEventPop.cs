@@ -25,12 +25,13 @@ public class SearchEventPop : PopupBase
 
     [SerializeField] private TreasureDiscoveryPop treasureDiscoveryPop;
 
+    [SerializeField] private MiniGamePop miniGamePop;
+
     [SerializeField] private Button btnLeave;
 
     private List<TreasureButtonController> treasureButtonList = new();
 
-    // TODO 必要であれば変更する
-    private TreasureType[] events = new TreasureType[4] { TreasureType.None, TreasureType.GetItem, TreasureType.GetItem, TreasureType.GetItem};
+    private TreasureType[] events = new TreasureType[4] { TreasureType.None, TreasureType.GetItem, TreasureType.GetItem, TreasureType.MiniGame};  // 必要であれば変更する
 
 
     /// <summary>
@@ -61,6 +62,9 @@ public class SearchEventPop : PopupBase
 
         treasureDiscoveryPop.CanvasGroup.alpha = 0;
         treasureDiscoveryPop.CanvasGroup.blocksRaycasts = false;
+
+        miniGamePop.CanvasGroup.alpha = 0;
+        miniGamePop.CanvasGroup.blocksRaycasts = false;
 
         // ボタンの生成と各イベントの設定
         GenerateTreasureButtons();
@@ -103,10 +107,12 @@ public class SearchEventPop : PopupBase
                 treasureDiscoveryPop.ShowTreasureDiscoveryPop(GetRandomItem());
                 break;
 
-            // TODO case TreasureType.MiniGame:
+            case TreasureType.MiniGame:
+                miniGamePop.ShowPopUp();
+                break;
 
             default:
-                Debug.Log("該当のイベントがありません");
+                Debug.Log("該当の探索イベントがありません");
                 break;
         }
     }

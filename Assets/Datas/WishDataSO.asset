@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbcf79b42088c463fbca907bbd7efb72, type: 3}
+  m_Name: WishDataSO
+  m_EditorClassIdentifier: 
+  wishDataList:
+  - id: 0
+    wishDetail: "\u30A2\u30A4\u30C6\u30E0\u30A4\u30F3\u30D9\u30F3\u30C8\u30EA+1"
+  - id: 1
+    wishDetail: "\u30E9\u30F3\u30C0\u30E0\u306A\u30AB\u30FC\u30C91\u679A\u3092\u3092\u30C7\u30C3\u30AD\u306B\u8FFD\u52A0"
+  - id: 2
+    wishDetail: "HP\u3092\u5B8C\u5168\u56DE\u5FA9"
+  - id: 3
+    wishDetail: "\u30EB\u30D3\u30FC7\u500B\u3092\u3082\u3089\u3046"
+  - id: 4
+    wishDetail: "\u30E9\u30F3\u30C0\u30E0\u306A\u30AB\u30FC\u30C95\u679A\u306E\u30AF\u30FC\u30EB\u30BF\u30A4\u30E0\u30921\u6E1B\u5C11"
