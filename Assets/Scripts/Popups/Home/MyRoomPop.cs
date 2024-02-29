@@ -17,10 +17,15 @@ public class MyRoomPop : PopupBase
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
 
-        //TODO 各ボタンの購読処理
+        // 各ボタンの購読処理
         btnToUpgradePop.OnClickAsObservable()
             .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
             .Subscribe(_ => PopupManager.instance.Show<UpgradePop>())
+            .AddTo(this);
+
+        btnToCardGalleryPop.OnClickAsObservable()
+            .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
+            .Subscribe(_ => PopupManager.instance.Show<CardGalleryPop>())
             .AddTo(this);
 
         btnToChallengeTaskPop.OnClickAsObservable()
