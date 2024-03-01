@@ -15,6 +15,9 @@ public class CardController : MonoBehaviour
 
     [SerializeField] private Text txtAttackPointOrInterval;
 
+    [SerializeField] private Transform cardImageTran;
+    [SerializeField] private Transform attackPointOrIntervalTextTran;
+
     public IObservable<Unit> OnClickAsObservable => btnCard.OnClickAsObservable();
 
     public ReactiveProperty<bool> IsSelectable = new();
@@ -31,7 +34,7 @@ public class CardController : MonoBehaviour
 
     public int currentCoolTime;
 
-    public bool IsCoolTime => currentCoolTime != 0;  // get専門のプロパティ
+    //public bool IsCoolTime => currentCoolTime != 0;  // get専門のプロパティ
 
 
     /// <summary>
@@ -46,7 +49,7 @@ public class CardController : MonoBehaviour
         // リフレクションを利用し、カードから同名のカード効果を持つクラス・インスタンスを生成
         cardEffect = CardEffectFactory.CreateCardEffect(cardData);
 
-        // ボタンの購読処理
+        // 購読処理
         btnCard.OnClickAsObservable()
             .ThrottleFirst(TimeSpan.FromSeconds(0.5f))
             .Subscribe(_ => descriptionPop.ShowPopUp(data))
@@ -89,7 +92,8 @@ public class CardController : MonoBehaviour
     {
         currentCoolTime = cardData.coolTime;
 
-        Debug.Log($"{cardData.name} : {currentCoolTime}");
+        // カードにクールタイムを表示
+        DisplayCoolTime(true);
     }
 
     /// <summary>
@@ -104,15 +108,45 @@ public class CardController : MonoBehaviour
         }
 
         currentCoolTime--;
+        txtAttackPointOrInterval.text = currentCoolTime.ToString();
 
         if (currentCoolTime == 0)
         {
             // もう一度このカードを選べるようにする
             SetSelectable(false);
+
+            // カードに攻撃力を表示
+            DisplayCoolTime(false);
         }
+    }
 
-        Debug.Log($"クールタイム更新{cardData.name} : {currentCoolTime}");
+    /// <summary>
+    /// カードにクールタイムを表示
+    /// </summary>
+    /// <param name="isCoolTime"></param>
+    private void DisplayCoolTime(bool isCoolTime)
+    {
+        if (isCoolTime)
+        {
+            // ボタンを非アクティブ化 (同時にカードが使えないことを可視化)
+            btnCard.interactable = false;
 
-        // TODO カードの絵を変える、クールタイム表示の更新
+            // クールタイムを上に、カードの画像を下に移動
+            cardImageTran.localPosition = new Vector3(0f, -30.5f, 0f);
+            attackPointOrIntervalTextTran.localPosition = new Vector3(0f, 53f, 0f);
+
+            // クールタイムを表示
+            txtAttackPointOrInterval.text = currentCoolTime.ToString();
+        }
+        else
+        {
+            btnCard.interactable = true;
+
+            cardImageTran.localPosition = new Vector3(0f, 30.5f, 0f);
+            attackPointOrIntervalTextTran.localPosition = new Vector3(0f, -53f, 0f);
+
+            // 攻撃力を表示
+            txtAttackPointOrInterval.text = cardData.attackPower.ToString();
+        }
     }
 }

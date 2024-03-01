@@ -50,7 +50,8 @@ public class BattleEventManager : MonoBehaviour
 
     //private UnityAction battleEndAction = null;
 
-    private List<CardController> handCardList = new();
+    private List<CardController> playerHandCardList = new();
+    // TODO private List<CardData> opponentHandCardList = new();
 
 
     /// <summary>
@@ -92,21 +93,21 @@ public class BattleEventManager : MonoBehaviour
     /// 初期化
     /// </summary>
     /// <param name="token"></param>
-    /// <param name="popCloseAction"></param>
     /// <returns></returns>
     public async UniTask Initialize(CancellationToken token) //UnityAction popCloseAction)
     {
         // デリゲートに登録
         //battleEndAction = popCloseAction;
 
-        for (int i = 0; i < handCardList.Count; i++)
+        foreach (var card in playerHandCardList)
         {
-            Destroy(handCardList[i].gameObject);
+            Destroy(card.gameObject);
         }
 
-        handCardList.Clear();
+        playerHandCardList.Clear();
+        // TODO opponentHandCardList.Clear();
 
-        // プレイヤーのカードは毎回初期化(前バトルで変更された攻撃力など)
+        // TODO カードを初期化 (前回バトルで変更された攻撃力など)
         GameData.instance.GetPlayer().CopyCardDataList = new ReactiveCollection<CardData>(GameData.instance.myCardList);
 
         for (int i = 0; i < GameData.instance.GetPlayer().CopyCardDataList.Count; i++)
@@ -114,12 +115,17 @@ public class BattleEventManager : MonoBehaviour
             CardController card = Instantiate(cardPrefab, playerHandCardTran);
             card.SetUp(GameData.instance.GetCardData(i), descriptionPop);
 
-            handCardList.Add(card);
+            playerHandCardList.Add(card);
         }
+        // TODO
+        //foreach (var card in GameData.instance.GetOpponent().CopyCardDataList)
+        //{
+        //    opponentHandCardList.Add(card);
+        //}
 
         // TODO GameDataへ移行予定
-        playerHandCardManager = new(handCardList, SelectCard);
-        opponentHandCardManager = new(handCardList, cardSlotManager);
+        playerHandCardManager = new(playerHandCardList, SelectCard);
+        opponentHandCardManager = new(playerHandCardList, cardSlotManager);  // TODO 同じカードリストを使っているため、敵の手札のカードにもプレイヤーのクールタイムが反映されてしまう
 
         // カードの効果が全て終了したら購読する
         //cardHandler.CommandSubject
