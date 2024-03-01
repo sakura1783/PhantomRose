@@ -74,7 +74,7 @@ public class BattleEventManager : MonoBehaviour
         cardHandler = new();  // これによって、CardHandlerクラスが利用できるようになる
 
         // プレイヤー情報を生成
-        GameData.instance.InitCharacter(OwnerStatus.Player, 40);
+        GameData.instance.InitCharacter(OwnerStatus.Player, 5);
 
         // プレイヤーの各ステータス購読処理
         battleUIPresenter.SubscribePlayerHp();
@@ -244,6 +244,9 @@ public class BattleEventManager : MonoBehaviour
 
             // ゲームオーバーのポップアップを開く
             gameUpPop.ShowPopUp(false);
+
+            // プレイヤーのHPを最大値に戻す
+            GameData.instance.GetPlayer().Hp.Value = GameData.instance.GetPlayer().MaxHp;
 
             return;
         }
