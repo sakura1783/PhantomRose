@@ -76,16 +76,6 @@ public class BattleUIView : MonoBehaviour
     }
 
     /// <summary>
-    /// 対戦相手のHPの更新
-    /// </summary>
-    /// <param name="currentHp"></param>
-    public void UpdateOpponentHp(int currentHp)
-    {
-        txtOpponentHp.text = currentHp.ToString();
-        opponentSlider.DOValue((float)currentHp / GameData.instance.GetOpponent().MaxHp, animDuration).SetEase(animEase);
-    }
-
-    /// <summary>
     /// プレイヤーのシールド値の更新
     /// </summary>
     /// <param name="currentValue"></param>
@@ -95,6 +85,92 @@ public class BattleUIView : MonoBehaviour
         SetCanvasAlpha(playerShieldGroup, currentValue);
 
         txtPlayerShieldValue.text = currentValue.ToString();
+    }
+
+    /// <summary>
+    /// プレイヤーのバフの初期設定
+    /// </summary>
+    public void SetUpPlayerBuff()
+    {
+        SetCanvasAlpha(playerBuffGroup, 0);
+
+        // バフの継続時間と画像の初期化
+        imgPlayerBuff.sprite = null;
+        UpdatePlayerBuffDuration(0);
+    }
+
+    /// <summary>
+    /// プレイヤーのバフ更新
+    /// </summary>
+    /// <param name="currentDuration"></param>
+    public void UpdatePlayerBuff(SimpleStateData newStateData)
+    {
+        // カードに状態異常効果がない場合、リストの中身が空になる(データがない)ので、newStateDataがない場合は処理を行わない
+        if (newStateData == null)
+        {
+            return;
+        }
+
+        SetCanvasAlpha(playerBuffGroup, newStateData.duration);
+
+        UpdatePlayerBuffDuration(newStateData.duration);
+        imgPlayerBuff.sprite = IconManager.instance.GetStateIcon(DataBaseManager.instance.stateDataSO.stateDataList[newStateData.stateId].spriteId);
+    }
+
+    /// <summary>
+    /// プレイヤーのバフ継続時間の更新
+    /// </summary>
+    /// <param name="duration"></param>
+    public void UpdatePlayerBuffDuration(int duration)
+    {
+        txtPlayerBuffDuration.text = duration.ToString();
+    }
+
+    /// <summary>
+    /// プレイヤーのデバフの初期設定
+    /// </summary>
+    public void SetUpPlayerDebuff()
+    {
+        SetCanvasAlpha(playerDebuffGroup, 0);
+
+        UpdatePlayerDebuffDuration(0);
+        imgPlayerDebuff.sprite = null;
+    }
+
+    /// <summary>
+    /// プレイヤーのデバフ更新
+    /// </summary>
+    /// <param name="currentDuration"></param>
+    public void UpdatePlayerDebuff(SimpleStateData newStateData)
+    {
+        if (newStateData == null)
+        {
+            return;
+        }
+
+        SetCanvasAlpha(playerDebuffGroup, newStateData.duration);
+
+        UpdatePlayerDebuffDuration(newStateData.duration);
+        imgPlayerDebuff.sprite = IconManager.instance.GetStateIcon(DataBaseManager.instance.stateDataSO.stateDataList[newStateData.stateId].spriteId);
+    }
+
+    /// <summary>
+    /// プレイヤーのデバフ継続時間の更新
+    /// </summary>
+    /// <param name="duration"></param>
+    public void UpdatePlayerDebuffDuration(int duration)
+    {
+        txtPlayerDebuffDuration.text = duration.ToString();
+    }
+
+    /// <summary>
+    /// 対戦相手のHPの更新
+    /// </summary>
+    /// <param name="currentHp"></param>
+    public void UpdateOpponentHp(int currentHp)
+    {
+        txtOpponentHp.text = currentHp.ToString();
+        opponentSlider.DOValue((float)currentHp / GameData.instance.GetOpponent().MaxHp, animDuration).SetEase(animEase);
     }
 
     /// <summary>
@@ -109,76 +185,19 @@ public class BattleUIView : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーのバフの初期設定
-    /// </summary>
-    public void SetUpPlayerBuff()
-    {
-        SetCanvasAlpha(playerBuffGroup, 0);
-
-        txtPlayerBuffDuration.text = "0";
-        imgPlayerBuff.sprite = null;
-    }
-
-    /// <summary>
-    /// プレイヤーのバフの更新
-    /// </summary>
-    /// <param name="currentDuration"></param>
-    public void UpdatePlayerBuff(SimpleStateData newStateData)
-    {
-        // カードにバフデバフ効果がない場合、リストの中身が空になる(データがない)ので、newStateDataがない場合は処理を行わない
-        if (newStateData == null)
-        {
-            return;
-        }
-
-        SetCanvasAlpha(playerBuffGroup, newStateData.duration);
-
-        txtPlayerBuffDuration.text = newStateData.duration.ToString();
-        imgPlayerBuff.sprite = IconManager.instance.GetStateIcon(DataBaseManager.instance.stateDataSO.stateDataList[newStateData.stateId].spriteId);
-    }
-
-    /// <summary>
-    /// プレイヤーのデバフの初期設定
-    /// </summary>
-    public void SetUpPlayerDebuff()
-    {
-        SetCanvasAlpha(playerDebuffGroup, 0);
-
-        txtPlayerDebuffDuration.text = "0";
-        imgPlayerDebuff.sprite = null;
-    }
-
-    /// <summary>
-    /// プレイヤーのデバフ継続時間の更新
-    /// </summary>
-    /// <param name="currentDuration"></param>
-    public void UpdatePlayerDebuff(SimpleStateData newStateData)
-    {
-        if (newStateData == null)
-        {
-            return;
-        }
-
-        SetCanvasAlpha(playerDebuffGroup, newStateData.duration);
-
-        txtPlayerDebuffDuration.text = newStateData.duration.ToString();
-        imgPlayerDebuff.sprite = IconManager.instance.GetStateIcon(DataBaseManager.instance.stateDataSO.stateDataList[newStateData.stateId].spriteId);
-    }
-
-    /// <summary>
-    /// 対戦相手のバフ継続時間の初期設定
+    /// 対戦相手のバフの初期設定
     /// </summary>
     /// <param name="defaultDuration"></param>
     public void SetUpOpponentBuff()
     {
         SetCanvasAlpha(opponentBuffGroup, 0);
 
-        txtOpponentBuffDuration.text = "0";
+        UpdateOpponentBuffDuration(0);
         imgOpponentBuff.sprite = null;
     }
 
     /// <summary>
-    /// 対戦相手のバフ継続時間の更新
+    /// 対戦相手のバフ更新
     /// </summary>
     /// <param name="currentDuration"></param>
     public void UpdateOpponentBuff(SimpleStateData newStateData)
@@ -190,37 +209,57 @@ public class BattleUIView : MonoBehaviour
 
         SetCanvasAlpha(opponentBuffGroup, newStateData.duration);
 
-        txtOpponentBuffDuration.text = newStateData.duration.ToString();
+        UpdateOpponentBuffDuration(newStateData.duration);
         imgOpponentBuff.sprite = IconManager.instance.GetStateIcon(DataBaseManager.instance.stateDataSO.stateDataList[newStateData.stateId].spriteId);
     }
 
     /// <summary>
-    /// 対戦相手のデバフ継続時間の初期設定
+    /// 対戦相手のバフ継続時間の更新
+    /// </summary>
+    /// <param name="duration"></param>
+    public void UpdateOpponentBuffDuration(int duration)
+    {
+        txtOpponentBuffDuration.text = duration.ToString();
+    }
+
+    /// <summary>
+    /// 対戦相手のデバフの初期設定
     /// </summary>
     /// <param name="defaultDuration"></param>
     public void SetUpOpponentDebuff()
     {
         SetCanvasAlpha(opponentDebuffGroup, 0);
 
-        txtOpponentDebuffDuration.text = "0";
+        UpdateOpponentDebuffDuration(0);
         imgOpponentDebuff.sprite = null;
     }
 
     /// <summary>
-    /// 対戦相手のデバフ継続時間の更新
+    /// 対戦相手のデバフ更新
     /// </summary>
     /// <param name="currentDuration"></param>
     public void UpdateOpponentDebuff(SimpleStateData newStateData)
     {
         if (newStateData == null)
         {
+            SetUpOpponentDebuff();
+
             return;
         }
 
         SetCanvasAlpha(opponentDebuffGroup, newStateData.duration);
 
-        txtOpponentDebuffDuration.text = newStateData.duration.ToString();
+        UpdateOpponentDebuffDuration(newStateData.duration);
         imgOpponentDebuff.sprite = IconManager.instance.GetStateIcon(DataBaseManager.instance.stateDataSO.stateDataList[newStateData.stateId].spriteId);
+    }
+
+    /// <summary>
+    /// 対戦相手のデバフ継続時間の更新
+    /// </summary>
+    /// <param name="duration"></param>
+    public void UpdateOpponentDebuffDuration(int duration)
+    {
+        txtOpponentDebuffDuration.text = duration.ToString();
     }
 
     /// <summary>

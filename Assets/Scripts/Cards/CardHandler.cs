@@ -27,7 +27,7 @@ public class CardHandler
             await commandList[i].ExecuteAsync(ownerList[i], token);
 
             // 仮の待機時間。本来はエフェクトなどの絡みがあるので、各ExecuteAsync内にかく
-            await UniTask.Delay(1000, cancellationToken: token);
+            await UniTask.Delay(1500, cancellationToken: token);
 
             // HPのチェック。いずれかが0になったら、以降の処理はキャンセルする
             if (GameData.instance.GetPlayer().Hp.Value <= 0)

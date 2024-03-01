@@ -76,8 +76,11 @@ public class BattleEventManager : MonoBehaviour
         // プレイヤー情報を生成
         GameData.instance.InitCharacter(OwnerStatus.Player, 40);
 
-        // プレイヤーのHP購読処理
+        // プレイヤーの各ステータス購読処理
         battleUIPresenter.SubscribePlayerHp();
+        battleUIPresenter.SubscribePlayerShieldValue();
+        battleUIPresenter.SubscribePlayerBuff();
+        battleUIPresenter.SubscribePlayerDebuff();
 
         // TODO プレイヤーのCardDataListの購読処理。変更されたら、そのデータを持っているカードの表示を更新する
         //subscription = GameData.instance.GetPlayer().CopyCardDataList.ObserveReplace()
@@ -131,10 +134,13 @@ public class BattleEventManager : MonoBehaviour
         //cardHandler.CommandSubject
         //    .Subscribe(_ => PrepareNextTurn());
 
-        // TODO デバッグ用にプレイヤーと対戦相手の生成(対戦相手はバトルのたびにインスタンスする)
-        GameData.instance.InitCharacter(OwnerStatus.Opponent, 25);
+        // プレイヤーの状態異常とシールド値の初期化
+        InitPlayerForNewBattle();
 
-        // キャラのHP、Shield、バフデバフなどの購読処理
+        // TODO デバッグ用にプレイヤーと対戦相手の生成(対戦相手はバトルのたびにインスタンスする)
+        GameData.instance.InitCharacter(OwnerStatus.Opponent, 10);
+
+        // 敵のステータスの購読処理
         battleUIPresenter.SubscribeEveryBattle();
 
         await UniTask.Delay(500, cancellationToken: token);  // 第一引数はミリ秒。1000ミリ秒で1秒
@@ -147,8 +153,6 @@ public class BattleEventManager : MonoBehaviour
     /// </summary>
     private void PrepareNextTurn()
     {
-        // TODO クールタイムの減少など
-
         // 盤面のリセット
         ResetBattleField();
 
@@ -185,8 +189,6 @@ public class BattleEventManager : MonoBehaviour
     /// </summary>
     public void RemoveCard()
     {
-        // TODO カードのクールタイムを設定
-
         selectedCard = null;
     }
 
@@ -290,5 +292,18 @@ public class BattleEventManager : MonoBehaviour
 
         //プレイヤーのカードだけ破棄
         cardSlotManager.DeleteCardsFromSlots(OwnerStatus.Player);
+    }
+
+    /// <summary>
+    /// 毎バトル行う、プレイヤーのステータス初期化処理
+    /// </summary>
+    private void InitPlayerForNewBattle()
+    {
+        // 前回バトルで付随したシールドや状態異常をリセット
+        GameData.instance.GetPlayer().Shield.Value = 0;
+        GameData.instance.GetPlayer().BuffDuration.Value = 0;
+        GameData.instance.GetPlayer().DebuffDuration.Value = 0;
+
+        Debug.Log($"DebuffDurationの値：{GameData.instance.GetPlayer().DebuffDuration.Value}");
     }
 }

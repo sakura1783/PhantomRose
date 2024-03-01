@@ -22,16 +22,13 @@ public class Character
 
     public ReactiveProperty<SimpleStateData> Buff = new();
     public ReactiveProperty<SimpleStateData> Debuff = new();
+    public ReactiveProperty<int> BuffDuration = new();
+    public ReactiveProperty<int> DebuffDuration = new();
 
     private int maxHp;
     public int MaxHp => maxHp;
 
     private OwnerStatus owner;
-
-    private bool replaceBuff = false;  // バフを置き換えるかどうか
-    public bool ReplaceBuff => replaceBuff;
-    private bool replaceDebuff = false;
-    public bool ReplaceDebuff => replaceDebuff;
 
 
     /// <summary>
@@ -64,33 +61,48 @@ public class Character
     public void UpdateShield(int amount)
     {
         Shield.Value = Mathf.Clamp(Shield.Value += amount, 0, int.MaxValue);
-
-        Debug.Log($"{owner}のシールド値 : {Shield.Value}");
     }
 
     /// <summary>
-    /// バフの継続時間の更新
+    /// バフ更新
     /// </summary>
     /// <param name="amount"></param>
     public void UpdateBuff(SimpleStateData newStateData)
     {
-        replaceBuff = Buff.Value != newStateData;
+        // バフを置き換えるかどうか
+        var replaceBuff = Buff.Value != newStateData;
 
-        Buff.Value = newStateData;
+        //置き換える場合
+        if (replaceBuff)
+        {
+            Buff.Value = newStateData;
 
-        Debug.Log($"{owner}のバフ : {Buff.Value}");
+            //継続時間を置き換え
+            BuffDuration.Value = newStateData.duration;
+        }
+        else
+        {
+            // 継続時間を追加
+            BuffDuration.Value += newStateData.duration;
+        }
     }
 
     /// <summary>
-    /// デバフの継続時間の更新
+    /// デバフ更新
     /// </summary>
     /// <param name="amount"></param>
     public void UpdateDebuff(SimpleStateData newStateData)
     {
-        replaceDebuff = Debuff.Value != newStateData;
+        var replaceDebuff = Debuff.Value != newStateData;
 
-        Debuff.Value = newStateData;
-
-        Debug.Log($"{owner}のデバフ : {Debuff.Value}");
+        if (replaceDebuff)
+        {
+            Debuff.Value = newStateData;
+            DebuffDuration.Value = newStateData.duration;
+        }
+        else
+        {
+            DebuffDuration.Value += newStateData.duration;
+        }
     }
 }

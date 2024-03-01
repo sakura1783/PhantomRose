@@ -10,17 +10,12 @@ public class BattleUIPresenter : MonoBehaviour
 
 
     /// <summary>
-    /// バトル毎に実行する初期化と購読処理
+    /// バトル毎に実行する敵のステータスの初期化と購読処理
     /// </summary>
     public void SubscribeEveryBattle()
     {
         SubscribeOpponentHp();
-
-        SubscribePlayerShieldValue();
         SubscribeOpponentShieldValue();
-
-        SubscribePlayerBuff();
-        SubscribePlayerDebuff();
         SubscribeOpponentBuff();
         SubscribeOpponentDebuff();
     }
@@ -43,6 +38,67 @@ public class BattleUIPresenter : MonoBehaviour
     }
 
     /// <summary>
+    /// プレイヤーのシールド値の初期設定と購読処理
+    /// </summary>
+    public void SubscribePlayerShieldValue()
+    {
+        battleUIView.UpdatePlayerShieldValue(0);
+
+        GameData.instance.GetPlayer().Shield
+            .Subscribe(value => battleUIView.UpdatePlayerShieldValue(value))
+            .AddTo(this);
+    }
+
+    /// <summary>
+    /// プレイヤーのバフの初期設定と購読処理
+    /// </summary>
+    public void SubscribePlayerBuff()
+    {
+        battleUIView.SetUpPlayerBuff();
+
+        GameData.instance.GetPlayer().Buff
+            .Subscribe(data => battleUIView.UpdatePlayerBuff(data))
+            .AddTo(this);
+
+        GameData.instance.GetPlayer().BuffDuration
+            .Subscribe(value =>
+            {
+                battleUIView.UpdatePlayerBuffDuration(value);
+
+                // 継続時間が0以下の場合
+                if (value <= 0)
+                {
+                    battleUIView.SetUpPlayerBuff();
+                }
+            })
+            .AddTo(this);
+    }
+
+    /// <summary>
+    /// プレイヤーのデバフ継続時間の初期設定と購読処理
+    /// </summary>
+    public void SubscribePlayerDebuff()
+    {
+        battleUIView.SetUpPlayerDebuff();
+
+        GameData.instance.GetPlayer().Debuff
+            .Subscribe(data => battleUIView.UpdatePlayerDebuff(data))
+            .AddTo(this);
+
+        GameData.instance.GetPlayer().DebuffDuration
+            .Subscribe(value =>
+            {
+                battleUIView.UpdatePlayerDebuffDuration(value);
+
+                if (value <= 0)
+                {
+                    battleUIView.SetUpPlayerDebuff();
+                }
+            })
+            .AddTo(this);
+    }
+
+    /// <summary>
     /// 対戦相手のHP用UIをMVPパターンで設定
     /// </summary>
     private void SubscribeOpponentHp()
@@ -52,19 +108,6 @@ public class BattleUIPresenter : MonoBehaviour
         // 対戦相手のHPの購読処理(対戦相手が変わるたびに購読するので、AddToではなく、対戦相手がいなくなるたびに毎回購読を止める必要がある)
         GameData.instance.GetOpponent().Hp
             .Subscribe(value => battleUIView.UpdateOpponentHp(value))
-            .AddTo(subscriptions);
-    }
-
-    /// <summary>
-    /// プレイヤーのシールド値の初期設定と購読処理
-    /// </summary>
-    private void SubscribePlayerShieldValue()
-    {
-        battleUIView.UpdatePlayerShieldValue(0);
-
-        // バトルが終わるたびに毎回購読を止める(シールド値は毎バトル0からスタート)
-        GameData.instance.GetPlayer().Shield
-            .Subscribe(value => battleUIView.UpdatePlayerShieldValue(value))
             .AddTo(subscriptions);
     }
 
@@ -81,30 +124,6 @@ public class BattleUIPresenter : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーのバフ継続時間の初期設定と購読処理
-    /// </summary>
-    private void SubscribePlayerBuff()
-    {
-        battleUIView.SetUpPlayerBuff();
-
-        GameData.instance.GetPlayer().Buff
-            .Subscribe(data => battleUIView.UpdatePlayerBuff(data))
-            .AddTo(subscriptions);
-    }
-
-    /// <summary>
-    /// プレイヤーのデバフ継続時間の初期設定と購読処理
-    /// </summary>
-    private void SubscribePlayerDebuff()
-    {
-        battleUIView.SetUpPlayerDebuff();
-
-        GameData.instance.GetPlayer().Debuff
-            .Subscribe(data => battleUIView.UpdatePlayerDebuff(data))
-            .AddTo(subscriptions);
-    }
-
-    /// <summary>
     /// 対戦相手のバフ継続時間の初期設定と購読処理
     /// </summary>
     private void SubscribeOpponentBuff()
@@ -113,6 +132,18 @@ public class BattleUIPresenter : MonoBehaviour
 
         GameData.instance.GetOpponent().Buff
             .Subscribe(data => battleUIView.UpdateOpponentBuff(data))
+            .AddTo(subscriptions);
+
+        GameData.instance.GetOpponent().BuffDuration
+            .Subscribe(value =>
+            {
+                battleUIView.UpdateOpponentBuffDuration(value);
+
+                if (value <= 0)
+                {
+                    battleUIView.SetUpOpponentBuff();
+                }
+            })
             .AddTo(subscriptions);
     }
 
@@ -126,6 +157,18 @@ public class BattleUIPresenter : MonoBehaviour
         GameData.instance.GetOpponent().Debuff
             .Subscribe(data => battleUIView.UpdateOpponentDebuff(data))
             .AddTo(subscriptions);
+
+        GameData.instance.GetOpponent().DebuffDuration
+            .Subscribe(value =>
+            {
+                battleUIView.UpdateOpponentDebuffDuration(value);
+
+                if (value <= 0)
+                {
+                    battleUIView.SetUpOpponentDebuff();
+                }
+            })
+            .AddTo(subscriptions);
     }
 
     /// <summary>
@@ -133,8 +176,9 @@ public class BattleUIPresenter : MonoBehaviour
     /// </summary>
     public void EndBattle()
     {
-        // 購読を停止(ここで停止しておかないと、次の対戦相手のHPの購読が重複して発生してしまう)
-        subscriptions?.Dispose();
+        // TODO 購読を停止(ここで停止しておかないと、次の対戦相手のHPの購読が重複して発生してしまう)
+        //subscriptions?.Dispose();
+        subscriptions.Clear();
 
         // TODO 処理自体は変数内に残っているので、nullにすることで残っている処理も削除する
         //subscriptions = null;
