@@ -42,6 +42,9 @@ public class BattleEventPop : PopupBase
     {
         var token = this.GetCancellationTokenOnDestroy();
 
+        // スロットにセットされているすべてのカードを破棄
+        battleEventManager.ResetBattleField();
+
         // 各カードデッキにカードを生成
         battleEventManager.Initialize(token).Forget(); //HidePopUp)
 

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f47ca317e7814004adfc24c8f85883a, type: 3}
+  m_Name: RouteDataSO 1
+  m_EditorClassIdentifier: 
+  routeList:
+  - eventList:
+    - {fileID: 256527575672891372, guid: 943d9cf8d4a7a4fe4ad74cb23e4bfbbd, type: 3}
+    - {fileID: 1488221615298780620, guid: 673729af24ca94da2a92d108c04a9db4, type: 3}
+  - eventList:
+    - {fileID: 1488221615298780620, guid: 673729af24ca94da2a92d108c04a9db4, type: 3}
+  - eventList:
+    - {fileID: 2402983266296702463, guid: 4e4f774edde094270970b9250e25ed42, type: 3}
+    - {fileID: 1488221615298780620, guid: 673729af24ca94da2a92d108c04a9db4, type: 3}
+  - eventList:
+    - {fileID: 1901127914098972633, guid: a649fe3651083419e9abe8c066fd440b, type: 3}
+  - eventList:
+    - {fileID: 256527575672891372, guid: 943d9cf8d4a7a4fe4ad74cb23e4bfbbd, type: 3}
+    - {fileID: 256527575672891372, guid: 943d9cf8d4a7a4fe4ad74cb23e4bfbbd, type: 3}
+  - eventList:
+    - {fileID: 256527575672891372, guid: 943d9cf8d4a7a4fe4ad74cb23e4bfbbd, type: 3}
+    - {fileID: 1488221615298780620, guid: 673729af24ca94da2a92d108c04a9db4, type: 3}
+  - eventList:
+    - {fileID: 2402983266296702463, guid: 4e4f774edde094270970b9250e25ed42, type: 3}

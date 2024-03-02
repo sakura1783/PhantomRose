@@ -31,7 +31,7 @@ public class SearchEventPop : PopupBase
 
     private List<TreasureButtonController> treasureButtonList = new();
 
-    private TreasureType[] events = new TreasureType[4] { TreasureType.None, TreasureType.GetItem, TreasureType.GetItem, TreasureType.MiniGame};  // 必要であれば変更する
+    private TreasureType[] events = new TreasureType[4] { TreasureType.MiniGame, TreasureType.MiniGame, TreasureType.MiniGame, TreasureType.MiniGame};  // 必要であれば変更する
 
 
     /// <summary>

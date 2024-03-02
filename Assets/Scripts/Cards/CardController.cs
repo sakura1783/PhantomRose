@@ -148,5 +148,7 @@ public class CardController : MonoBehaviour
             // 攻撃力を表示
             txtAttackPointOrInterval.text = cardData.attackPower.ToString();
         }
+
+        Debug.Log("動きました");
     }
 }

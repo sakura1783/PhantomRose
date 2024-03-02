@@ -74,7 +74,7 @@ public class BattleEventManager : MonoBehaviour
         cardHandler = new();  // これによって、CardHandlerクラスが利用できるようになる
 
         // プレイヤー情報を生成
-        GameData.instance.InitCharacter(OwnerStatus.Player, 5);
+        GameData.instance.InitCharacter(OwnerStatus.Player, 30);
 
         // プレイヤーの各ステータス購読処理
         battleUIPresenter.SubscribePlayerHp();
@@ -153,8 +153,20 @@ public class BattleEventManager : MonoBehaviour
     /// </summary>
     private void PrepareNextTurn()
     {
+        //TODO 追加
+
         // 盤面のリセット
         ResetBattleField();
+
+        Debug.Log($"カードの数：{cardSlotManager.setPlayerCardList.Count}");
+
+        // スロットに配置したカードのクールタイムを設定
+        playerHandCardManager.SetCoolTimeCards(cardSlotManager.setPlayerCardList);
+
+        // それ以外のクールタイムがあるカードのクールタイムを減少
+        playerHandCardManager.UpdateCoolTimeCards(cardSlotManager.setPlayerCardList);
+
+        // TODO バフとデバフの管理
 
         // スロットのOwnerStatusをランダムで2箇所、対戦相手のスロットとして設定
         cardSlotManager.SetOpponentCardSlotsRandomly();
@@ -263,12 +275,6 @@ public class BattleEventManager : MonoBehaviour
     {
         // スロットに配置したプレイヤーのカードだけ、再度利用できる状態にする
         //playerHandCardManager.ActivateSelectedCards(cardSlotManager.setPlayerCardList);
-
-        // スロットに配置したカードのクールタイムを設定
-        playerHandCardManager.SetCoolTimeCards(cardSlotManager.setPlayerCardList);
-
-        // それ以外のクールタイムがあるカードのクールタイムを減少
-        playerHandCardManager.UpdateCoolTimeCards(cardSlotManager.setPlayerCardList);
 
         // 全てのカードを破棄
         cardSlotManager.DeleteAllCardsFromSlots();
