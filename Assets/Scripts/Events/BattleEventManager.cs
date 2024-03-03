@@ -59,6 +59,15 @@ public class BattleEventManager : MonoBehaviour
         public int coolTime;
     }
 
+    /// <summary>
+    /// Json化する際、そのままListを渡すとJson化しても無視される(できない)ので、Listをラップするためのクラスを用意
+    /// </summary>
+    [System.Serializable]
+    public class Wrapper
+    {
+        public List<CoolTimeData> coolTimeDataList = new();
+    }
+
     private const string CoolTime_Key = "CoolTime_Key";  // クールタイムのセーブ用Key
 
 
@@ -140,26 +149,20 @@ public class BattleEventManager : MonoBehaviour
         // クールタイムのセーブデータがある場合
         if (PlayerPrefsHelper.ExistsData(CoolTime_Key))
         {
-            var coolTimeDataList = PlayerPrefsHelper.Load<List<CoolTimeData>>(CoolTime_Key);
+            var wrapper = PlayerPrefsHelper.Load<Wrapper>(CoolTime_Key);
 
-            foreach (var data in coolTimeDataList)
+            foreach (var data in wrapper.coolTimeDataList)
             {
-                Debug.Log($"{data.cardId}, {data.coolTime}");
-
                 foreach (var card in playerHandCardList)
                 {
-                    // セーブデータに該当のカードが含まれていたら
-                    if (data.cardId == card.CardData.id)
+                    // セーブデータに該当のカードが含まれていて、かつ、クールタイムがあるなら
+                    if (data.cardId == card.CardData.id && data.coolTime > 0)
                     {
                         // クールタイムを引き継ぎ
                         card.SetCoolTime(data.coolTime);
-
-                        Debug.Log("クールタイムを引き継ぎます");
                     }
                 }
             }
-
-            Debug.Log("通りました");
         }
 
         // TODO GameDataへ移行予定
@@ -355,7 +358,7 @@ public class BattleEventManager : MonoBehaviour
     /// </summary>
     private void SaveCoolTime()
     {
-        List<CoolTimeData> coolTimeDataList = new();
+        Wrapper wrapper = new();
 
         foreach (var card in playerHandCardList)
         {
@@ -366,9 +369,9 @@ public class BattleEventManager : MonoBehaviour
                 coolTime = card.CurrentCoolTime,
             };
 
-            coolTimeDataList.Add(coolTimeData);
+            wrapper.coolTimeDataList.Add(coolTimeData);
         }
 
-        PlayerPrefsHelper.Save(CoolTime_Key, coolTimeDataList);
+        PlayerPrefsHelper.Save(CoolTime_Key, wrapper);
     }
 }

@@ -148,7 +148,7 @@ public class CardController : MonoBehaviour
             attackPointOrIntervalTextTran.localPosition = new Vector3(0f, -53f, 0f);
 
             // 攻撃力を表示
-            txtAttackPointOrInterval.text = cardData.attackPower.ToString();
+            txtAttackPointOrInterval.text = cardData.attackPower <= 0 ? "" : cardData.attackPower.ToString();
         }
     }
 }
