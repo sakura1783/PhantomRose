@@ -131,7 +131,7 @@ public class CardController : MonoBehaviour
         if (isCoolTime)
         {
             // ボタンを非アクティブ化 (同時にカードが使えないことを可視化)
-            btnCard.interactable = false;
+            btnCard.interactable = false;  // TODO 変更。DisabledColorゲームオブジェクトを追加して、色だけ変更。現在の処理だと、タップしてもDescriptionポップが開かないため、どんなカードかわかりずらい
 
             // クールタイムを上に、カードの画像を下に移動
             cardImageTran.localPosition = new Vector3(0f, -30.5f, 0f);
