@@ -39,10 +39,13 @@ public class BattleEventManager : MonoBehaviour
     [SerializeField] private MainGameManager mainGameManager;
 
     private CardSlotManager cardSlotManager;
+    public CardSlotManager CardSlotManager => cardSlotManager;
 
     private readonly int slotCount = 4;
 
     private PlayerHandCardManager playerHandCardManager;
+    public PlayerHandCardManager PlayerHandCardManager => playerHandCardManager;
+
     private OpponentHandCardManager opponentHandCardManager;
 
     private CardHandler cardHandler;
@@ -153,14 +156,22 @@ public class BattleEventManager : MonoBehaviour
 
             foreach (var data in wrapper.coolTimeDataList)
             {
-                foreach (var card in playerHandCardList)
+                //foreach (var card in playerHandCardList)
+                //{
+                //    
+                //    if (data.cardId == card.CardData.id && data.coolTime > 0)
+                //    {
+                //    }
+                //}
+
+                // 上記をリファクタリング
+                // セーブデータに該当のカードが含まれていて、かつ、クールタイムがあるなら
+                var card = playerHandCardList.FirstOrDefault(card => card.CardData.id == data.cardId && data.coolTime > 0);
+
+                if (card)
                 {
-                    // セーブデータに該当のカードが含まれていて、かつ、クールタイムがあるなら
-                    if (data.cardId == card.CardData.id && data.coolTime > 0)
-                    {
-                        // クールタイムを引き継ぎ
-                        card.SetCoolTime(data.coolTime);
-                    }
+                    // クールタイムを引き継ぎ
+                    card.SetCoolTime(data.coolTime);
                 }
             }
         }
@@ -192,8 +203,8 @@ public class BattleEventManager : MonoBehaviour
     /// </summary>
     private void PrepareNextTurn()
     {
-        // TODO 場所を、カード実行タイミングに変更
-        // スロットに配置したカードのクールタイムを設定
+        //TODO 場所を、カード実行タイミングに変更
+        //スロットに配置したカードのクールタイムを設定
         playerHandCardManager.SetCoolTimeCards(cardSlotManager.setPlayerCardList);
 
         // それ以外のクールタイムがあるカードのクールタイムを減少
@@ -272,8 +283,6 @@ public class BattleEventManager : MonoBehaviour
 
             // プレイヤーアイコンの位置と親子関係を初期化
             mainGameManager.ResetPlayerIconTran();
-
-            // TODO 最後に使ったカードのクールタイム設定。2枚のうち、1枚使わずに勝った場合も考慮して実装する
 
             // 全カードのクールタイムを記憶
             SaveCoolTime();

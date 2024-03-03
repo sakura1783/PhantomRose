@@ -15,6 +15,8 @@ public class CardController : MonoBehaviour
 
     [SerializeField] private Text txtAttackPointOrInterval;
 
+    [SerializeField] private CanvasGroup disabledColorGroup;
+
     [SerializeField] private Transform cardImageTran;
     [SerializeField] private Transform attackPointOrIntervalTextTran;
 
@@ -130,8 +132,8 @@ public class CardController : MonoBehaviour
     {
         if (isCoolTime)
         {
-            // ボタンを非アクティブ化 (同時にカードが使えないことを可視化)
-            btnCard.interactable = false;  // TODO 変更。DisabledColorゲームオブジェクトを追加して、色だけ変更。現在の処理だと、タップしてもDescriptionポップが開かないため、どんなカードかわかりずらい
+            // カードの色を暗くして、クールタイム中であることを示す
+            disabledColorGroup.alpha = 1;
 
             // クールタイムを上に、カードの画像を下に移動
             cardImageTran.localPosition = new Vector3(0f, -30.5f, 0f);
@@ -142,7 +144,7 @@ public class CardController : MonoBehaviour
         }
         else
         {
-            btnCard.interactable = true;
+            disabledColorGroup.alpha = 0;
 
             cardImageTran.localPosition = new Vector3(0f, 30.5f, 0f);
             attackPointOrIntervalTextTran.localPosition = new Vector3(0f, -53f, 0f);
