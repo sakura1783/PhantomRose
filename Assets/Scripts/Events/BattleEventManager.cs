@@ -59,6 +59,9 @@ public class BattleEventManager : MonoBehaviour
     /// </summary>
     public void SetUp()
     {
+        // クールタイムのセーブデータをクリア
+        PlayerPrefsHelper.ClearSaveData("CoolTime_Key");
+
         // カードスロットの作成
         for (int i = 0; i < slotCount; i++)
         {
@@ -102,15 +105,15 @@ public class BattleEventManager : MonoBehaviour
         // デリゲートに登録
         //battleEndAction = popCloseAction;
 
+        // カードのゲームオブジェクトを削除せず、下でカードの攻撃力などの情報だけ初期化することで、クールタイムを引き継ぐ
         foreach (var card in playerHandCardList)
         {
             Destroy(card.gameObject);
         }
-
         playerHandCardList.Clear();
         // TODO opponentHandCardList.Clear();
 
-        // TODO カードを初期化 (前回バトルで変更された攻撃力など)
+        // カードの情報を初期化 (前回バトルで変更された攻撃力など)
         GameData.instance.GetPlayer().CopyCardDataList = new ReactiveCollection<CardData>(GameData.instance.myCardList);
 
         for (int i = 0; i < GameData.instance.GetPlayer().CopyCardDataList.Count; i++)
@@ -125,6 +128,32 @@ public class BattleEventManager : MonoBehaviour
         //{
         //    opponentHandCardList.Add(card);
         //}
+
+        // クールタイムのセーブデータがある場合
+        if (PlayerPrefsHelper.ExistsData("CoolTime_Key"))
+        {
+            Debug.Log("通りました");
+
+            var coolTimeDataDic = PlayerPrefsHelper.Load<Dictionary<int, int>>("CoolTime_Key");
+            foreach (var data in coolTimeDataDic)
+            {
+                Debug.Log($"{data.Key}, {data.Value}");  // TODO ここのデバッグが出ない。=>coolTimeDataDicの中身が空？
+            }
+
+            Debug.Log($"coolTimeDicの値：{coolTimeDataDic}");
+
+            foreach (var card in playerHandCardList)
+            {
+                // セーブデータに該当のカードが含まれていたら
+                if (coolTimeDataDic.ContainsKey(card.CardData.id))
+                {
+                    // クールタイムを引き継ぎ
+                    card.SetCoolTime(coolTimeDataDic[card.CardData.id]);
+
+                    Debug.Log("クールタイムを引き継ぎました");
+                }
+            }
+        }
 
         // TODO GameDataへ移行予定
         playerHandCardManager = new(playerHandCardList, SelectCard);
@@ -153,18 +182,14 @@ public class BattleEventManager : MonoBehaviour
     /// </summary>
     private void PrepareNextTurn()
     {
-        //TODO 追加
-
-        // 盤面のリセット
-        ResetBattleField();
-
-        Debug.Log($"カードの数：{cardSlotManager.setPlayerCardList.Count}");
-
         // スロットに配置したカードのクールタイムを設定
         playerHandCardManager.SetCoolTimeCards(cardSlotManager.setPlayerCardList);
 
         // それ以外のクールタイムがあるカードのクールタイムを減少
         playerHandCardManager.UpdateCoolTimeCards(cardSlotManager.setPlayerCardList);
+
+        // 盤面のリセット
+        ResetBattleField();
 
         // TODO バフとデバフの管理
 
@@ -237,6 +262,23 @@ public class BattleEventManager : MonoBehaviour
             // プレイヤーアイコンの位置と親子関係を初期化
             mainGameManager.ResetPlayerIconTran();
 
+            // TODO 最後に使ったカードのクールタイム設定。2枚のうち、1枚使わずに勝った場合も考慮して実装する
+
+            // 全カードのクールタイムを記憶
+            var dic = new Dictionary<int, int>();  // カードのid番号とクールタイムの情報を持つDictionaryを作成
+
+            foreach (var card in playerHandCardList)
+            {
+                dic.Add(card.CardData.id, card.CurrentCoolTime);
+            }
+
+            foreach (var data in dic)
+            {
+                Debug.Log($"{data.Key}, {data.Value}");
+            }
+
+            PlayerPrefsHelper.Save("CoolTime_Key", dic);  // セーブ
+
             // 勝利ポップアップを開く
             PopupManager.instance.Show<VictoryPop>(false);
 
@@ -251,8 +293,6 @@ public class BattleEventManager : MonoBehaviour
             battleUIPresenter.EndBattle();
 
             mainGameManager.ResetPlayerIconTran();
-
-            mainGameManager.CurrentRouteIndex.Value = 0;
 
             // ゲームオーバーのポップアップを開く
             gameUpPop.ShowPopUp(false);

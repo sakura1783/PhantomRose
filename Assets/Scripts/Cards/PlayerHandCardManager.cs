@@ -66,7 +66,7 @@ public class PlayerHandCardManager : HandCardManagerBase
     {
         foreach (CardController card in cardList.Intersect(setCardList))
         {
-            card.SetCoolTime();
+            card.SetCoolTime(card.CardData.coolTime);
         }
     }
 

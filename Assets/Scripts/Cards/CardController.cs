@@ -32,7 +32,8 @@ public class CardController : MonoBehaviour
     private CardData cardData;
     public CardData CardData => cardData;
 
-    public int currentCoolTime;
+    private int currentCoolTime;
+    public int CurrentCoolTime => currentCoolTime;
 
     //public bool IsCoolTime => currentCoolTime != 0;  // get専門のプロパティ
 
@@ -88,9 +89,10 @@ public class CardController : MonoBehaviour
     /// クールタイムの設定
     /// カードをスロットにセットした後に実行させる
     /// </summary>
-    public void SetCoolTime()
+    public void SetCoolTime(int value)
     {
-        currentCoolTime = cardData.coolTime;
+        //currentCoolTime = cardData.coolTime;
+        currentCoolTime = value;
 
         // カードにクールタイムを表示
         DisplayCoolTime(true);
@@ -148,7 +150,5 @@ public class CardController : MonoBehaviour
             // 攻撃力を表示
             txtAttackPointOrInterval.text = cardData.attackPower.ToString();
         }
-
-        Debug.Log("動きました");
     }
 }

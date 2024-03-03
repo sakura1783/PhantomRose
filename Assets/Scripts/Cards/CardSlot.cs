@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 using UniRx;
 
 public class CardSlot : MonoBehaviour
