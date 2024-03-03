@@ -20,7 +20,7 @@ public class Slash : CardEffectBase
     {
         if (owner == OwnerStatus.Player)
         {
-            GameData.instance.GetOpponent().UpdateHp(-cardData.attackPower);
+            GameData.instance.GetOpponent().CalculateDamage(-cardData.attackPower, false);
             FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Opponent);
 
             // 相手にデバフを付与
@@ -29,7 +29,7 @@ public class Slash : CardEffectBase
         }
         else
         {
-            GameData.instance.GetPlayer().UpdateHp(-cardData.attackPower);
+            GameData.instance.GetPlayer().CalculateDamage(-cardData.attackPower, false);
             FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Player);
 
             GameData.instance.GetPlayer().UpdateDebuff(cardData.stateList[0]);

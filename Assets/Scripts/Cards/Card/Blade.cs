@@ -22,7 +22,7 @@ public class Blade : CardEffectBase
         if (owner == OwnerStatus.Player)
         {
             // 対戦相手のHPを減らす
-            GameData.instance.GetOpponent().UpdateHp(-cardData.attackPower);
+            GameData.instance.GetOpponent().CalculateDamage(-cardData.attackPower, false);
             FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Opponent);
 
             // このカードの攻撃力を1増加
@@ -31,7 +31,7 @@ public class Blade : CardEffectBase
         }
         else
         {
-            GameData.instance.GetPlayer().UpdateHp(-cardData.attackPower);
+            GameData.instance.GetPlayer().CalculateDamage(-cardData.attackPower, false);
             FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Player);
 
             GameData.instance.GetOpponent().CopyCardDataList.Where(data => data == cardData).FirstOrDefault().attackPower++;

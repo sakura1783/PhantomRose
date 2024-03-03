@@ -64,6 +64,36 @@ public class Character
     }
 
     /// <summary>
+    /// ダメージ計算
+    /// 攻撃やデバフなど、ダメージ用のメソッド (回復などの場合はUpdateHp、UpdateShieldを使う)
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="isDirect"></param>
+    public void CalculateDamage(int value, bool isDirect)
+    {
+        if (isDirect)
+        {
+            UpdateHp(value);
+        }
+        else
+        {
+            // ダメージがシールド値よりも大きい場合
+            if (-value > Shield.Value)
+            {
+                UpdateHp(-(-value - Shield.Value));
+
+                Shield.Value = 0;
+            }
+            else
+            {
+                UpdateShield(value);
+            }
+        }
+
+        Debug.Log("ダメージ計算");
+    }
+
+    /// <summary>
     /// バフ更新
     /// </summary>
     /// <param name="amount"></param>
