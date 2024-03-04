@@ -20,7 +20,11 @@ public class BattleEventManager : MonoBehaviour
     public CardController selectedCard;
 
     [SerializeField] private Transform cardSlotTran;
-    [SerializeField] private Transform playerHandCardTran;
+
+    [SerializeField] private Transform attackCardTran;
+    [SerializeField] private Transform magicCardTran;
+
+    [SerializeField] private Transform opponentCardTran;
 
     [SerializeField] private CardSlot cardSlotPrefab;
 
@@ -39,12 +43,10 @@ public class BattleEventManager : MonoBehaviour
     [SerializeField] private MainGameManager mainGameManager;
 
     private CardSlotManager cardSlotManager;
-    public CardSlotManager CardSlotManager => cardSlotManager;
 
     private readonly int slotCount = 4;
 
     private PlayerHandCardManager playerHandCardManager;
-    public PlayerHandCardManager PlayerHandCardManager => playerHandCardManager;
 
     private OpponentHandCardManager opponentHandCardManager;
 
@@ -53,7 +55,7 @@ public class BattleEventManager : MonoBehaviour
     //private UnityAction battleEndAction = null;
 
     private List<CardController> playerHandCardList = new();
-    // TODO private List<CardData> opponentHandCardList = new();
+    private List<CardController> opponentHandCardList = new();
 
     [System.Serializable]
     public class CoolTimeData
@@ -132,29 +134,35 @@ public class BattleEventManager : MonoBehaviour
         // デリゲートに登録
         //battleEndAction = popCloseAction;
 
+        // TODO テスト。対戦相手の生成
+        GameData.instance.InitCharacter(OwnerStatus.Opponent, 10, GameData.instance.myCardList);
+
         // カードのゲームオブジェクトを削除
         foreach (var card in playerHandCardList)
         {
             Destroy(card.gameObject);
         }
         playerHandCardList.Clear();
-        // TODO opponentHandCardList.Clear();
+        opponentHandCardList.Clear();
 
         // カードの情報を初期化 (前回バトルで変更された攻撃力など)
         GameData.instance.GetPlayer().CopyCardDataList = new List<CardData>(GameData.instance.myCardList);
 
         for (int i = 0; i < GameData.instance.GetPlayer().CopyCardDataList.Count; i++)
         {
-            CardController card = Instantiate(cardPrefab, playerHandCardTran);
+            // TODO 生成位置を攻撃カードと魔法カードで分ける
+            var card = Instantiate(cardPrefab, attackCardTran);
             card.SetUp(GameData.instance.GetCardData(i), descriptionPop);
 
             playerHandCardList.Add(card);
         }
-        // TODO
-        //foreach (var card in GameData.instance.GetOpponent().CopyCardDataList)
-        //{
-        //    opponentHandCardList.Add(card);
-        //}
+        for (int i = 0; i < GameData.instance.GetOpponent().CopyCardDataList.Count; i++)
+        {
+            var card = Instantiate(cardPrefab, opponentCardTran);
+            card.SetUp(GameData.instance.GetCardData(i), descriptionPop);
+
+            opponentHandCardList.Add(card);
+        }
 
         // クールタイムのセーブデータがある場合
         if (PlayerPrefsHelper.ExistsData(CoolTime_Key))
@@ -185,7 +193,7 @@ public class BattleEventManager : MonoBehaviour
 
         // TODO GameDataへ移行予定
         playerHandCardManager = new(playerHandCardList, SelectCard);
-        opponentHandCardManager = new(playerHandCardList, cardSlotManager);  // TODO 同じカードリストを使っているため、敵の手札のカードにもプレイヤーのクールタイムが反映されてしまう
+        opponentHandCardManager = new(opponentHandCardList, cardSlotManager);  // TODO 同じカードリストを使っているため、敵の手札のカードにもプレイヤーのクールタイムが反映されてしまう
 
         // カードの効果が全て終了したら購読する
         //cardHandler.CommandSubject
@@ -193,9 +201,6 @@ public class BattleEventManager : MonoBehaviour
 
         // プレイヤーの状態異常とシールド値の初期化
         InitPlayerForNewBattle();
-
-        // TODO デバッグ用にプレイヤーと対戦相手の生成(対戦相手はバトルのたびにインスタンスする)
-        //GameData.instance.InitCharacter(OwnerStatus.Opponent, 10);
 
         // 敵のステータスの購読処理
         battleUIPresenter.SubscribeEveryBattle();

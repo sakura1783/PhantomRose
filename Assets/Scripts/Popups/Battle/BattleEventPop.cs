@@ -7,9 +7,6 @@ public class BattleEventPop : PopupBase
 {
     [SerializeField] private CardController cardPrefab;
 
-    [SerializeField] private Transform attackCardTran;
-    [SerializeField] private Transform magicCardTran;
-
     [SerializeField] private Button btnHideCardDescription;
 
     [SerializeField] private Text txtStageNo;
