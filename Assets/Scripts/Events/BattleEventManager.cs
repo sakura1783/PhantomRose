@@ -148,13 +148,21 @@ public class BattleEventManager : MonoBehaviour
         // カードの情報を初期化 (前回バトルで変更された攻撃力など)
         GameData.instance.GetPlayer().CopyCardDataList = new List<CardData>(GameData.instance.myCardList);
 
-        for (int i = 0; i < GameData.instance.GetPlayer().CopyCardDataList.Count; i++)
+        // 手札のカードを生成
+        GameData.instance.SortBattleCardList();
+        foreach (var cardData in GameData.instance.attackCardList)
         {
-            // TODO 生成位置を攻撃カードと魔法カードで分ける
-            var card = Instantiate(cardPrefab, attackCardTran);
-            card.SetUp(GameData.instance.GetCardData(i), descriptionPop);
+            var cardObj = Instantiate(cardPrefab, attackCardTran);
+            cardObj.SetUp(cardData, descriptionPop);
 
-            playerHandCardList.Add(card);
+            playerHandCardList.Add(cardObj);
+        }
+        foreach (var cardData in GameData.instance.magicCardList)
+        {
+            var cardObj = Instantiate(cardPrefab, magicCardTran);
+            cardObj.SetUp(cardData, descriptionPop);
+
+            playerHandCardList.Add(cardObj);
         }
         for (int i = 0; i < GameData.instance.GetOpponent().CopyCardDataList.Count; i++)
         {
@@ -193,7 +201,7 @@ public class BattleEventManager : MonoBehaviour
 
         // TODO GameDataへ移行予定
         playerHandCardManager = new(playerHandCardList, SelectCard);
-        opponentHandCardManager = new(opponentHandCardList, cardSlotManager);  // TODO 同じカードリストを使っているため、敵の手札のカードにもプレイヤーのクールタイムが反映されてしまう
+        opponentHandCardManager = new(opponentHandCardList, cardSlotManager);
 
         // カードの効果が全て終了したら購読する
         //cardHandler.CommandSubject
