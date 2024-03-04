@@ -121,7 +121,7 @@ public class SearchEventPop : PopupBase
     /// どのアイテムを獲得するかランダムに決定
     /// </summary>
     /// <returns></returns>
-    private ItemData GetRandomItem()
+    private ItemDataSO.ItemData GetRandomItem()
     {
         int randomNo = Random.Range(0, DataBaseManager.instance.itemDataSO.itemDataList.Count);
 

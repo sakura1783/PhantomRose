@@ -11,7 +11,7 @@ public class GameData : AbstractSingleton<GameData>
     public List<CardData> magicCardList = new();
 
     public int inventoryCapacity;
-    public List<ItemData> myItemList = new();
+    public List<ItemDataSO.ItemData> myItemList = new();
 
     public List<int> achievedChallengeTaskList = new();
 

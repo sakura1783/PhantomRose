@@ -8,6 +8,7 @@ public class DataBaseManager : MonoBehaviour
     public CardDataSO cardDataSO;
     public StateDataSO stateDataSO;
     public ItemDataSO itemDataSO;
+    public OpponentDataSO opponentDataSO;
     public StageDetailDataSO stageDetailDataSO;
 
 

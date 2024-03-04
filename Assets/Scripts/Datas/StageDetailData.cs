@@ -27,7 +27,7 @@ public class StageDetailData
 
     public int[] enemyIds;
     public int bossId;
-    public int[] dropCards;
+    public int[] dropCards;  // 探索イベントやステージ終了後にもらえるカードの種類
 
 
     /// <summary>

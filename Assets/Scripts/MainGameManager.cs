@@ -44,7 +44,7 @@ public class MainGameManager : MonoBehaviour
         PopupManager.instance.SetUp();
 
         // 手札のカードをセット
-        DataBaseManager.instance.SetCardData();
+        //DataBaseManager.instance.SetCardData();
 
         //監視。Startに1回書けば良い
         subscription = CurrentRouteIndex

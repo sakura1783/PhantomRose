@@ -14,7 +14,7 @@ public class TreasureDiscoveryPop : PopupBase
 
     [SerializeField] private InventoryPop inventoryPop;
 
-    private ItemData getItemData;
+    private ItemDataSO.ItemData getItemData;
 
 
     /// <summary>
@@ -40,7 +40,7 @@ public class TreasureDiscoveryPop : PopupBase
     /// ポップアップを表示
     /// </summary>
     /// <param name="itemData"></param>
-    public void ShowTreasureDiscoveryPop(ItemData itemData)
+    public void ShowTreasureDiscoveryPop(ItemDataSO.ItemData itemData)
     {
         getItemData = itemData;
 

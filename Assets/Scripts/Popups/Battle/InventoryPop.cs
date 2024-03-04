@@ -23,8 +23,8 @@ public class InventoryPop : PopupBase
 
     private bool isDisplayExchangePop = false;  // 重複してポップアップの切り替えが行われるのを防ぐ
 
-    private ItemData newItemData;
-    public ItemData NewItemData => newItemData;
+    private ItemDataSO.ItemData newItemData;
+    public ItemDataSO.ItemData NewItemData => newItemData;
 
 
     /// <summary>
@@ -50,7 +50,7 @@ public class InventoryPop : PopupBase
     /// インベントリにアイテムを追加
     /// </summary>
     /// <param name="data"></param>
-    public void AddBattleItem(ItemData data)
+    public void AddBattleItem(ItemDataSO.ItemData data)
     {
         newItemData = data;
 

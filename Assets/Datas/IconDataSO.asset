@@ -35,6 +35,10 @@ MonoBehaviour:
   - iconId: 4
     iconSprite: {fileID: 798309987, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   - iconId: 5
+    iconSprite: {fileID: 590339701, guid: e5ccfbacb46474f11874ed7c0049ced9, type: 3}
+  - iconId: 6
+    iconSprite: {fileID: 590339701, guid: e5ccfbacb46474f11874ed7c0049ced9, type: 3}
+  - iconId: 7
     iconSprite: {fileID: 1744151977, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   stateIconDataList:
   - iconId: 0
@@ -47,6 +51,8 @@ MonoBehaviour:
     iconSprite: {fileID: -566336432, guid: a21486dd926db4a3bb52f17cf1ad4d49, type: 3}
   - iconId: 4
     iconSprite: {fileID: 108747426, guid: 62fc041ef9089471e80ac0de134a66c7, type: 3}
+  - iconId: 5
+    iconSprite: {fileID: 21300000, guid: f120f9740f45245dbbfec2506ff13e3f, type: 3}
   - iconId: 101
     iconSprite: {fileID: 623849741, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   - iconId: 102

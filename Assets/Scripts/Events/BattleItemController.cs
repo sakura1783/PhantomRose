@@ -26,7 +26,7 @@ public class BattleItemController : MonoBehaviour
     /// 初期設定
     /// </summary>
     /// <param name="data"></param>
-    public void SetUp(ItemData data, InventoryPop inventoryPop)
+    public void SetUp(ItemDataSO.ItemData data, InventoryPop inventoryPop)
     {
         this.inventoryPop = inventoryPop;
 
@@ -63,7 +63,7 @@ public class BattleItemController : MonoBehaviour
     /// </summary>
     /// <param name="thisData">このゲームオブジェクトのアイテムデータ</param>
     /// <param name="newItemData"></param>
-    public void ExchangeBattleItem(ItemData thisItemData, ItemData newItemData)
+    public void ExchangeBattleItem(ItemDataSO.ItemData thisItemData, ItemDataSO.ItemData newItemData)
     {
         // ポップアップをもとに戻す
         inventoryPop.SwitchDisplayExchangePop(false);
