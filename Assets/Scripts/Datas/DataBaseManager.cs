@@ -8,6 +8,7 @@ public class DataBaseManager : MonoBehaviour
     public CardDataSO cardDataSO;
     public StateDataSO stateDataSO;
     public ItemDataSO itemDataSO;
+    public StageDetailDataSO stageDetailDataSO;
 
 
     void Awake()
@@ -34,6 +35,12 @@ public class DataBaseManager : MonoBehaviour
         //}
 
         // 上記をLinqを使ってリファクタリング
-        GameData.instance.myCardList.AddRange(cardDataSO.cardDataList);
+        //GameData.instance.myCardList.AddRange(cardDataSO.cardDataList);
+
+        // プレイヤーの初期カードを設定
+        for (int i = 0; i < 7; i++)
+        {
+            GameData.instance.myCardList.Add(cardDataSO.cardDataList[i]);
+        }
     }
 }

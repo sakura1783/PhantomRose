@@ -35,17 +35,21 @@ public class GameData : AbstractSingleton<GameData>
     /// </summary>
     /// <param name="owner"></param>
     /// <param name="hp"></param>
-    public void InitCharacter(OwnerStatus owner, int hp)
+    /// <param name="handCards"></param>
+    public void InitCharacter(OwnerStatus owner, int hp, List<CardData> handCards)
     {
         // キャラクターを生成し、HPの設定を行う
         if (owner == OwnerStatus.Player)
         {
-            player = new(hp, owner);
+            player = new(owner, hp);
         }
         else
         {
-            opponent = new(hp, owner);
+            opponent = new(owner, hp);
         }
+
+        // キャラの手札をセット
+        SetCardData(owner, handCards);
     }
 
     /// <summary>
@@ -61,6 +65,24 @@ public class GameData : AbstractSingleton<GameData>
     public Character GetOpponent() => opponent;
 
     //TODO カード管理用の処理を追加する
+
+    /// <summary>
+    /// キャラクターの手札をセット
+    /// </summary>
+    private void SetCardData(OwnerStatus owner, List<CardData> cards)
+    {
+        if (owner == OwnerStatus.Player)
+        {
+            // プレイヤーの初期カードを設定
+            myCardList.AddRange(cards);
+            player.CopyCardDataList = new(myCardList);
+        }
+        else
+        {
+            // 敵の手札のカードを設定
+            opponent.CopyCardDataList = new(cards);
+        }
+    }
 
     /// <summary>
     /// 攻撃カードと魔法カードに分ける

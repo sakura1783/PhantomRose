@@ -14,7 +14,12 @@ public enum OwnerStatus
 [System.Serializable]  // インスペクターにクラス内部が表示される
 public class Character
 {
-    public List<CardData> CopyCardDataList = new();  // 攻撃力などの変更をキャラごとに設定。バトル終了後、破棄する
+    private List<CardData> copyCardDataList;  // 攻撃力などの変更をキャラごとに設定。バトル終了後、破棄する
+    public List<CardData> CopyCardDataList
+    {
+        get => copyCardDataList;
+        set => copyCardDataList = value;
+    }
 
     public ReactiveProperty<int> Hp = new();
     public ReactiveProperty<int> Shield = new();
@@ -36,13 +41,14 @@ public class Character
     /// </summary>
     /// <param name="defaultHp"></param>
     /// <param name="owner"></param>
-    public Character(int defaultHp, OwnerStatus owner)
+    /// <param name="handCards">キャラの手札のカード</param>
+    public Character(OwnerStatus owner, int maxHp) //List<CardData> handCards
     {
-        Hp.Value = defaultHp;
-        maxHp = Hp.Value;
         this.owner = owner;
+        this.maxHp = maxHp;
+        Hp.Value = maxHp;
 
-        CopyCardDataList = new List<CardData>(GameData.instance.myCardList);  // ReactiveCollectionのコンストラクタを使用して、CopyDataListを置き換え
+        //copyCardDataList = new List<CardData>(handCards);
     }
 
     /// <summary>
@@ -89,8 +95,6 @@ public class Character
                 UpdateShield(value);
             }
         }
-
-        Debug.Log("ダメージ計算");
     }
 
     /// <summary>

@@ -96,8 +96,15 @@ public class BattleEventManager : MonoBehaviour
         // ハンドラの生成と購読
         cardHandler = new();  // これによって、CardHandlerクラスが利用できるようになる
 
+        // プレイヤーの初期手札カードを作成
+        List<CardData> playerHandCards = new();
+        for (int i = 0; i < 7; i++)
+        {
+            playerHandCards.Add(DataBaseManager.instance.cardDataSO.cardDataList[i]);
+        }
+
         // プレイヤー情報を生成
-        GameData.instance.InitCharacter(OwnerStatus.Player, 30);
+        GameData.instance.InitCharacter(OwnerStatus.Player, 30, playerHandCards);
 
         // プレイヤーの各ステータス購読処理
         battleUIPresenter.SubscribePlayerHp();
@@ -188,7 +195,7 @@ public class BattleEventManager : MonoBehaviour
         InitPlayerForNewBattle();
 
         // TODO デバッグ用にプレイヤーと対戦相手の生成(対戦相手はバトルのたびにインスタンスする)
-        GameData.instance.InitCharacter(OwnerStatus.Opponent, 10);
+        //GameData.instance.InitCharacter(OwnerStatus.Opponent, 10);
 
         // 敵のステータスの購読処理
         battleUIPresenter.SubscribeEveryBattle();

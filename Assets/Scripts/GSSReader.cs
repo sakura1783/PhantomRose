@@ -13,8 +13,8 @@ public enum SheetName
     None,
     CardData,
     StateData,
-    EventData,
     ItemData,
+    StageDetailData,
 
     // その他にもあれば追加
 }
