@@ -42,6 +42,8 @@ public class BattleEventManager : MonoBehaviour
 
     [SerializeField] private MainGameManager mainGameManager;
 
+    [SerializeField] private CardDeckPop cardDeckPop;
+
     private CardSlotManager cardSlotManager;
 
     private readonly int slotCount = 4;
@@ -107,6 +109,12 @@ public class BattleEventManager : MonoBehaviour
 
         // プレイヤー情報を生成
         GameData.instance.InitCharacter(OwnerStatus.Player, 30, playerHandCards);
+
+        // 初期手札をカードデッキポップに追加
+        foreach(var data in playerHandCards)
+        {
+            cardDeckPop.AddCardToCardDeck(data);
+        }
 
         // プレイヤーの各ステータス購読処理
         battleUIPresenter.SubscribePlayerHp();

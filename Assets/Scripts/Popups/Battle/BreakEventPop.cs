@@ -17,9 +17,6 @@ public class BreakEventPop : PopupBase
     [SerializeField] private int healCost;
     [SerializeField] private int resetCoolDownCost;
 
-    // TODO テスト
-    [SerializeField] private int maxCardCount;
-
     private bool isCardCountBeyondMax = false;
 
 
@@ -80,9 +77,9 @@ public class BreakEventPop : PopupBase
     {
         SwitchActivateButtons();
 
-        txtCardCount.text = $"{GameData.instance.myCardList.Count}/{maxCardCount}";
+        txtCardCount.text = $"{GameData.instance.myCardList.Count}/{GameData.instance.handCardCapacity}";
 
-        isCardCountBeyondMax = GameData.instance.myCardList.Count > maxCardCount;
+        isCardCountBeyondMax = GameData.instance.myCardList.Count > GameData.instance.handCardCapacity;
         ProcessByCardCountStatus();
 
         base.ShowPopUp();

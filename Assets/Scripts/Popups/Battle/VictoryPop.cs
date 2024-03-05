@@ -12,6 +12,10 @@ public class VictoryPop : PopupBase
 
     [SerializeField] private DescriptionPop descriptionPop;
 
+    [SerializeField] private CardDeckPop cardDeckPop;
+
+    private CardData rewardCardData;
+
 
     /// <summary>
     /// 初期設定
@@ -25,7 +29,9 @@ public class VictoryPop : PopupBase
             .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
             .Subscribe(_ =>
             {
-                // TODO インベントリにカードを追加
+                // カードを手札に追加
+                GameData.instance.myCardList.Add(rewardCardData);
+                cardDeckPop.AddCardToCardDeck(rewardCardData);
 
                 PopupManager.instance.GoBack();
             })
@@ -69,5 +75,7 @@ public class VictoryPop : PopupBase
         var card = Instantiate(cardPrefab, rewardTran);
         card.SetUp(cardData, descriptionPop);
         card.transform.localScale = new Vector2(1.3f, 1.3f);
+
+        rewardCardData = cardData;
     }
 }

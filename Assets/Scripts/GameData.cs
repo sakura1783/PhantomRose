@@ -10,6 +10,8 @@ public class GameData : AbstractSingleton<GameData>
     public List<CardData> attackCardList = new();
     public List<CardData> magicCardList = new();
 
+    public int handCardCapacity;  // TODO とりあえず、固定値
+
     public int inventoryCapacity;
     public List<ItemDataSO.ItemData> myItemList = new();
 
@@ -89,8 +91,10 @@ public class GameData : AbstractSingleton<GameData>
     /// </summary>
     public void SortBattleCardList()
     {
-        attackCardList = myCardList.Where(card => card.cardType == CardType.攻撃).ToList();
+        // レベルが低い順に並び替え
+        myCardList = myCardList.OrderBy(card => card.level).ToList();
 
+        attackCardList = myCardList.Where(card => card.cardType == CardType.攻撃).ToList();
         magicCardList = myCardList.Where(card => card.cardType == CardType.魔法).ToList();
     }
 

@@ -18,23 +18,6 @@ public class CardDeckPop : PopupBase
     public ReactiveProperty<int> cardCount = new();
 
 
-    // TODO テスト
-    private void Start()
-    {
-        //foreach (var card in DataBaseManager.instance.cardDataSO.cardDataList)
-        //{
-        //    GameData.instance.myCardList.Add(card);
-        //}
-
-        // リストが変更されないように、リストをコピー
-        //var copyList = GameData.instance.myCardList;  // TODO エラーになる。かといって新しくインスタンスするとデータの中身が2倍になってしまう
-
-        //foreach (var card in copyList)
-        //{
-        //    AddCardToCardDeck(card);
-        //}
-    }
-
     /// <summary>
     /// 初期設定
     /// </summary>
@@ -43,19 +26,17 @@ public class CardDeckPop : PopupBase
         base.SetUp();
 
         cardCount
-            .Subscribe(_ => txtCardCount.text = cardCount.Value.ToString())
+            .Subscribe(_ => txtCardCount.text = $"{cardCount}/{GameData.instance.handCardCapacity}")
             .AddTo(this);
     }
 
     /// <summary>
     /// カードデッキにカードを追加
+    /// このメソッドは必ず、myCardListに新しいカードの情報を追加してから実行する
     /// </summary>
-    /// <param name="card"></param>
+    /// <param name="data"></param>
     public void AddCardToCardDeck(CardData data)
     {
-        // GameDataのListにカードを追加
-        GameData.instance.myCardList.Add(data);
-
         // Listをレベルが低い順(昇順)に並べ替え
         List<CardData> sortedList = GameData.instance.myCardList.OrderBy(card => card.level).ToList();
 

@@ -159,7 +159,8 @@ public class ShopEventPop : PopupBase
             card.Key.BtnShopCard.interactable = GameData.instance.RubyCount.Value >= card.Value.price;
         }
 
-        // カードデッキに買ったカードを追加
+        // myCardListとカードデッキに買ったカードを追加
+        GameData.instance.myCardList.Add(data);
         cardDeckPop.AddCardToCardDeck(data);
 
         // CardPurchaseポップアップを非表示にする
