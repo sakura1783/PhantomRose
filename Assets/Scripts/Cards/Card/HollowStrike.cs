@@ -20,13 +20,13 @@ public class HollowStrike : CardEffectBase
     {
         if (owner == OwnerStatus.Player)
         {
-            GameData.instance.GetOpponent().CalculateDamage(-cardData.attackPower, false);
-            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Opponent);
+            GameData.instance.GetOpponent().CalculateDamage(-cardData.AttackPower.Value, false);
+            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, OwnerStatus.Opponent);
         }
         else
         {
-            GameData.instance.GetPlayer().CalculateDamage(-cardData.attackPower, false);
-            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Player);
+            GameData.instance.GetPlayer().CalculateDamage(-cardData.AttackPower.Value, false);
+            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, OwnerStatus.Player);
         }
 
         await UniTask.DelayFrame(1);

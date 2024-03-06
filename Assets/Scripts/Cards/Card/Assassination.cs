@@ -22,16 +22,16 @@ public class Assassination : CardEffectBase
         {
             for (int i = 0; i < 2; i++)
             {
-                GameData.instance.GetOpponent().CalculateDamage(-cardData.attackPower, false);
-                FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Opponent);
+                GameData.instance.GetOpponent().CalculateDamage(-cardData.AttackPower.Value, false);
+                FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, OwnerStatus.Opponent);
             }
         }
         else
         {
             for (int i = 0; i < 2; i++)
             {
-                GameData.instance.GetPlayer().CalculateDamage(-cardData.attackPower, false);
-                FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Player);
+                GameData.instance.GetPlayer().CalculateDamage(-cardData.AttackPower.Value, false);
+                FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, OwnerStatus.Player);
             }
         }
 

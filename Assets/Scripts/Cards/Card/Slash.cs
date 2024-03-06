@@ -20,8 +20,8 @@ public class Slash : CardEffectBase
     {
         if (owner == OwnerStatus.Player)
         {
-            GameData.instance.GetOpponent().CalculateDamage(-cardData.attackPower, false);
-            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Opponent);
+            GameData.instance.GetOpponent().CalculateDamage(-cardData.AttackPower.Value, false);
+            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, OwnerStatus.Opponent);
 
             // 相手にデバフを付与
             GameData.instance.GetOpponent().UpdateDebuff(cardData.stateList[0]);
@@ -29,8 +29,8 @@ public class Slash : CardEffectBase
         }
         else
         {
-            GameData.instance.GetPlayer().CalculateDamage(-cardData.attackPower, false);
-            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Player);
+            GameData.instance.GetPlayer().CalculateDamage(-cardData.AttackPower.Value, false);
+            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, OwnerStatus.Player);
 
             GameData.instance.GetPlayer().UpdateDebuff(cardData.stateList[0]);
             FloatingMessageManager.instance.GenerateFloatingMessage(cardData.stateList[0].duration, DataBaseManager.instance.stateDataSO.stateDataList[cardData.stateList[0].stateId].spriteId, OwnerStatus.Player);

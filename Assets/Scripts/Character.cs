@@ -14,11 +14,11 @@ public enum OwnerStatus
 [System.Serializable]  // インスペクターにクラス内部が表示される
 public class Character
 {
-    private List<CardData> copyCardDataList;  // 攻撃力などの変更をキャラごとに設定。バトル終了後、破棄する
-    public List<CardData> CopyCardDataList
+    private List<CardData> handCardList = new();  // CardDataSOのcardDataListの情報をディープコピーした、DataBaseManagerのcopyCardDataListの情報を使って値を代入する
+    public List<CardData> HandCardList
     {
-        get => copyCardDataList;
-        set => copyCardDataList = value;
+        get => handCardList;
+        set => handCardList = value;
     }
 
     public ReactiveProperty<int> Hp = new();

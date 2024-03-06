@@ -5,7 +5,7 @@ using System.Linq;
 
 public class GameData : AbstractSingleton<GameData>
 {
-    public List<CardData> myCardList = new();
+    public List<int> myCardList = new();  // 持っているカードのid番号のList。この情報を使って、毎バトル時、手札を生成する
 
     public List<CardData> attackCardList = new();
     public List<CardData> magicCardList = new();
@@ -38,7 +38,7 @@ public class GameData : AbstractSingleton<GameData>
     /// <param name="owner"></param>
     /// <param name="hp"></param>
     /// <param name="handCards"></param>
-    public void InitCharacter(OwnerStatus owner, int hp, List<CardData> handCards)
+    public void InitCharacter(OwnerStatus owner, int hp)
     {
         // キャラクターを生成し、HPの設定を行う
         if (owner == OwnerStatus.Player)
@@ -49,9 +49,6 @@ public class GameData : AbstractSingleton<GameData>
         {
             opponent = new(owner, hp);
         }
-
-        // キャラの手札をセット
-        SetCardData(owner, handCards);
     }
 
     /// <summary>
@@ -66,46 +63,16 @@ public class GameData : AbstractSingleton<GameData>
     /// <returns></returns>
     public Character GetOpponent() => opponent;
 
-    //TODO カード管理用の処理を追加する
-
-    /// <summary>
-    /// キャラクターの手札をセット
-    /// </summary>
-    private void SetCardData(OwnerStatus owner, List<CardData> cards)
-    {
-        if (owner == OwnerStatus.Player)
-        {
-            // プレイヤーの初期カードを設定
-            myCardList.AddRange(cards);
-            player.CopyCardDataList = new(myCardList);
-        }
-        else
-        {
-            // 敵の手札のカードを設定
-            opponent.CopyCardDataList = new(cards);
-        }
-    }
-
     /// <summary>
     /// 攻撃カードと魔法カードに分ける
     /// </summary>
     public void SortBattleCardList()
     {
         // レベルが低い順に並び替え
-        myCardList = myCardList.OrderBy(card => card.level).ToList();
+        GetPlayer().HandCardList = GetPlayer().HandCardList.OrderBy(card => card.level).ToList();
 
-        attackCardList = myCardList.Where(card => card.cardType == CardType.攻撃).ToList();
-        magicCardList = myCardList.Where(card => card.cardType == CardType.魔法).ToList();
-    }
-
-    /// <summary>
-    /// カード取得
-    /// </summary>
-    /// <param name="cardId"></param>
-    /// <returns></returns>
-    public CardData GetCardData(int cardId)
-    {
-        return myCardList.Find(card => card.id == cardId);
+        attackCardList = GetPlayer().HandCardList.Where(card => card.cardType == CardType.攻撃).ToList();
+        magicCardList = GetPlayer().HandCardList.Where(card => card.cardType == CardType.魔法).ToList();
     }
 
     /// <summary>

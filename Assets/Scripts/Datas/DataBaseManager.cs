@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DataBaseManager : MonoBehaviour
@@ -10,6 +11,8 @@ public class DataBaseManager : MonoBehaviour
     public ItemDataSO itemDataSO;
     public OpponentDataSO opponentDataSO;
     public StageDetailDataSO stageDetailDataSO;
+
+    public List<CardData> copyCardDataList = new();  // CardDataSOのCardDataListをディープコピーしたもの。この情報を使って、カードの生成や値の変更を行う
 
 
     void Awake()
@@ -28,20 +31,20 @@ public class DataBaseManager : MonoBehaviour
     /// <summary>
     /// myCardListの設定
     /// </summary>
-    public void SetCardData()
-    {
-        //foreach (CardData cardData in cardDataSO.cardDataList)
-        //{
-        //    GameData.instance.myCardList.Add(cardData);
-        //}
+    //public void SetMyCardList()
+    //{
+    //    //foreach (CardData cardData in cardDataSO.cardDataList)
+    //    //{
+    //    //    GameData.instance.myCardList.Add(cardData);
+    //    //}
 
-        // 上記をLinqを使ってリファクタリング
-        //GameData.instance.myCardList.AddRange(cardDataSO.cardDataList);
+    //    // 上記をLinqを使ってリファクタリング
+    //    //GameData.instance.myCardList.AddRange(cardDataSO.cardDataList);
 
-        // プレイヤーの初期カードを設定
-        for (int i = 0; i < 7; i++)
-        {
-            GameData.instance.myCardList.Add(cardDataSO.cardDataList[i]);
-        }
-    }
+    //    // プレイヤーの初期カードを設定
+    //    for (int i = 0; i < 7; i++)
+    //    {
+    //        GameData.instance.myCardList.Add(cardDataSO.cardDataList[i]);
+    //    }
+    //}
 }

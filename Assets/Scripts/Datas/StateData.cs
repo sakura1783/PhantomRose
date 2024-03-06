@@ -69,4 +69,18 @@ public class SimpleStateData
     //public ConditionType stateName;
     public int stateId;
     public int duration;  // 同じ状態異常でもカードごとに継続時間を変更できる(性能差を持たせる)
+
+
+    /// <summary>
+    /// ディープコピーを行うためのコンストラクタ
+    /// </summary>
+    /// <returns></returns>
+    public SimpleStateData Clone()
+    {
+        return new SimpleStateData
+        {
+            stateId = stateId,
+            duration = duration
+        };
+    }
 }

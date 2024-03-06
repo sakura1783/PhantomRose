@@ -56,8 +56,8 @@ public class BattleEventManager : MonoBehaviour
 
     //private UnityAction battleEndAction = null;
 
-    private List<CardController> playerHandCardList = new();
-    private List<CardController> opponentHandCardList = new();
+    private List<CardController> playerHandCardObjs = new();  // 生成した手札カードのプレハブを入れておく場所
+    private List<CardController> opponentHandCardObjs = new();
 
     [System.Serializable]
     public class CoolTimeData
@@ -86,6 +86,9 @@ public class BattleEventManager : MonoBehaviour
         // クールタイムのセーブデータをクリア
         PlayerPrefsHelper.ClearSaveData(CoolTime_Key);
 
+        // CardDataSO.cardDataListをディープコピー
+        DataBaseManager.instance.copyCardDataList = DataBaseManager.instance.cardDataSO.GetCopyCardDataList();  
+
         // カードスロットの作成
         for (int i = 0; i < slotCount; i++)
         {
@@ -100,20 +103,20 @@ public class BattleEventManager : MonoBehaviour
         // ハンドラの生成と購読
         cardHandler = new();  // これによって、CardHandlerクラスが利用できるようになる
 
+        // プレイヤー情報を生成
+        GameData.instance.InitCharacter(OwnerStatus.Player, 30);
+
+        // TODO SOの中身が変わらないか確認する
         // プレイヤーの初期手札カードを作成
-        List<CardData> playerHandCards = new();
         for (int i = 0; i < 7; i++)
         {
-            playerHandCards.Add(DataBaseManager.instance.cardDataSO.cardDataList[i]);
+            GameData.instance.myCardList.Add(DataBaseManager.instance.copyCardDataList[i].id);
         }
 
-        // プレイヤー情報を生成
-        GameData.instance.InitCharacter(OwnerStatus.Player, 30, playerHandCards);
-
         // 初期手札をカードデッキポップに追加
-        foreach(var data in playerHandCards)
+        foreach (var cardId in GameData.instance.myCardList)
         {
-            cardDeckPop.AddCardToCardDeck(data);
+            cardDeckPop.AddCardToCardDeck(DataBaseManager.instance.cardDataSO.cardDataList[cardId]);
         }
 
         // プレイヤーの各ステータス購読処理
@@ -121,15 +124,6 @@ public class BattleEventManager : MonoBehaviour
         battleUIPresenter.SubscribePlayerShieldValue();
         battleUIPresenter.SubscribePlayerBuff();
         battleUIPresenter.SubscribePlayerDebuff();
-
-        // TODO プレイヤーのCardDataListの購読処理。変更されたら、そのデータを持っているカードの表示を更新する
-        //subscription = GameData.instance.GetPlayer().CopyCardDataList.ObserveReplace()
-        //    .Subscribe(data =>
-        //    {
-        //        handCardList.Where(card => card.CardData == data.NewValue).FirstOrDefault().SetUp(data.NewValue);
-
-        //        Debug.Log("表示を更新しました");
-        //    });
     }
 
     /// <summary>
@@ -142,84 +136,31 @@ public class BattleEventManager : MonoBehaviour
         // デリゲートに登録
         //battleEndAction = popCloseAction;
 
-        // TODO テスト。対戦相手の生成
-        GameData.instance.InitCharacter(OwnerStatus.Opponent, 10, GameData.instance.myCardList);
+        // カードの元情報を初期化
+        DataBaseManager.instance.copyCardDataList = DataBaseManager.instance.cardDataSO.GetCopyCardDataList();
 
-        // カードのゲームオブジェクトを削除
-        foreach (var card in playerHandCardList)
+        // 前回バトルで生成したカードのゲームオブジェクトを削除
+        foreach (var card in playerHandCardObjs)
         {
             Destroy(card.gameObject);
         }
-        playerHandCardList.Clear();
-        opponentHandCardList.Clear();
-
-        // カードの情報を初期化 (前回バトルで変更された攻撃力など)
-        GameData.instance.GetPlayer().CopyCardDataList = new List<CardData>(GameData.instance.myCardList);
-
-        // 手札のカードを生成
-        GameData.instance.SortBattleCardList();
-        foreach (var cardData in GameData.instance.attackCardList)
+        playerHandCardObjs.Clear();
+        foreach (var card in opponentHandCardObjs)
         {
-            var cardObj = Instantiate(cardPrefab, attackCardTran);
-            cardObj.SetUp(cardData, descriptionPop);
-
-            playerHandCardList.Add(cardObj);
+            Destroy(card.gameObject);
         }
-        foreach (var cardData in GameData.instance.magicCardList)
-        {
-            var cardObj = Instantiate(cardPrefab, magicCardTran);
-            cardObj.SetUp(cardData, descriptionPop);
+        opponentHandCardObjs.Clear();
 
-            playerHandCardList.Add(cardObj);
-        }
-        for (int i = 0; i < GameData.instance.GetOpponent().CopyCardDataList.Count; i++)
-        {
-            var card = Instantiate(cardPrefab, opponentCardTran);
-            card.SetUp(GameData.instance.GetCardData(i), descriptionPop);
+        InitPlayerForNewBattle();
 
-            opponentHandCardList.Add(card);
-        }
+        SetOpponentForNewBattle();
 
-        // クールタイムのセーブデータがある場合
-        if (PlayerPrefsHelper.ExistsData(CoolTime_Key))
-        {
-            var wrapper = PlayerPrefsHelper.Load<Wrapper>(CoolTime_Key);
-
-            foreach (var data in wrapper.coolTimeDataList)
-            {
-                //foreach (var card in playerHandCardList)
-                //{
-                //    
-                //    if (data.cardId == card.CardData.id && data.coolTime > 0)
-                //    {
-                //    }
-                //}
-
-                // 上記をリファクタリング
-                // セーブデータに該当のカードが含まれていて、かつ、クールタイムがあるなら
-                var card = playerHandCardList.FirstOrDefault(card => card.CardData.id == data.cardId && data.coolTime > 0);
-
-                if (card)
-                {
-                    // クールタイムを引き継ぎ
-                    card.SetCoolTime(data.coolTime);
-                }
-            }
-        }
-
-        // TODO GameDataへ移行予定
-        playerHandCardManager = new(playerHandCardList, SelectCard);
-        opponentHandCardManager = new(opponentHandCardList, cardSlotManager);
+        playerHandCardManager = new(playerHandCardObjs, SelectCard);
+        opponentHandCardManager = new(opponentHandCardObjs, cardSlotManager);
 
         // カードの効果が全て終了したら購読する
         //cardHandler.CommandSubject
         //    .Subscribe(_ => PrepareNextTurn());
-
-        // プレイヤーの状態異常とシールド値の初期化
-        InitPlayerForNewBattle();
-
-        // 敵のステータスの購読処理
-        battleUIPresenter.SubscribeEveryBattle();
 
         await UniTask.Delay(500, cancellationToken: token);  // 第一引数はミリ秒。1000ミリ秒で1秒
 
@@ -380,7 +321,7 @@ public class BattleEventManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 毎バトル行う、プレイヤーのステータス初期化処理
+    /// 毎バトル行う、プレイヤーのカードやステータスの初期化処理
     /// </summary>
     private void InitPlayerForNewBattle()
     {
@@ -388,6 +329,82 @@ public class BattleEventManager : MonoBehaviour
         GameData.instance.GetPlayer().Shield.Value = 0;
         GameData.instance.GetPlayer().BuffDuration.Value = 0;
         GameData.instance.GetPlayer().DebuffDuration.Value = 0;
+
+        // 手札の情報を作成
+        GameData.instance.GetPlayer().HandCardList.Clear();
+        foreach (var cardId in GameData.instance.myCardList)
+        {
+            GameData.instance.GetPlayer().HandCardList.Add(DataBaseManager.instance.copyCardDataList[cardId]);
+        }
+
+        // 手札のカードのプレハブを生成
+        GameData.instance.SortBattleCardList();
+        foreach (var cardData in GameData.instance.attackCardList)
+        {
+            var cardObj = Instantiate(cardPrefab, attackCardTran);
+            cardObj.SetUp(cardData, descriptionPop);
+
+            playerHandCardObjs.Add(cardObj);
+        }
+        foreach (var cardData in GameData.instance.magicCardList)
+        {
+            var cardObj = Instantiate(cardPrefab, magicCardTran);
+            cardObj.SetUp(cardData, descriptionPop);
+
+            playerHandCardObjs.Add(cardObj);
+        }
+
+        // クールタイム引き継ぎ処理
+        if (PlayerPrefsHelper.ExistsData(CoolTime_Key))
+        {
+            var wrapper = PlayerPrefsHelper.Load<Wrapper>(CoolTime_Key);
+
+            foreach (var data in wrapper.coolTimeDataList)
+            {
+                //foreach (var card in playerHandCardList)
+                //{
+                //    
+                //    if (data.cardId == card.CardData.id && data.coolTime > 0)
+                //    {
+                //    }
+                //}
+
+                // 上記をリファクタリング
+                // セーブデータに該当のカードが含まれていて、かつ、クールタイムがあるなら
+                var card = playerHandCardObjs.FirstOrDefault(card => card.CardData.id == data.cardId && data.coolTime > 0);
+
+                if (card)
+                {
+                    // クールタイムを引き継ぎ
+                    card.SetCoolTime(data.coolTime);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 対戦相手の設置
+    /// </summary>
+    private void SetOpponentForNewBattle()
+    {
+        // 対戦相手の生成
+        GameData.instance.InitCharacter(OwnerStatus.Opponent, 10);
+
+        // TODO 対戦相手のHandCardListの作成
+        GameData.instance.GetOpponent().HandCardList.Clear();
+        GameData.instance.GetOpponent().HandCardList = GameData.instance.GetPlayer().HandCardList;
+
+        // 対戦相手の手札のカードを見えない位置に生成
+        foreach (var cardData in GameData.instance.GetOpponent().HandCardList)
+        {
+            var cardObj = Instantiate(cardPrefab, opponentCardTran);
+            cardObj.SetUp(cardData, descriptionPop);
+
+            opponentHandCardObjs.Add(cardObj);
+        }
+
+        // 敵のステータスの購読処理
+        battleUIPresenter.SubscribeEveryBattle();
     }
 
     /// <summary>
@@ -397,7 +414,7 @@ public class BattleEventManager : MonoBehaviour
     {
         Wrapper wrapper = new();
 
-        foreach (var card in playerHandCardList)
+        foreach (var card in playerHandCardObjs)
         {
             var coolTimeData = new CoolTimeData
             {

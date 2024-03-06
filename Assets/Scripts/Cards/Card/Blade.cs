@@ -22,19 +22,19 @@ public class Blade : CardEffectBase
         if (owner == OwnerStatus.Player)
         {
             // 対戦相手のHPを減らす
-            GameData.instance.GetOpponent().CalculateDamage(-cardData.attackPower, false);
-            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Opponent);
+            GameData.instance.GetOpponent().CalculateDamage(-cardData.AttackPower.Value, false);
+            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, OwnerStatus.Opponent);
 
             // このカードの攻撃力を1増加
-            GameData.instance.GetPlayer().CopyCardDataList.Where(data => data == cardData).FirstOrDefault().attackPower++;
+            GameData.instance.GetPlayer().HandCardList.Where(data => data == cardData).FirstOrDefault().AttackPower.Value++;
             FloatingMessageManager.instance.GenerateFloatingMessage(1, 3, OwnerStatus.Player);  // TODO 第二引数、数を使わない
         }
         else
         {
-            GameData.instance.GetPlayer().CalculateDamage(-cardData.attackPower, false);
-            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.attackPower, -1, OwnerStatus.Player);
+            GameData.instance.GetPlayer().CalculateDamage(-cardData.AttackPower.Value, false);
+            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, OwnerStatus.Player);
 
-            GameData.instance.GetOpponent().CopyCardDataList.Where(data => data == cardData).FirstOrDefault().attackPower++;
+            GameData.instance.GetOpponent().HandCardList.Where(data => data == cardData).FirstOrDefault().AttackPower.Value++;
             FloatingMessageManager.instance.GenerateFloatingMessage(1, 3, OwnerStatus.Opponent);
         }
 

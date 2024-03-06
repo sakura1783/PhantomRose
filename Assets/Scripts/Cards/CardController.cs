@@ -57,6 +57,10 @@ public class CardController : MonoBehaviour
             .ThrottleFirst(TimeSpan.FromSeconds(0.5f))
             .Subscribe(_ => descriptionPop.ShowPopUp(data))
             .AddTo(this);
+
+        cardData.AttackPower
+            .Subscribe(value => txtAttackPointOrInterval.text = value.ToString())  // 攻撃力が変更された時、表示を更新
+            .AddTo(this);
     }
 
     /// <summary>
@@ -67,7 +71,7 @@ public class CardController : MonoBehaviour
         // 各値を設定
         imgCard.sprite = IconManager.instance.GetCardIcon(data.spriteId);
         imgBase.color = data.cardColor;
-        txtAttackPointOrInterval.text = data.attackPower <= 0 ? "" : data.attackPower.ToString();  //TODO 回復値、攻撃値、シールド値が別々に設定されているため、どうするか検討する。
+        txtAttackPointOrInterval.text = data.AttackPower.Value <= 0 ? "" : data.AttackPower.ToString();  //TODO 置く場所や状況によって攻撃力に変動があるものは 4+ などのように表示する
     }
 
     /// <summary>
@@ -150,7 +154,7 @@ public class CardController : MonoBehaviour
             attackPointOrIntervalTextTran.localPosition = new Vector3(0f, -53f, 0f);
 
             // 攻撃力を表示
-            txtAttackPointOrInterval.text = cardData.attackPower <= 0 ? "" : cardData.attackPower.ToString();
+            txtAttackPointOrInterval.text = cardData.AttackPower.Value <= 0 ? "" : cardData.AttackPower.ToString();
         }
     }
 }

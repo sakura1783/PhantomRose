@@ -32,13 +32,13 @@ public class CardDeckPop : PopupBase
 
     /// <summary>
     /// カードデッキにカードを追加
-    /// このメソッドは必ず、myCardListに新しいカードの情報を追加してから実行する
+    /// Character.HandCardListに新しいカードの情報を追加してから実行する
     /// </summary>
     /// <param name="data"></param>
     public void AddCardToCardDeck(CardData data)
     {
         // Listをレベルが低い順(昇順)に並べ替え
-        List<CardData> sortedList = GameData.instance.myCardList.OrderBy(card => card.level).ToList();
+        List<CardData> sortedList = GameData.instance.GetPlayer().HandCardList.OrderBy(card => card.level).ToList();
 
         // 追加するカードの要素番号を取得
         int index = sortedList.FindIndex(x => x == data);

@@ -30,7 +30,7 @@ public class VictoryPop : PopupBase
             .Subscribe(_ =>
             {
                 // カードを手札に追加
-                GameData.instance.myCardList.Add(rewardCardData);
+                GameData.instance.myCardList.Add(rewardCardData.id);
                 cardDeckPop.AddCardToCardDeck(rewardCardData);
 
                 PopupManager.instance.GoBack();

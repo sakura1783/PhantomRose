@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UniRx;
 
 [System.Serializable]
 public class CardData
@@ -13,7 +15,8 @@ public class CardData
 
     public int level;
 
-    public int attackPower;
+    //public int attackPower;
+    public ReactiveProperty<int> AttackPower = new();
     public int shieldPower;
     public int recoveryPower;
 
@@ -49,7 +52,8 @@ public class CardData
         englishName = datas[2];
         cardType = (CardType)System.Enum.Parse(typeof(CardType), datas[3]);
         level = int.Parse(datas[4]);
-        attackPower = int.Parse(datas[5]);
+        //attackPower = int.Parse(datas[5]);
+        AttackPower.Value = int.Parse(datas[5]);
         shieldPower = int.Parse(datas[6]);
         recoveryPower = int.Parse(datas[7]);
         coolTime = int.Parse(datas[8]);
@@ -83,5 +87,37 @@ public class CardData
 
             stateList.Add(simpleState);
         }
+    }
+
+    /// <summary>
+    /// 空のコンストラクタ
+    /// </summary>
+    public CardData() { }
+
+    /// <summary>
+    /// ディープコピーを行うためのコンストラクタ
+    /// </summary>
+    /// <returns></returns>
+    public CardData Clone()
+    {
+        CardData clone = new CardData();
+
+        clone.id = id;
+        clone.name = name;
+        clone.englishName = englishName;
+        clone.cardType = cardType;
+        clone.level = level;
+        clone.AttackPower.Value = AttackPower.Value;
+        clone.shieldPower = shieldPower;
+        clone.recoveryPower = recoveryPower;
+        clone.coolTime = coolTime;
+        clone.cardColor = cardColor;
+        clone.spriteId = spriteId;
+        clone.price = price;
+        clone.description = description;
+
+        clone.stateList = new List<SimpleStateData>(stateList.Select(s => s.Clone()));
+
+        return clone;
     }
 }

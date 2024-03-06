@@ -77,9 +77,9 @@ public class BreakEventPop : PopupBase
     {
         SwitchActivateButtons();
 
-        txtCardCount.text = $"{GameData.instance.myCardList.Count}/{GameData.instance.handCardCapacity}";
+        txtCardCount.text = $"{GameData.instance.GetPlayer().HandCardList.Count}/{GameData.instance.handCardCapacity}";
 
-        isCardCountBeyondMax = GameData.instance.myCardList.Count > GameData.instance.handCardCapacity;
+        isCardCountBeyondMax = GameData.instance.GetPlayer().HandCardList.Count > GameData.instance.handCardCapacity;
         ProcessByCardCountStatus();
 
         base.ShowPopUp();

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -14,4 +15,15 @@ public enum CardType
 public class CardDataSO : ScriptableObject
 {
     public List<CardData> cardDataList = new();
+
+
+    /// <summary>
+    /// CardDataSOの情報をディープコピー
+    /// </summary>
+    /// <returns></returns>
+    public List<CardData> GetCopyCardDataList()
+    {
+        // 深いコピーを行い、新しいリストを返す
+        return cardDataList.Select(cardData => cardData.Clone()).ToList();
+    }
 }
