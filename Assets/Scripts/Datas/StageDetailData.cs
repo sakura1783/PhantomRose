@@ -10,7 +10,6 @@ public enum DifficultyType
     Gold,
     Diamond1,
     Diamond2,
-    Diamond3,
 }
 
 [Serializable]
