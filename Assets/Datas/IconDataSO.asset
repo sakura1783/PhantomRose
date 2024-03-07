@@ -35,7 +35,7 @@ MonoBehaviour:
   - iconId: 4
     iconSprite: {fileID: 798309987, guid: 132358e9bf26b60458b731bf001e31db, type: 3}
   - iconId: 5
-    iconSprite: {fileID: 590339701, guid: e5ccfbacb46474f11874ed7c0049ced9, type: 3}
+    iconSprite: {fileID: -239587200, guid: 3ad8a710cac3443c58488adc0af87b5c, type: 3}
   - iconId: 6
     iconSprite: {fileID: 590339701, guid: e5ccfbacb46474f11874ed7c0049ced9, type: 3}
   - iconId: 7
