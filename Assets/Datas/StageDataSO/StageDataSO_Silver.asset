@@ -16,4 +16,3 @@ MonoBehaviour:
   - routeDataSOList:
     - {fileID: 11400000, guid: 63016df3e2d5b45ed933025e633b5ee9, type: 2}
     - {fileID: 11400000, guid: b8e82f541eb76416fb5488881e689ee7, type: 2}
-    - {fileID: 11400000, guid: 32fd0a17d4b24425ab03be1e080f79c8, type: 2}

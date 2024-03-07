@@ -32,7 +32,13 @@ public class MainGameManager : MonoBehaviour
 
     private IDisposable subscription;
 
-    public ReactiveProperty<int> CurrentRouteIndex = new(0);  // ReactivePropertyで監視できるようになる。プロパティは参照型なので最初に初期値を代入する。
+    public ReactiveProperty<int> CurrentRouteIndex = new(0);  // ReactivePropertyで監視できるようになる。プロパティは参照型なので最初に初期値を代入する。// Silver-1-2の場合、-2の方。
+
+    public int currentStageIndex;  // Silver-1-2の場合、-1の方。
+
+    public StageDataSO currentStageDataSO;
+    private RouteDataSO currentRouteDataSO;
+    private int clearRouteCount;
 
 
     async void Start()
@@ -67,7 +73,7 @@ public class MainGameManager : MonoBehaviour
             return;
         }
 
-        CurrentRouteIndex.Value = 0;
+        //CurrentRouteIndex.Value = 0;
 
         DestroyEndEvents();
 
@@ -87,7 +93,8 @@ public class MainGameManager : MonoBehaviour
         }
         routeList.Clear();
 
-        for (int i = 0; i < routeDataSO.routeList.Count; i++)
+        //for (int i = 0; i < routeDataSO.routeList.Count; i++)
+        for (int i = 0; i < currentRouteDataSO.routeList.Count; i++)
         {
             // ルート配置用のベース作成
             Transform routeBase = Instantiate(routeBasePrefab, routeBaseSetTran, false);
@@ -113,13 +120,15 @@ public class MainGameManager : MonoBehaviour
             RouteDetail routeBrunch = null;
 
             // ルート内のイベント分だけマスを配置
+            //for (int eventCount = 0; eventCount < routeDataSO.routeList[i].eventList.Count; eventCount++)
             for (int eventCount = 0; eventCount < routeDataSO.routeList[i].eventList.Count; eventCount++)
             {
                 index = eventCount;
 
                 routeBrunch = Instantiate(routeDetailPrefab, routeBase, false);
 
-                EventIconType iconType = (EventIconType)Enum.Parse(typeof(EventIconType), routeDataSO.routeList[i].eventList[index].name);  // Enum.Parse(列挙型の型情報, 変換したい文字列)
+                //EventIconType iconType = (EventIconType)Enum.Parse(typeof(EventIconType), routeDataSO.routeList[i].eventList[index].name);  // Enum.Parse(列挙型の型情報, 変換したい文字列)
+                EventIconType iconType = (EventIconType)Enum.Parse(typeof(EventIconType), currentRouteDataSO.routeList[i].eventList[index].name);
 
                 routeBrunch.SetUp(IconManager.instance.GetEventIcon(iconType));
             }
@@ -145,10 +154,12 @@ public class MainGameManager : MonoBehaviour
         disposableList?.Clear();  // Compositeを使う時はClearで購読を停止する。Disposeをすると、二度と購読してくれなくなる
 
         // 次のイベント用のボタン生成
-        for (int i = 0; i < routeDataSO.routeList[CurrentRouteIndex.Value].eventList.Count; i++)
+        //for (int i = 0; i < routeDataSO.routeList[CurrentRouteIndex.Value].eventList.Count; i++)
+        for (int i = 0; i < currentRouteDataSO.routeList[CurrentRouteIndex.Value].eventList.Count; i++)
         {
             int index = i;
-            EventBase eventButton = Instantiate(routeDataSO.routeList[CurrentRouteIndex.Value].eventList[i], eventButtonTran);
+            //EventBase eventButton = Instantiate(routeDataSO.routeList[CurrentRouteIndex.Value].eventList[i], eventButtonTran);
+            EventBase eventButton = Instantiate(currentRouteDataSO.routeList[CurrentRouteIndex.Value].eventList[i], eventButtonTran);
 
             // ボタンのイベントを購読
             eventButton.OnClickEventButtonObserbable
@@ -215,14 +226,34 @@ public class MainGameManager : MonoBehaviour
     private void CheckRoute()
     {
         // ルートが残っていない場合、ルートクリア
-        if (routeDataSO.routeList.Count <= CurrentRouteIndex.Value)
+        //if (routeDataSO.routeList.Count <= CurrentRouteIndex.Value)
+        if (currentRouteDataSO.routeList.Count <= CurrentRouteIndex.Value)
         {
             Debug.Log("ルート終了");
+
+            clearRouteCount++;
+
+            // 次のルートがあるか確認
+            if (currentStageDataSO.stageDataList.Count <= clearRouteCount)
+            {
+                // なければステージクリア。ポップアップを表示して、報酬を獲得してホームに戻る
+
+                Debug.Log("ステージ終了");
+
+                return;
+            }
+
+            // ルートが残っているなら
+            CurrentRouteIndex.Value = 0;
+
+            ResetPlayerIconTran();
+
+            GenerateRoute();  // 新しいルート作成
 
             return;
         }
 
-        // ルートが残っている場合、次の分岐用ボタンを作成
+        // ルートのマスが残っている場合、次の分岐用ボタンを作成
         GenerateEventButtons();
     }
 
