@@ -31,6 +31,8 @@ public class GameData : AbstractSingleton<GameData>
     private Character player;
     private Character opponent;
 
+    private Dictionary<GemType, ReactiveProperty<int>> gemCounts = new();
+
 
     /// <summary>
     /// キャラクターの生成
@@ -76,32 +78,90 @@ public class GameData : AbstractSingleton<GameData>
     }
 
     /// <summary>
+    /// GemCounts変数の初期化
+    /// </summary>
+    public void InitGemCounts()
+    {
+        gemCounts.Add(GemType.Purple, new ReactiveProperty<int>());
+        gemCounts.Add(GemType.Gold, new ReactiveProperty<int>());
+        gemCounts.Add(GemType.Diamond, new ReactiveProperty<int>());
+        gemCounts.Add(GemType.Ruby, new ReactiveProperty<int>());
+    }
+
+    /// <summary>
     /// ジェムの更新
     /// </summary>
-    /// <param name="data"></param>
+    /// <param name="gemType"></param>
+    /// <param name="value"></param>
     public void UpdateGemCount(GemType gemType, int value)
     {
-        switch (gemType)
+        //switch (gemType)
+        //{
+        //    case GemType.Purple:
+        //        PurpleGemCount.Value += value;
+        //        break;
+
+        //    case GemType.Gold:
+        //        GoldGemCount.Value += value;
+        //        break;
+
+        //    case GemType.Diamond:
+        //        DiamondGemCount.Value += value;
+        //        break;
+
+        //    case GemType.Ruby:
+        //        RubyGemCount.Value += value;
+        //        break;
+
+        //    default:
+        //        Debug.Log("該当のGemTypeがありません");
+        //        break;
+        //}
+
+        // Dictionaryの変数を利用して、上記をリファクタリング
+        if (gemCounts.ContainsKey(gemType))
         {
-            case GemType.Purple:
-                PurpleGemCount.Value += value;
-                break;
-
-            case GemType.Gold:
-                GoldGemCount.Value += value;
-                break;
-
-            case GemType.Diamond:
-                DiamondGemCount.Value += value;
-                break;
-
-            case GemType.Ruby:
-                RubyGemCount.Value += value;
-                break;
-
-            default:
-                Debug.Log("該当のGemTypeがありません");
-                break;
+            gemCounts[gemType].Value += value;
         }
+        else
+        {
+            Debug.Log("該当のGemTypeがありません");
+        }
+    }
+
+    /// <summary>
+    /// 複数のジェムの更新
+    /// </summary>
+    /// <param name="gemTypes"></param>
+    /// <param name="values"></param>
+    public void UpdateGemCounts(GemType[] gemTypes, int[] values)
+    {
+        if (gemTypes.Length != values.Length)
+        {
+            Debug.Log("GemTypesとValuesの配列の長さが一致しません");
+            return;
+        }
+
+        for (int i = 0; i < gemTypes.Length; i++)
+        {
+            if (gemCounts.ContainsKey(gemTypes[i]))
+            {
+                gemCounts[gemTypes[i]].Value += values[i];
+            }
+            else
+            {
+                Debug.Log("該当のGemTypeがありません");
+            }
+        }
+    }
+
+    /// <summary>
+    /// 自分からみて、ターゲットを見つける
+    /// </summary>
+    /// <param name="myStatus"></param>
+    /// <returns></returns>
+    public OwnerStatus GetTarget(OwnerStatus myStatus)
+    {
+        return myStatus == OwnerStatus.Player ? OwnerStatus.Opponent : OwnerStatus.Player;
     }
 }

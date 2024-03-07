@@ -12,4 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba76079d1b084d189681a566efbfb3a, type: 3}
   m_Name: ItemDataSO
   m_EditorClassIdentifier: 
-  itemDataList: []
+  itemDataList:
+  - id: 0
+    itemName: "\u9B54\u6CD5\u306E\u30EA\u30F3\u30B4"
+    spriteId: 0
+    description: "\u30D0\u30C8\u30EB\u3067\u4F7F\u7528\u3057\u3066\u3001HP\u30925\u56DE\u5FA9"
+  - id: 1
+    itemName: "\u30CA\u30A4\u30D5"
+    spriteId: 1
+    description: "\u30D0\u30C8\u30EB\u3067\u4F7F\u7528\u3057\u3066\u3001\u6575\u306B\u653B\u6483\u529B5\u3067\u653B\u6483"
+  - id: 2
+    itemName: "\u6642\u8A08\u306E\u79D2\u91DD"
+    spriteId: 2
+    description: "\u30E9\u30F3\u30C0\u30E0\u30673\u3064\u306E\u30AB\u30FC\u30C9\u306E\u30AF\u30FC\u30EB\u30BF\u30A4\u30E0\u30921\u6E1B\u5C11"
+  - id: 3
+    itemName: "\u9B54\u5973\u306E\u6642\u8A08"
+    spriteId: 3
+    description: "\u30E9\u30F3\u30C0\u30E0\u30673\u3064\u306E\u30AB\u30FC\u30C9\u306E\u30AF\u30FC\u30EB\u30BF\u30A4\u30E0\u3092\u30EA\u30BB\u30C3\u30C8"

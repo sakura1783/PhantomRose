@@ -54,9 +54,34 @@ public class Character
     /// <summary>
     /// HPの更新
     /// </summary>
-    /// <param name="amount"></param>
-    public virtual void UpdateHp(int amount)
+    /// <param name="value"></param>
+    /// <param name="isDirect">シールドを無視して、直接HPに影響を与えるかどうか</param>
+    public virtual void UpdateHp(int value, bool isDirect)
     {
+        // 最終的にHP追加する量
+        int amount;
+
+        // TODO 「集中」バフを持っている場合、isDirectをtrueにする
+
+        if (isDirect)
+        {
+            amount = value;
+        }
+        else
+        {
+            // ダメージがシールド値よりも大きい場合
+            if (-value > Shield.Value)
+            {
+                amount = -(-value - Shield.Value);
+                Shield.Value = 0;
+            }
+            else
+            {
+                amount = 0;
+                UpdateShield(value);
+            }
+        }
+
         Hp.Value = Mathf.Clamp(Hp.Value += amount, 0, maxHp);
     }
 
@@ -67,34 +92,6 @@ public class Character
     public void UpdateShield(int amount)
     {
         Shield.Value = Mathf.Clamp(Shield.Value += amount, 0, int.MaxValue);
-    }
-
-    /// <summary>
-    /// ダメージ計算
-    /// 攻撃やデバフなど、ダメージ用のメソッド (回復などの場合はUpdateHp、UpdateShieldを使う)
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="isDirect"></param>
-    public void CalculateDamage(int value, bool isDirect)
-    {
-        if (isDirect)
-        {
-            UpdateHp(value);
-        }
-        else
-        {
-            // ダメージがシールド値よりも大きい場合
-            if (-value > Shield.Value)
-            {
-                UpdateHp(-(-value - Shield.Value));
-
-                Shield.Value = 0;
-            }
-            else
-            {
-                UpdateShield(value);
-            }
-        }
     }
 
     /// <summary>

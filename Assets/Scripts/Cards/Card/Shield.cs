@@ -18,16 +18,9 @@ public class Shield : CardEffectBase
     /// <returns></returns>
     public override async UniTask ExecuteAsync(OwnerStatus owner, CancellationToken token)
     {
-        if (owner == OwnerStatus.Player)
-        {
-            GameData.instance.GetPlayer().UpdateShield(cardData.shieldPower);
-            FloatingMessageManager.instance.GenerateFloatingMessage(cardData.shieldPower, 102, OwnerStatus.Player);
-        }
-        else
-        {
-            GameData.instance.GetOpponent().UpdateShield(cardData.shieldPower);
-            FloatingMessageManager.instance.GenerateFloatingMessage(cardData.shieldPower, 102, OwnerStatus.Opponent);
-        }
+        // シールド追加
+        AllCardEffectManager.AddShield(owner, cardData.shieldPower);
+        FloatingMessageManager.instance.GenerateFloatingMessage(cardData.shieldPower, 102, owner);
 
         await UniTask.DelayFrame(1);
 

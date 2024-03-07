@@ -18,16 +18,9 @@ public class Heal : CardEffectBase
     /// <returns></returns>
     public override async UniTask ExecuteAsync(OwnerStatus owner, CancellationToken token)
     {
-        if (owner == OwnerStatus.Player)
-        {
-            GameData.instance.GetPlayer().UpdateHp(cardData.recoveryPower);
-            FloatingMessageManager.instance.GenerateFloatingMessage(cardData.recoveryPower, 101, OwnerStatus.Player);
-        }
-        else
-        {
-            GameData.instance.GetOpponent().UpdateHp(cardData.recoveryPower);
-            FloatingMessageManager.instance.GenerateFloatingMessage(cardData.recoveryPower, 101, OwnerStatus.Opponent);
-        }
+        // HP回復
+        AllCardEffectManager.HealHp(owner, cardData.recoveryPower);
+        FloatingMessageManager.instance.GenerateFloatingMessage(cardData.recoveryPower, 101, owner);
 
         await UniTask.DelayFrame(1);
 

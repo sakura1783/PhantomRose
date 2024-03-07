@@ -18,24 +18,13 @@ public class Slash : CardEffectBase
     /// <returns></returns>
     public override async UniTask ExecuteAsync(OwnerStatus owner, CancellationToken token)
     {
-        if (owner == OwnerStatus.Player)
-        {
-            GameData.instance.GetOpponent().CalculateDamage(-cardData.AttackPower.Value, false);
-            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, OwnerStatus.Opponent);
+        // 攻撃
+        AllCardEffectManager.OneAttack(owner, -cardData.AttackPower.Value);
+        FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, GameData.instance.GetTarget(owner));
 
-            // 相手にデバフを付与
-            GameData.instance.GetOpponent().UpdateDebuff(cardData.stateList[0]);
-            FloatingMessageManager.instance.GenerateFloatingMessage(cardData.stateList[0].duration, DataBaseManager.instance.stateDataSO.stateDataList[cardData.stateList[0].stateId].spriteId, OwnerStatus.Opponent);
-        }
-        else
-        {
-            GameData.instance.GetPlayer().CalculateDamage(-cardData.AttackPower.Value, false);
-            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, OwnerStatus.Player);
-
-            GameData.instance.GetPlayer().UpdateDebuff(cardData.stateList[0]);
-            FloatingMessageManager.instance.GenerateFloatingMessage(cardData.stateList[0].duration, DataBaseManager.instance.stateDataSO.stateDataList[cardData.stateList[0].stateId].spriteId, OwnerStatus.Player);
-
-        }
+        // 相手にデバフ付与
+        AllCardEffectManager.AddDebuff(owner, cardData.stateList[0]);  // TODO 数字を使わないように、リファクタリング。debuffとbuffの情報を分けて保持した方がいいかも
+        FloatingMessageManager.instance.GenerateFloatingMessage(cardData.stateList[0].duration, DataBaseManager.instance.stateDataSO.stateDataList[cardData.stateList[0].stateId].spriteId, GameData.instance.GetTarget(owner));
 
         await UniTask.DelayFrame(1);
 

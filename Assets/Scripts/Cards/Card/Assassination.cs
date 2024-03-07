@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Assassination : CardEffectBase
 {
+    private int attackCount = 2;
+
+
     /// <summary>
     /// コンストラクタ
     /// </summary>
@@ -18,21 +21,11 @@ public class Assassination : CardEffectBase
     /// <returns></returns>
     public override async UniTask ExecuteAsync(OwnerStatus owner, CancellationToken token)
     {
-        if (owner == OwnerStatus.Player)
+        // 指定回数(attackCount)だけ攻撃
+        for (int i = 0; i < attackCount; i++)
         {
-            for (int i = 0; i < 2; i++)
-            {
-                GameData.instance.GetOpponent().CalculateDamage(-cardData.AttackPower.Value, false);
-                FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, OwnerStatus.Opponent);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < 2; i++)
-            {
-                GameData.instance.GetPlayer().CalculateDamage(-cardData.AttackPower.Value, false);
-                FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, OwnerStatus.Player);
-            }
+            AllCardEffectManager.OneAttack(owner, -cardData.AttackPower.Value);
+            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, GameData.instance.GetTarget(owner));
         }
 
         await UniTask.DelayFrame(1);
