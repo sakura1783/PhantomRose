@@ -14,14 +14,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficultyLevelDataList:
   - difficultyType: 0
+    difficultyName: "\u30B7\u30EB\u30D0\u30FC"
     stageDataList:
-    - {fileID: 0}
+    - {fileID: 11400000, guid: f2a4c00825ab34f849d6c0851d00d0f4, type: 2}
+    diamond: 60
+    purpleGem: 20
+    goldGem: 0
+    diamondGem: 0
+    rubyGem: 0
   - difficultyType: 1
+    difficultyName: "\u30B4\u30FC\u30EB\u30C9"
     stageDataList:
-    - {fileID: 0}
+    - {fileID: 11400000, guid: b50c971b42f2f4a6b8cffa650cdb75b7, type: 2}
+    diamond: 90
+    purpleGem: 10
+    goldGem: 20
+    diamondGem: 0
+    rubyGem: 0
   - difficultyType: 2
+    difficultyName: "\u30C0\u30A4\u30E4\u30E2\u30F3\u30C9 1 / 2"
     stageDataList:
     - {fileID: 0}
-  - difficultyType: 3
+    diamond: 130
+    purpleGem: 0
+    goldGem: 10
+    diamondGem: 20
+    rubyGem: 0
+  - difficultyType: 2
+    difficultyName: "\u30C0\u30A4\u30E4\u30E2\u30F3\u30C9 2 / 2"
     stageDataList:
     - {fileID: 0}
+    diamond: 190
+    purpleGem: 0
+    goldGem: 10
+    diamondGem: 25
+    rubyGem: 0

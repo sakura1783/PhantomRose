@@ -323,7 +323,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 1
   m_Interactable: 1
-  m_BlocksRaycasts: 0
+  m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!1 &1577094601911537478
 GameObject:
@@ -788,6 +788,8 @@ GameObject:
   - component: {fileID: 1577094602433823900}
   - component: {fileID: 1577094602433823902}
   - component: {fileID: 1577094602433823901}
+  - component: {fileID: 4911646326233550617}
+  - component: {fileID: 1424920519212196531}
   m_Layer: 5
   m_Name: DifficultyDetailPop
   m_TagString: Untagged
@@ -856,6 +858,47 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &4911646326233550617
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577094602433823899}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &1424920519212196531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577094602433823899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9925bd6f1573d4d1d83a601cec3a1336, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imgDifficulty: {fileID: 1577094602254969145}
+  imgCrown: {fileID: 1577094602302795205}
+  txtDifficulty: {fileID: 1577094602234563777}
+  txtDiamondRewardCount: {fileID: 1577094602820627792}
+  btnLevelDown: {fileID: 1577094602795052648}
+  btnLevelUp: {fileID: 1577094602600934885}
+  btnStart: {fileID: 1577094600940643326}
+  gemRewardTran: {fileID: 1577094602325062272}
+  canvasGroup: {fileID: 4911646326233550617}
+  levelButtonGroup: {fileID: 1577094601469058844}
+  clearRewardPrefab: {fileID: 4313969166950665250, guid: c4fbf7d0b379b4e80bca9fd485888a92, type: 3}
+  difficultySilverSprite: {fileID: 21300000, guid: 4ba82e416290b4a6aa766e7a5ea72a37, type: 3}
+  difficultyGoldSprite: {fileID: 21300000, guid: 40330b961792241a5892ae4d4e23af12, type: 3}
+  difficultyDiamondSprite: {fileID: 21300000, guid: 5b3010d0d984b4797bcd2ad03161367b, type: 3}
+  silverCrownSprite: {fileID: 1050777919, guid: bae7f7f1dfcd548c4bebb20865bde323, type: 3}
+  goldCrownSprite: {fileID: 890642983, guid: bae7f7f1dfcd548c4bebb20865bde323, type: 3}
+  diamondCrownSprite: {fileID: 1348692250, guid: bae7f7f1dfcd548c4bebb20865bde323, type: 3}
 --- !u!1 &1577094602541888625
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,7 +1082,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.47058824}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1161,7 +1204,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 0.47058824}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:

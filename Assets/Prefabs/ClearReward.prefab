@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8562611412635557711}
   - component: {fileID: 8562611412635557697}
   - component: {fileID: 8562611412635557710}
+  - component: {fileID: 4313969166950665250}
   m_Layer: 5
   m_Name: ClearReward
   m_TagString: Untagged
@@ -77,6 +78,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4313969166950665250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8562611412635557708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051cc1085eee148ffa2e2aedafdbe3c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imgGem: {fileID: 8562611412635557710}
+  txtGemCount: {fileID: 8562611413175185545}
 --- !u!1 &8562611413175185655
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +104,7 @@ GameObject:
   - component: {fileID: 8562611413175185544}
   - component: {fileID: 8562611413175185545}
   m_Layer: 5
-  m_Name: RewardCount
+  m_Name: txtGemCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,7 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.9939985, b: 0.9292453, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

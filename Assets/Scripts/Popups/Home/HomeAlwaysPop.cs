@@ -37,7 +37,8 @@ public class HomeAlwaysPop : PopupBase
             .Subscribe(_ =>
             {
                 SetButtonsColor(btnToBattle);
-                PopupManager.instance.SwitchToBattleOrHomeScene("Battle");
+                PopupManager.instance.Show<BattleEntryPop>(false);
+                //PopupManager.instance.SwitchToBattleOrHomeScene("Battle");
             })
             .AddTo(this);
 

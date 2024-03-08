@@ -11,6 +11,14 @@ public class DifficultyLevelDataSO : ScriptableObject
     public class DifficultyLevelData
     {
         public DifficultyType difficultyType;
+        public string difficultyName;
         public List<StageDataSO> stageDataList = new();
+
+        // 難易度クリア後にもらえる報酬
+        public int diamond;
+        public int purpleGem;
+        public int goldGem;
+        public int diamondGem;
+        public int rubyGem;
     }
 }

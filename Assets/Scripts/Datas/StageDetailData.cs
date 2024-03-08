@@ -8,8 +8,7 @@ public enum DifficultyType
 {
     Silver,
     Gold,
-    Diamond1,
-    Diamond2,
+    Diamond,
 }
 
 [Serializable]
@@ -19,10 +18,10 @@ public class StageDetailData
     public int stageNo;
     //public int routeIndex;
 
-    public int purpleRewardCount;
-    public int goldRewardCount;
-    public int diamondRewardCount;
-    public int rubyRewardCount;
+    //public int purpleRewardCount;
+    //public int goldRewardCount;
+    //public int diamondRewardCount;
+    //public int rubyRewardCount;
 
     public int[] enemyIds;
     public int bossId;
@@ -38,18 +37,18 @@ public class StageDetailData
         difficultyType = (DifficultyType)Enum.Parse(typeof(DifficultyType), datas[0]);
         stageNo = int.Parse(datas[1]);
         //routeIndex = int.Parse(datas[2]);
-        purpleRewardCount = int.Parse(datas[2]);
-        goldRewardCount = int.Parse(datas[3]);
-        diamondRewardCount = int.Parse(datas[4]);
-        rubyRewardCount = int.Parse(datas[5]);
+        //purpleRewardCount = int.Parse(datas[2]);
+        //goldRewardCount = int.Parse(datas[3]);
+        //diamondRewardCount = int.Parse(datas[4]);
+        //rubyRewardCount = int.Parse(datas[5]);
 
         // 敵のIDを / の位置で分割して配列化
-        string[] enemyArray = datas[6].Split("/");
+        string[] enemyArray = datas[2].Split("/");
         enemyIds = enemyArray.Select(int.Parse).ToArray();  // 要素をすべて変換する場合、Select(data => int.Parse(data))と書かなくても良い
 
-        bossId = int.Parse(datas[7]);
+        bossId = int.Parse(datas[3]);
 
-        string[] dropCardArray = datas[8].Split("/");
+        string[] dropCardArray = datas[4].Split("/");
         dropCards = dropCardArray.Select(int.Parse).ToArray();
     }
 }
