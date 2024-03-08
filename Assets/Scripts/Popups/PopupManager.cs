@@ -170,11 +170,11 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
     /// バトル画面↔︎ホーム画面に移動したい時に使用する
     /// </summary>
     /// <param name="sceneName"></param>
-    public void SwitchToBattleOrHomeScene(string nextSceneName)
+    public void SwitchToBattleOrHomeScene(string nextSceneName, DifficultyLevelDataSO.DifficultyLevelData difficultyData = null)
     {
         if (nextSceneName == "Battle")
         {
-            ShowBattlePop();
+            ShowBattlePop(difficultyData);
         }
         else if (nextSceneName == "Home")
         {
@@ -189,10 +189,10 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
     /// <summary>
     /// ホーム画面のポップアップを全て非表示にして、バトル用のポップアップを表示する
     /// </summary>
-    private async void ShowBattlePop()
+    private async void ShowBattlePop(DifficultyLevelDataSO.DifficultyLevelData difficultyData)
     {
         //ルート作成
-        mainGameManager.GenerateRoute();
+        mainGameManager.GenerateRoute(difficultyData);
 
         await InitPopupsAsync();
 

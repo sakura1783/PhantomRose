@@ -76,7 +76,7 @@ public class DifficultyDetailPopController : MonoBehaviour
         // TODO 前の難易度をクリアしてから新しい難易度を解放させる
         btnStart.OnClickAsObservable()
             .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
-            .Subscribe(_ => PopupManager.instance.SwitchToBattleOrHomeScene("Battle"))  // TODO 難易度を反映させる
+            .Subscribe(_ => PopupManager.instance.SwitchToBattleOrHomeScene("Battle", difficultyData))
             .AddTo(this);
 
         // 自身が何番目のレベルか把握

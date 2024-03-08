@@ -65,15 +65,22 @@ public class MainGameManager : MonoBehaviour
     /// <summary>
     /// ルートとイベントボタンの作成
     /// </summary>
-    public void GenerateRoute()
+    public void GenerateRoute(DifficultyLevelDataSO.DifficultyLevelData difficultyData)
     {
-        // セーブデータが存在しない場合だけ、新しくルートを作成
-        if (GameData.instance.HasSaveData.Value)
-        {
-            return;
-        }
+        // TODO 変更。ホームからバトルに移動する際のみ。セーブデータが存在しない場合だけ、新しくルートを作成
+        //if (GameData.instance.HasSaveData.Value)
+        //{
+        //    return;
+        //}
 
         //CurrentRouteIndex.Value = 0;
+
+        // 難易度の情報から、ステージを作成
+        if (difficultyData != null)
+        {
+            currentStageDataSO = difficultyData.stageDataList[0];
+        }
+        currentRouteDataSO = currentStageDataSO.stageDataList[clearRouteCount].routeDataSOList[0];
 
         DestroyEndEvents();
 
@@ -236,7 +243,7 @@ public class MainGameManager : MonoBehaviour
             // 次のルートがあるか確認
             if (currentStageDataSO.stageDataList.Count <= clearRouteCount)
             {
-                // なければステージクリア。ポップアップを表示して、報酬を獲得してホームに戻る
+                // TODO なければステージクリア。ポップアップを表示して、報酬を獲得してホームに戻る
 
                 Debug.Log("ステージ終了");
 
@@ -248,7 +255,7 @@ public class MainGameManager : MonoBehaviour
 
             ResetPlayerIconTran();
 
-            GenerateRoute();  // 新しいルート作成
+            GenerateRoute(null);  // 新しいルート作成
 
             return;
         }
