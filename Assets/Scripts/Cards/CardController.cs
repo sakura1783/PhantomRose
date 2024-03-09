@@ -157,4 +157,6 @@ public class CardController : MonoBehaviour
             txtAttackPointOrInterval.text = cardData.AttackPower.Value <= 0 ? "" : cardData.AttackPower.ToString();
         }
     }
+
+    // TODO attackPointをTextに反映させるメソッド
 }

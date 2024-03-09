@@ -27,4 +27,22 @@ public class HandCardManagerBase
 
         //cardList.Clear();
     }
+
+    /// <summary>
+    /// 今回利用したカードにクールタイムを設定
+    /// </summary>
+    /// <param name="setCardList"></param>
+    public void SetCoolTimeCard(CardController card)
+    {
+        card.SetCoolTime(card.CardData.coolTime);
+    }
+
+    /// <summary>
+    /// カードのクールタイムを更新
+    /// </summary>
+    /// <param name="setCardList"></param>
+    public void UpdateCoolTimeCard(CardController card)
+    {
+        card.UpdateCoolTime();
+    }
 }
