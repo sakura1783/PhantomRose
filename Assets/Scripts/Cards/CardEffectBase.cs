@@ -25,7 +25,7 @@ public abstract class CardEffectBase : ICommand
     /// <param name="owner"></param>
     /// <param name="token"></param>
     /// <returns></returns>
-    public abstract UniTask ExecuteAsync(OwnerStatus owner, CancellationToken token);
+    public abstract UniTask ExecuteAsync(OwnerStatus owner, CancellationToken token, int slotNo);
 
     public int GetId() => cardData.id;  // 戻り値があるメソッドの省略記法
 }
