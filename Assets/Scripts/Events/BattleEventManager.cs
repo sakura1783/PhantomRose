@@ -106,7 +106,6 @@ public class BattleEventManager : MonoBehaviour
         // プレイヤー情報を生成
         GameData.instance.InitCharacter(OwnerStatus.Player, 30);
 
-        // TODO SOの中身が変わらないか確認する
         // プレイヤーの初期手札カードを作成
         for (int i = 0; i < 7; i++)
         {
@@ -172,9 +171,8 @@ public class BattleEventManager : MonoBehaviour
     /// </summary>
     private void PrepareNextTurn()
     {
-        //TODO 場所を、カード実行タイミングに変更
         //スロットに配置したカードのクールタイムを設定
-        playerHandCardManager.SetCoolTimeCards(cardSlotManager.setPlayerCardList);
+        //playerHandCardManager.SetCoolTimeCards(cardSlotManager.setPlayerCardList);
 
         // それ以外のクールタイムがあるカードのクールタイムを減少
         playerHandCardManager.UpdateCoolTimeCards(cardSlotManager.setPlayerCardList);
@@ -239,7 +237,10 @@ public class BattleEventManager : MonoBehaviour
     {
         // セットされたカードを実行し、結果を取得する
         BattleState currentBattleStateResult = await cardHandler
-            .ExecuteCommandsAsync(cardSlotList.Select(slot => slot.cardController.CardEffect).ToList(), cardSlotList.Select(slot => slot.owner).ToList(), this.GetCancellationTokenOnDestroy());
+            .ExecuteCommandsAsync(cardSlotList.Select(slot => slot.cardController).ToList(),  
+                                    cardSlotList.Select(slot => slot.owner).ToList(),
+                                    this.GetCancellationTokenOnDestroy(),
+                                    playerHandCardManager);
 
         if (currentBattleStateResult == BattleState.Win)
         {
