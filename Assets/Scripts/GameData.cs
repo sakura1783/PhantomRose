@@ -6,7 +6,8 @@ using System.Linq;
 [System.Serializable]
 public class GameData
 {
-    public List<int> myCardList = new();  // 持っているカードのid番号のList。この情報を使って、毎バトル時、手札を生成する
+    //public List<int> myCardList = new();  // 持っているカードのid番号のList。この情報を使って、毎バトル時、手札を生成する
+    public Dictionary<int, int> myCardList = new();  // Dictionary<serialNo, cardId>
 
     public List<CardData> attackCardList = new();
     public List<CardData> magicCardList = new();
@@ -18,8 +19,7 @@ public class GameData
 
     public List<int> achievedChallengeTaskList = new();
 
-    // TODO バトルのデータ。敵の種類、フェードカウント、置いたカード情報、キャラのHP、バフデバフなど
-
+    public ReactiveProperty<int> DiamondCount = new();
     public ReactiveProperty<int> RubyCount = new();
 
     public ReactiveProperty<int> PurpleGemCount = new();
@@ -33,6 +33,31 @@ public class GameData
     private Character opponent;
 
     private Dictionary<GemType, ReactiveProperty<int>> gemCounts = new();
+
+    private int currentSerialNo;  // カードの通し番号の最後の値。カードを生成する際に、この値をつけ、通し番号は常に一意なものとする
+    public int CurrentSerialNo
+    {
+        get => currentSerialNo;
+        set => currentSerialNo = value;
+    }
+
+    /// <summary>
+    /// レベルアップしたカードの情報
+    /// </summary>
+    [System.Serializable]  // Serializable属性を付けないと、levelUpCardDataList変数をpublicにしても、インスペクターに表示されない
+    public class LevelUpCardData
+    {
+        public int serialNo;
+
+        public int attackPower;
+        public int recoveryPower;
+        public int shieldPower;
+
+        public int buffDuration;
+        public int debuffDuration;
+    }
+
+    public List<LevelUpCardData> levelUpCardDataList = new();
 
 
     /// <summary>
@@ -164,5 +189,27 @@ public class GameData
     public OwnerStatus GetTarget(OwnerStatus myStatus)
     {
         return myStatus == OwnerStatus.Player ? OwnerStatus.Opponent : OwnerStatus.Player;
+    }
+
+    /// <summary>
+    /// 引数で指定したカードをmyCardList(所持カード)に追加
+    /// 通し番号を付けて管理
+    /// </summary>
+    /// <param name="cardId"></param>
+    //public void AddMyCard(int cardId)
+    //{
+    //    myCardList.Add(currentSerialNo, cardId);
+    //}
+
+    /// <summary>
+    /// 引数に指定した通し番号を持つカードをmyCardListから削除
+    /// </summary>
+    /// <param name="serialNo"></param>
+    public void RemoveMyCard(int serialNo)
+    {
+        if (myCardList.ContainsKey(serialNo))
+        {
+            myCardList.Remove(serialNo);
+        }
     }
 }

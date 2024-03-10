@@ -17,6 +17,8 @@ public class CardDeckPop : PopupBase
 
     public ReactiveProperty<int> cardCount = new();
 
+    private List<CardData> generatedCardList = new();
+
 
     /// <summary>
     /// 初期設定
@@ -31,23 +33,50 @@ public class CardDeckPop : PopupBase
     }
 
     /// <summary>
-    /// カードデッキにカードを追加
-    /// Character.HandCardListに新しいカードの情報を追加してから実行する
+    /// カード追加
     /// </summary>
     /// <param name="data"></param>
-    public void AddCardToCardDeck(CardData data)
+    public void AddMyCard(CardData data)
     {
-        // Listをレベルが低い順(昇順)に並べ替え
-        List<CardData> sortedList = GameDataManager.instance.gameData.GetPlayer().HandCardList.OrderBy(card => card.level).ToList();
+        // myCardListにカードを追加
+        GameDataManager.instance.gameData.myCardList.Add(GameDataManager.instance.gameData.CurrentSerialNo, data.id);
 
-        // 追加するカードの要素番号を取得
+        // カードデッキにカードを追加
+        AddCardToCardDeck(data);
+
+        GameDataManager.instance.gameData.CurrentSerialNo++;
+    }
+
+    /// <summary>
+    /// カードデッキにカードを追加
+    /// </summary>
+    /// <param name="data"></param>
+    private void AddCardToCardDeck(CardData data)
+    {
+        // デッキにカードを生成
+        var cardObj = Instantiate(cardPrefab, cardTran);
+        cardObj.SetUp(data, descriptionPop, GameDataManager.instance.gameData.CurrentSerialNo);
+
+        generatedCardList.Add(cardObj.CardData);
+
+        // 生成したカードをレベルが低い順(昇順)に並べ替え
+        List<CardData> sortedList = generatedCardList.OrderBy(card => card.level).ToList();  // TODO 同じカードがあれば、並ぶようにする
+
+        // 追加したカードの要素番号を取得
         int index = sortedList.FindIndex(x => x == data);
 
-        var cardObj = Instantiate(cardPrefab, cardTran);
-        cardObj.SetUp(data, descriptionPop);
-        cardObj.transform.SetSiblingIndex(index);  // 指定したインデックスの位置にカードを生成
+        // 指定したインデックスの位置にカードを移動
+        cardObj.transform.SetSiblingIndex(index);  // TODO 適切な位置にカードが移動するか確認する
 
         cardCount.Value++;
+    }
+
+    /// <summary>
+    /// TODO カードデッキからカードを削除
+    /// </summary>
+    public void RemoveCardFromCardDeck(CardController tapCard)
+    {
+
     }
 
     /// <summary>

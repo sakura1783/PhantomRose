@@ -34,6 +34,9 @@ public class HandCardManagerBase
     /// <param name="setCardList"></param>
     public void SetCoolTimeCard(CardController card)
     {
+        UnityEngine.Debug.Log($"引数：{card}");
+        UnityEngine.Debug.Log($"CardData：{card.CardData}");
+
         card.SetCoolTime(card.CardData.coolTime);
     }
 

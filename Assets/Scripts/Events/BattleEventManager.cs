@@ -109,13 +109,7 @@ public class BattleEventManager : MonoBehaviour
         // プレイヤーの初期手札カードを作成
         for (int i = 0; i < 7; i++)
         {
-            GameDataManager.instance.gameData.myCardList.Add(DataBaseManager.instance.copyCardDataList[i].id);
-        }
-
-        // 初期手札をカードデッキポップに追加
-        foreach (var cardId in GameDataManager.instance.gameData.myCardList)
-        {
-            cardDeckPop.AddCardToCardDeck(DataBaseManager.instance.cardDataSO.cardDataList[cardId]);
+            cardDeckPop.AddMyCard(DataBaseManager.instance.copyCardDataList[i]);
         }
 
         // プレイヤーの各ステータス購読処理
@@ -238,9 +232,9 @@ public class BattleEventManager : MonoBehaviour
         // セットされたカードを実行し、結果を取得する
         BattleState currentBattleStateResult = await cardHandler
             .ExecuteCommandsAsync(cardSlotList.Select(slot => slot.cardController).ToList(),  
-                                    cardSlotList.Select(slot => slot.owner).ToList(),
-                                    this.GetCancellationTokenOnDestroy(),
-                                    playerHandCardManager);
+                                  cardSlotList.Select(slot => slot.owner).ToList(),
+                                  this.GetCancellationTokenOnDestroy(),
+                                  playerHandCardManager);
 
         if (currentBattleStateResult == BattleState.Win)
         {
@@ -333,9 +327,9 @@ public class BattleEventManager : MonoBehaviour
 
         // 手札の情報を作成
         GameDataManager.instance.gameData.GetPlayer().HandCardList.Clear();
-        foreach (var cardId in GameDataManager.instance.gameData.myCardList)
+        foreach (var card in GameDataManager.instance.gameData.myCardList)
         {
-            GameDataManager.instance.gameData.GetPlayer().HandCardList.Add(DataBaseManager.instance.copyCardDataList[cardId]);
+            GameDataManager.instance.gameData.GetPlayer().HandCardList.Add(DataBaseManager.instance.copyCardDataList[card.Value]);
         }
 
         // 手札のカードのプレハブを生成

@@ -34,6 +34,9 @@ public class CardController : MonoBehaviour
     private CardData cardData;
     public CardData CardData => cardData;
 
+    private int serialNo;  // 通し番号。この値は常に一意
+    public int SerialNo => serialNo;
+
     private int currentCoolTime;
     public int CurrentCoolTime => currentCoolTime;
 
@@ -43,9 +46,14 @@ public class CardController : MonoBehaviour
     /// <summary>
     /// 初期設定。カード見た目と効果を別々に設定
     /// </summary>
-    public void SetUp(CardData data, DescriptionPop descriptionPop)
+    /// <param name="data"></param>
+    /// <param name="descriptionPop"></param>
+    /// <param name="serialNo">カードデッキにカードを追加する際のみ、この値を設定</param>
+    public void SetUp(CardData data, DescriptionPop descriptionPop, int serialNo = -1)
     {
         cardData = data;
+
+        this.serialNo = serialNo;
 
         SetCardDetail(data);
 

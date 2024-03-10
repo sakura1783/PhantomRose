@@ -160,8 +160,7 @@ public class ShopEventPop : PopupBase
         }
 
         // myCardListとカードデッキに買ったカードを追加
-        GameDataManager.instance.gameData.myCardList.Add(data.id);
-        cardDeckPop.AddCardToCardDeck(data);
+        cardDeckPop.AddMyCard(data);
 
         // CardPurchaseポップアップを非表示にする
         SwitchCardPurchasePopVisibility(false);
