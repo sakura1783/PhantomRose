@@ -6,7 +6,7 @@ public class ThornShield : CardEffectBase
 {
     public ThornShield(CardData cardData) : base(cardData) { }
 
-    public override async UniTask ExecuteAsync(OwnerStatus owner, CancellationToken token)
+    public override async UniTask ExecuteAsync(OwnerStatus owner, CancellationToken token, int slotNo)
     {
         // シールド追加
         AllCardEffectManager.AddShield(owner, cardData.shieldPower);
