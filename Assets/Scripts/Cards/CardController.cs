@@ -59,7 +59,7 @@ public class CardController : MonoBehaviour
             .AddTo(this);
 
         cardData.AttackPower
-            .Subscribe(value => txtAttackPointOrInterval.text = value.ToString())  // 攻撃力が変更された時、表示を更新
+            .Subscribe(value => DisplayAttackPower(value))  // 攻撃力が変更された時、表示を更新
             .AddTo(this);
     }
 
@@ -71,7 +71,7 @@ public class CardController : MonoBehaviour
         // 各値を設定
         imgCard.sprite = IconManager.instance.GetCardIcon(data.spriteId);
         imgBase.color = data.cardColor;
-        txtAttackPointOrInterval.text = data.AttackPower.Value <= 0 ? "" : data.AttackPower.ToString();  //TODO 置く場所や状況によって攻撃力に変動があるものは 4+ などのように表示する
+        DisplayAttackPower(data.AttackPower.Value);  //TODO 置く場所や状況によって攻撃力に変動があるものは 4+ などのように表示する
     }
 
     /// <summary>
@@ -154,9 +154,15 @@ public class CardController : MonoBehaviour
             attackPointOrIntervalTextTran.localPosition = new Vector3(0f, -53f, 0f);
 
             // 攻撃力を表示
-            txtAttackPointOrInterval.text = cardData.AttackPower.Value <= 0 ? "" : cardData.AttackPower.ToString();
+            DisplayAttackPower(cardData.AttackPower.Value);
         }
     }
 
-    // TODO attackPointをTextに反映させるメソッド
+    /// <summary>
+    /// UIのTextに攻撃力を表示
+    /// </summary>
+    private void DisplayAttackPower(int attackPower)
+    {
+        txtAttackPointOrInterval.text = attackPower <= 0 ? "" : attackPower.ToString();
+    }
 }
