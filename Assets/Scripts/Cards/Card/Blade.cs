@@ -20,7 +20,7 @@ public class Blade : CardEffectBase
     {
         // 攻撃
         AllCardEffectManager.OneAttack(owner, -cardData.AttackPower.Value);
-        FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, GameData.instance.GetTarget(owner));
+        FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, GameDataManager.instance.gameData.GetTarget(owner));
 
         // 攻撃力アップ
         AllCardEffectManager.UpdateAttackPower(owner, cardData);

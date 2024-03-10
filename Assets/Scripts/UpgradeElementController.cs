@@ -28,7 +28,7 @@ public class UpgradeElementController : MonoBehaviour
         imgGem.sprite = IconManager.instance.GetGemSprite(data.gemType);
 
         // ゲーム進行中はボタンを押せない
-        GameData.instance.HasSaveData
+        GameDataManager.instance.gameData.HasSaveData
             .Subscribe(value =>
             {
                 btnUse.interactable = !value;
@@ -43,7 +43,7 @@ public class UpgradeElementController : MonoBehaviour
             .Subscribe(_ =>
             {
                 // ジェム消費
-                GameData.instance.UpdateGemCount(data.gemType, -data.cost);
+                GameDataManager.instance.gameData.UpdateGemCount(data.gemType, -data.cost);
 
                 revertButtonGroup.alpha = 1;
                 revertButtonGroup.blocksRaycasts = true;
@@ -55,7 +55,7 @@ public class UpgradeElementController : MonoBehaviour
             .Subscribe(_ =>
             {
                 // ジェムの払い戻し
-                GameData.instance.UpdateGemCount(data.gemType, data.cost);
+                GameDataManager.instance.gameData.UpdateGemCount(data.gemType, data.cost);
 
                 revertButtonGroup.alpha = 0;
                 revertButtonGroup.blocksRaycasts = false;
@@ -77,16 +77,16 @@ public class UpgradeElementController : MonoBehaviour
         switch (data.gemType)
         {
             case GemType.Purple:
-                return GameData.instance.PurpleGemCount.Value >= data.cost;
+                return GameDataManager.instance.gameData.PurpleGemCount.Value >= data.cost;
 
             case GemType.Gold:
-                return GameData.instance.GoldGemCount.Value >= data.cost;
+                return GameDataManager.instance.gameData.GoldGemCount.Value >= data.cost;
 
             case GemType.Diamond:
-                return GameData.instance.DiamondGemCount.Value >= data.cost;
+                return GameDataManager.instance.gameData.DiamondGemCount.Value >= data.cost;
 
             case GemType.Ruby:
-                return GameData.instance.RubyGemCount.Value >= data.cost;
+                return GameDataManager.instance.gameData.RubyGemCount.Value >= data.cost;
 
             default:
                 return true;

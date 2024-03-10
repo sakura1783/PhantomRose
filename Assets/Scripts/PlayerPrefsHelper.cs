@@ -1,4 +1,5 @@
 using UnityEngine;
+using Newtonsoft.Json;
 
 /// <summary>
 /// 指定したクラスをstring型のJson形式でPlayerPrefsクラスにセーブ・ロードするためのHelperクラス
@@ -57,5 +58,34 @@ public static class PlayerPrefsHelper
         PlayerPrefs.DeleteKey(key);
 
         Debug.Log($"{key}のデータを削除しました");
+    }
+
+    /// <summary>
+    /// GameDataクラスをセーブ
+    /// </summary>
+    public static void SaveGameData()
+    {
+        // GameDataをJSONにシリアライズ
+        string jsonString = JsonConvert.SerializeObject(GameDataManager.instance.gameData);
+
+        // JSON文字列を保存
+        PlayerPrefs.SetString(ConstData.GAME_DATA_SAVE_KEY, jsonString);
+        PlayerPrefs.Save();
+
+        Debug.Log($"{GameDataManager.instance.gameData}をセーブしました");
+    }
+
+    /// <summary>
+    /// GameDataクラスをロード
+    /// </summary>
+    public static void LoadGameData()
+    {
+        // JSON文字列をロード
+        string jsonString = PlayerPrefs.GetString(ConstData.GAME_DATA_SAVE_KEY);
+
+        // JSON文字列をGameDataクラスにデシリアライズ
+        GameDataManager.instance.gameData = JsonConvert.DeserializeObject<GameData>(jsonString);
+
+        Debug.Log($"{GameDataManager.instance.gameData}をロードしました");
     }
 }

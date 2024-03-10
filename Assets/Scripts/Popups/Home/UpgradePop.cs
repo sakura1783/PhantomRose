@@ -34,25 +34,25 @@ public class UpgradePop : PopupBase
     {
         base.SetUp();
 
-        txtPurpleGemCount.text = GameData.instance.PurpleGemCount.ToString();
-        txtGoldGemCount.text = GameData.instance.GoldGemCount.ToString();
-        txtDiamondGemCount.text = GameData.instance.DiamondGemCount.ToString();
-        txtRubyGemCount.text = GameData.instance.RubyGemCount.ToString();
+        txtPurpleGemCount.text = GameDataManager.instance.gameData.PurpleGemCount.ToString();
+        txtGoldGemCount.text = GameDataManager.instance.gameData.GoldGemCount.ToString();
+        txtDiamondGemCount.text = GameDataManager.instance.gameData.DiamondGemCount.ToString();
+        txtRubyGemCount.text = GameDataManager.instance.gameData.RubyGemCount.ToString();
 
         // 各ジェムの購読処理
-        GameData.instance.PurpleGemCount
+        GameDataManager.instance.gameData.PurpleGemCount
             .Subscribe(value => txtPurpleGemCount.text = Mathf.Clamp(value, 0, int.MaxValue).ToString())
             .AddTo(this);
 
-        GameData.instance.GoldGemCount
+        GameDataManager.instance.gameData.GoldGemCount
             .Subscribe(value => txtGoldGemCount.text = Mathf.Clamp(value, 0, int.MaxValue).ToString())
             .AddTo(this);
 
-        GameData.instance.DiamondGemCount
+        GameDataManager.instance.gameData.DiamondGemCount
             .Subscribe(value => txtDiamondGemCount.text = Mathf.Clamp(value, 0, int.MaxValue).ToString())
             .AddTo(this);
 
-        GameData.instance.RubyGemCount
+        GameDataManager.instance.gameData.RubyGemCount
             .Subscribe(value => txtRubyGemCount.text = Mathf.Clamp(value, 0, int.MaxValue).ToString())
             .AddTo(this);
 
@@ -109,7 +109,7 @@ public class UpgradePop : PopupBase
     public override void ShowPopUp(CardData cardData = null)
     {
         // ゲーム進行中の場合は機能が使えないことを示すダイアログを生成
-        if (GameData.instance.HasSaveData.Value)
+        if (GameDataManager.instance.gameData.HasSaveData.Value)
         {
             dialog = Instantiate(upgradeDisabledDialog, elementsTran);
             dialog.transform.SetAsFirstSibling();  // 子要素のうち先頭に配置

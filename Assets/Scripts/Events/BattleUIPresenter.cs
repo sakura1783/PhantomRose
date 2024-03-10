@@ -25,14 +25,14 @@ public class BattleUIPresenter : MonoBehaviour
     /// </summary>
     public void SubscribePlayerHp()
     {
-        battleUIView.SetUpPlayerHp(GameData.instance.GetPlayer().Hp.Value);
+        battleUIView.SetUpPlayerHp(GameDataManager.instance.gameData.GetPlayer().Hp.Value);
 
         // プレイヤーのHPの購読処理(HPSlider更新用にprevValueも使う場合)
         //GameData.instance.GetPlayer().Hp
         //    .Zip(GameData.instance.GetPlayer().Hp.Skip(1), (prevValue, currentValue) => (prevValue, currentValue))  // Zipオペレータは2つのOvservableシーケンスを組み合わせ、Skipオペレータはシーケンスの最初の値を無視する
         //    .Subscribe(values => battleUIView.UpdatePlayerHp(values.prevValue, values.currentValue))
         //    .AddTo(this);
-        GameData.instance.GetPlayer().Hp
+        GameDataManager.instance.gameData.GetPlayer().Hp
             .Subscribe(value => battleUIView.UpdatePlayerHp(value))
             .AddTo(this);
     }
@@ -44,7 +44,7 @@ public class BattleUIPresenter : MonoBehaviour
     {
         battleUIView.UpdatePlayerShieldValue(0);
 
-        GameData.instance.GetPlayer().Shield
+        GameDataManager.instance.gameData.GetPlayer().Shield
             .Subscribe(value => battleUIView.UpdatePlayerShieldValue(value))
             .AddTo(this);
     }
@@ -56,11 +56,11 @@ public class BattleUIPresenter : MonoBehaviour
     {
         battleUIView.SetUpPlayerBuff();
 
-        GameData.instance.GetPlayer().Buff
+        GameDataManager.instance.gameData.GetPlayer().Buff
             .Subscribe(data => battleUIView.UpdatePlayerBuff(data))
             .AddTo(this);
 
-        GameData.instance.GetPlayer().BuffDuration
+        GameDataManager.instance.gameData.GetPlayer().BuffDuration
             .Subscribe(value =>
             {
                 battleUIView.UpdatePlayerBuffDuration(value);
@@ -81,11 +81,11 @@ public class BattleUIPresenter : MonoBehaviour
     {
         battleUIView.SetUpPlayerDebuff();
 
-        GameData.instance.GetPlayer().Debuff
+        GameDataManager.instance.gameData.GetPlayer().Debuff
             .Subscribe(data => battleUIView.UpdatePlayerDebuff(data))
             .AddTo(this);
 
-        GameData.instance.GetPlayer().DebuffDuration
+        GameDataManager.instance.gameData.GetPlayer().DebuffDuration
             .Subscribe(value =>
             {
                 battleUIView.UpdatePlayerDebuffDuration(value);
@@ -103,10 +103,10 @@ public class BattleUIPresenter : MonoBehaviour
     /// </summary>
     private void SubscribeOpponentHp()
     {
-        battleUIView.SetUpOpponentHp(GameData.instance.GetOpponent().Hp.Value);
+        battleUIView.SetUpOpponentHp(GameDataManager.instance.gameData.GetOpponent().Hp.Value);
 
         // 対戦相手のHPの購読処理(対戦相手が変わるたびに購読するので、AddToではなく、対戦相手がいなくなるたびに毎回購読を止める必要がある)
-        GameData.instance.GetOpponent().Hp
+        GameDataManager.instance.gameData.GetOpponent().Hp
             .Subscribe(value => battleUIView.UpdateOpponentHp(value))
             .AddTo(subscriptions);
     }
@@ -118,7 +118,7 @@ public class BattleUIPresenter : MonoBehaviour
     {
         battleUIView.UpdateOpponentShieldValue(0);
 
-        GameData.instance.GetOpponent().Shield
+        GameDataManager.instance.gameData.GetOpponent().Shield
             .Subscribe(value => battleUIView.UpdateOpponentShieldValue(value))
             .AddTo(subscriptions);
     }
@@ -130,11 +130,11 @@ public class BattleUIPresenter : MonoBehaviour
     {
         battleUIView.SetUpOpponentBuff();
 
-        GameData.instance.GetOpponent().Buff
+        GameDataManager.instance.gameData.GetOpponent().Buff
             .Subscribe(data => battleUIView.UpdateOpponentBuff(data))
             .AddTo(subscriptions);
 
-        GameData.instance.GetOpponent().BuffDuration
+        GameDataManager.instance.gameData.GetOpponent().BuffDuration
             .Subscribe(value =>
             {
                 battleUIView.UpdateOpponentBuffDuration(value);
@@ -154,11 +154,11 @@ public class BattleUIPresenter : MonoBehaviour
     {
         battleUIView.SetUpOpponentDebuff();
 
-        GameData.instance.GetOpponent().Debuff
+        GameDataManager.instance.gameData.GetOpponent().Debuff
             .Subscribe(data => battleUIView.UpdateOpponentDebuff(data))
             .AddTo(subscriptions);
 
-        GameData.instance.GetOpponent().DebuffDuration
+        GameDataManager.instance.gameData.GetOpponent().DebuffDuration
             .Subscribe(value =>
             {
                 battleUIView.UpdateOpponentDebuffDuration(value);

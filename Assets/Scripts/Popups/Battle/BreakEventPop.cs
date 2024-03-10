@@ -36,7 +36,7 @@ public class BreakEventPop : PopupBase
             .Subscribe(_ =>
             {
                 // ルビーの支払い
-                GameData.instance.RubyCount.Value -= healCost;
+                GameDataManager.instance.gameData.RubyCount.Value -= healCost;
 
                 // 他のボタンの制御
                 SwitchActivateButtons();
@@ -50,7 +50,7 @@ public class BreakEventPop : PopupBase
             .ThrottleFirst(System.TimeSpan.FromSeconds(2f))
             .Subscribe(_ =>
             {
-                GameData.instance.RubyCount.Value -= resetCoolDownCost;
+                GameDataManager.instance.gameData.RubyCount.Value -= resetCoolDownCost;
 
                 SwitchActivateButtons();
 
@@ -77,9 +77,9 @@ public class BreakEventPop : PopupBase
     {
         SwitchActivateButtons();
 
-        txtCardCount.text = $"{GameData.instance.GetPlayer().HandCardList.Count}/{GameData.instance.handCardCapacity}";
+        txtCardCount.text = $"{GameDataManager.instance.gameData.GetPlayer().HandCardList.Count}/{GameDataManager.instance.gameData.handCardCapacity}";
 
-        isCardCountBeyondMax = GameData.instance.GetPlayer().HandCardList.Count > GameData.instance.handCardCapacity;
+        isCardCountBeyondMax = GameDataManager.instance.gameData.GetPlayer().HandCardList.Count > GameDataManager.instance.gameData.handCardCapacity;
         ProcessByCardCountStatus();
 
         base.ShowPopUp();
@@ -90,11 +90,11 @@ public class BreakEventPop : PopupBase
     /// </summary>
     private void SwitchActivateButtons()
     {
-        btnHeal.interactable = GameData.instance.RubyCount.Value >= healCost;
-        txtHealCost.color = GameData.instance.RubyCount.Value >= healCost ? ColorManager.instance.GetColor(ColorType.LightRed) : ColorManager.instance.GetColor(ColorType.Red);
+        btnHeal.interactable = GameDataManager.instance.gameData.RubyCount.Value >= healCost;
+        txtHealCost.color = GameDataManager.instance.gameData.RubyCount.Value >= healCost ? ColorManager.instance.GetColor(ColorType.LightRed) : ColorManager.instance.GetColor(ColorType.Red);
 
-        btnResetCoolDown.interactable = GameData.instance.RubyCount.Value >= resetCoolDownCost;
-        txtResetCoolDownCost.color = GameData.instance.RubyCount.Value >= resetCoolDownCost ? ColorManager.instance.GetColor(ColorType.LightRed) : ColorManager.instance.GetColor(ColorType.Red);
+        btnResetCoolDown.interactable = GameDataManager.instance.gameData.RubyCount.Value >= resetCoolDownCost;
+        txtResetCoolDownCost.color = GameDataManager.instance.gameData.RubyCount.Value >= resetCoolDownCost ? ColorManager.instance.GetColor(ColorType.LightRed) : ColorManager.instance.GetColor(ColorType.Red);
     }
 
     /// <summary>

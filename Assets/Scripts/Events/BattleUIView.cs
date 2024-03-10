@@ -72,7 +72,7 @@ public class BattleUIView : MonoBehaviour
     public void UpdatePlayerHp(int currentHp)
     {
         txtPlayerHp.text = currentHp.ToString();
-        playerSlider.DOValue((float)currentHp / GameData.instance.GetPlayer().MaxHp, animDuration).SetEase(animEase);
+        playerSlider.DOValue((float)currentHp / GameDataManager.instance.gameData.GetPlayer().MaxHp, animDuration).SetEase(animEase);
     }
 
     /// <summary>
@@ -170,7 +170,7 @@ public class BattleUIView : MonoBehaviour
     public void UpdateOpponentHp(int currentHp)
     {
         txtOpponentHp.text = currentHp.ToString();
-        opponentSlider.DOValue((float)currentHp / GameData.instance.GetOpponent().MaxHp, animDuration).SetEase(animEase);
+        opponentSlider.DOValue((float)currentHp / GameDataManager.instance.gameData.GetOpponent().MaxHp, animDuration).SetEase(animEase);
     }
 
     /// <summary>

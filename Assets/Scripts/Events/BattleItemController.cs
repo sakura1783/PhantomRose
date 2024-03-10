@@ -69,7 +69,7 @@ public class BattleItemController : MonoBehaviour
         inventoryPop.SwitchDisplayExchangePop(false);
 
         // GameDataのListからこのアイテムを削除(ここではListに新しい要素は追加しない。追加してしまうと、AddBattleItemメソッドのreturnにより処理が行われない)
-        GameData.instance.myItemList.Remove(thisItemData);
+        GameDataManager.instance.gameData.myItemList.Remove(thisItemData);
 
         // 親スロットのHasBattleItemを変更する
         if (transform.parent.TryGetComponent(out BattleItemSlot slot))

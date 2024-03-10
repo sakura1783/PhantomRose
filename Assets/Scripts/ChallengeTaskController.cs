@@ -25,7 +25,7 @@ public class ChallengeTaskController : MonoBehaviour
         txtTaskDetail.text = data.detail;
 
         // 達成しているタスクであれば
-        if (GameData.instance.achievedChallengeTaskList.Contains(data.id))
+        if (GameDataManager.instance.gameData.achievedChallengeTaskList.Contains(data.id))
         {
             // 背景色の設定
             imgBackground.color = ColorManager.instance.GetColor(ColorType.Brown);

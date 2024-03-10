@@ -3,7 +3,8 @@ using UniRx;
 using System.Collections.Generic;
 using System.Linq;
 
-public class GameData : AbstractSingleton<GameData>
+[System.Serializable]
+public class GameData
 {
     public List<int> myCardList = new();  // 持っているカードのid番号のList。この情報を使って、毎バトル時、手札を生成する
 

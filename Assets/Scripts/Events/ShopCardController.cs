@@ -36,7 +36,7 @@ public class ShopCardController : MonoBehaviour
         card.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
         card.SetUp(data, shopEventPop.DescriptionPop);
 
-        btnShopCard.interactable = GameData.instance.RubyCount.Value >= data.price;
+        btnShopCard.interactable = GameDataManager.instance.gameData.RubyCount.Value >= data.price;
 
         btnShopCard.OnClickAsObservable()
             .ThrottleFirst(System.TimeSpan.FromSeconds(0.5f))

@@ -35,11 +35,11 @@ public class CardHandler
             await UniTask.Delay(1000, cancellationToken: token);
 
             // HPのチェック。いずれかが0になったら、以降の処理はキャンセルする
-            if (GameData.instance.GetPlayer().Hp.Value <= 0)
+            if (GameDataManager.instance.gameData.GetPlayer().Hp.Value <= 0)
             {
                 return BattleState.Lose;
             }
-            else if (GameData.instance.GetOpponent().Hp.Value <= 0)
+            else if (GameDataManager.instance.gameData.GetOpponent().Hp.Value <= 0)
             {
                 return BattleState.Win;
             }

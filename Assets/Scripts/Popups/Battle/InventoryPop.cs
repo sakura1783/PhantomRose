@@ -35,7 +35,7 @@ public class InventoryPop : PopupBase
         base.SetUp();
 
         // アイテムスロットの生成
-        for (int i = 0; i < GameData.instance.inventoryCapacity; i++)
+        for (int i = 0; i < GameDataManager.instance.gameData.inventoryCapacity; i++)
         {
             var slot = Instantiate(BattleItemSlotPrefab, battleItemPlace);
 
@@ -55,7 +55,7 @@ public class InventoryPop : PopupBase
         newItemData = data;
 
         // インベントリのスペースがない場合
-        if (GameData.instance.myItemList.Count >= GameData.instance.inventoryCapacity)
+        if (GameDataManager.instance.gameData.myItemList.Count >= GameDataManager.instance.gameData.inventoryCapacity)
         {
             // ExchangePopを表示
             SwitchDisplayExchangePop(true);
@@ -64,7 +64,7 @@ public class InventoryPop : PopupBase
         }
 
         // インベントリにアイテムを追加する
-        GameData.instance.myItemList.Add(data);
+        GameDataManager.instance.gameData.myItemList.Add(data);
 
         var emptySlot = slots.Where(slot => !slot.HasBattleItem).Take(1).FirstOrDefault();
         var item = Instantiate(battleItemPrefab, emptySlot.transform);

@@ -12,12 +12,12 @@ public class SwiftStrike : CardEffectBase
         if (slotNo <= 1)
         {
             AllCardEffectManager.OneAttack(owner, -9);
-            FloatingMessageManager.instance.GenerateFloatingMessage(-9, -1, GameData.instance.GetTarget(owner));
+            FloatingMessageManager.instance.GenerateFloatingMessage(-9, -1, GameDataManager.instance.gameData.GetTarget(owner));
         }
         else
         {
             AllCardEffectManager.OneAttack(owner, -cardData.AttackPower.Value);
-            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, GameData.instance.GetTarget(owner));
+            FloatingMessageManager.instance.GenerateFloatingMessage(-cardData.AttackPower.Value, -1, GameDataManager.instance.gameData.GetTarget(owner));
         }
 
         await UniTask.DelayFrame(1);

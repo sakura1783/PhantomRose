@@ -104,16 +104,16 @@ public class BattleEventManager : MonoBehaviour
         cardHandler = new();  // これによって、CardHandlerクラスが利用できるようになる
 
         // プレイヤー情報を生成
-        GameData.instance.InitCharacter(OwnerStatus.Player, 30);
+        GameDataManager.instance.gameData.InitCharacter(OwnerStatus.Player, 30);
 
         // プレイヤーの初期手札カードを作成
         for (int i = 0; i < 7; i++)
         {
-            GameData.instance.myCardList.Add(DataBaseManager.instance.copyCardDataList[i].id);
+            GameDataManager.instance.gameData.myCardList.Add(DataBaseManager.instance.copyCardDataList[i].id);
         }
 
         // 初期手札をカードデッキポップに追加
-        foreach (var cardId in GameData.instance.myCardList)
+        foreach (var cardId in GameDataManager.instance.gameData.myCardList)
         {
             cardDeckPop.AddCardToCardDeck(DataBaseManager.instance.cardDataSO.cardDataList[cardId]);
         }
@@ -276,7 +276,7 @@ public class BattleEventManager : MonoBehaviour
             gameUpPop.ShowPopUp(false);
 
             // プレイヤーのHPを最大値に戻す
-            GameData.instance.GetPlayer().Hp.Value = GameData.instance.GetPlayer().MaxHp;
+            GameDataManager.instance.gameData.GetPlayer().Hp.Value = GameDataManager.instance.gameData.GetPlayer().MaxHp;
 
             return;
         }
@@ -327,27 +327,27 @@ public class BattleEventManager : MonoBehaviour
     private void InitPlayerForNewBattle()
     {
         // 前回バトルで付随したシールドや状態異常をリセット
-        GameData.instance.GetPlayer().Shield.Value = 0;
-        GameData.instance.GetPlayer().BuffDuration.Value = 0;
-        GameData.instance.GetPlayer().DebuffDuration.Value = 0;
+        GameDataManager.instance.gameData.GetPlayer().Shield.Value = 0;
+        GameDataManager.instance.gameData.GetPlayer().BuffDuration.Value = 0;
+        GameDataManager.instance.gameData.GetPlayer().DebuffDuration.Value = 0;
 
         // 手札の情報を作成
-        GameData.instance.GetPlayer().HandCardList.Clear();
-        foreach (var cardId in GameData.instance.myCardList)
+        GameDataManager.instance.gameData.GetPlayer().HandCardList.Clear();
+        foreach (var cardId in GameDataManager.instance.gameData.myCardList)
         {
-            GameData.instance.GetPlayer().HandCardList.Add(DataBaseManager.instance.copyCardDataList[cardId]);
+            GameDataManager.instance.gameData.GetPlayer().HandCardList.Add(DataBaseManager.instance.copyCardDataList[cardId]);
         }
 
         // 手札のカードのプレハブを生成
-        GameData.instance.SortBattleCardList();
-        foreach (var cardData in GameData.instance.attackCardList)
+        GameDataManager.instance.gameData.SortBattleCardList();
+        foreach (var cardData in GameDataManager.instance.gameData.attackCardList)
         {
             var cardObj = Instantiate(cardPrefab, attackCardTran);
             cardObj.SetUp(cardData, descriptionPop);
 
             playerHandCardObjs.Add(cardObj);
         }
-        foreach (var cardData in GameData.instance.magicCardList)
+        foreach (var cardData in GameDataManager.instance.gameData.magicCardList)
         {
             var cardObj = Instantiate(cardPrefab, magicCardTran);
             cardObj.SetUp(cardData, descriptionPop);
@@ -389,14 +389,14 @@ public class BattleEventManager : MonoBehaviour
     private void SetOpponentForNewBattle()
     {
         // 対戦相手の生成
-        GameData.instance.InitCharacter(OwnerStatus.Opponent, 10);
+        GameDataManager.instance.gameData.InitCharacter(OwnerStatus.Opponent, 10);
 
         // TODO 対戦相手のHandCardListの作成
-        GameData.instance.GetOpponent().HandCardList.Clear();
-        GameData.instance.GetOpponent().HandCardList = GameData.instance.GetPlayer().HandCardList;
+        GameDataManager.instance.gameData.GetOpponent().HandCardList.Clear();
+        GameDataManager.instance.gameData.GetOpponent().HandCardList = GameDataManager.instance.gameData.GetPlayer().HandCardList;
 
         // 対戦相手の手札のカードを見えない位置に生成
-        foreach (var cardData in GameData.instance.GetOpponent().HandCardList)
+        foreach (var cardData in GameDataManager.instance.gameData.GetOpponent().HandCardList)
         {
             var cardObj = Instantiate(cardPrefab, opponentCardTran);
             cardObj.SetUp(cardData, descriptionPop);

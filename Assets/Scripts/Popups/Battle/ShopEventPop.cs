@@ -151,16 +151,16 @@ public class ShopEventPop : PopupBase
         shopCards.Remove(purchasedCard.Key);  // これをしないと再度、下の処理でボタンがアクティブになってしまう
 
         // ルビー支払い
-        GameData.instance.RubyCount.Value -= data.price;
+        GameDataManager.instance.gameData.RubyCount.Value -= data.price;
 
         // 他の商品のボタンの制御
         foreach (var card in shopCards)
         {
-            card.Key.BtnShopCard.interactable = GameData.instance.RubyCount.Value >= card.Value.price;
+            card.Key.BtnShopCard.interactable = GameDataManager.instance.gameData.RubyCount.Value >= card.Value.price;
         }
 
         // myCardListとカードデッキに買ったカードを追加
-        GameData.instance.myCardList.Add(data.id);
+        GameDataManager.instance.gameData.myCardList.Add(data.id);
         cardDeckPop.AddCardToCardDeck(data);
 
         // CardPurchaseポップアップを非表示にする
@@ -202,7 +202,7 @@ public class ShopEventPop : PopupBase
     /// <param name="cardData"></param>
     private void SetUpCardPurchasePop(CardData cardData)
     {
-        txtSpendRuby.text = $"{GameData.instance.RubyCount}→{GameData.instance.RubyCount.Value - cardData.price}";
+        txtSpendRuby.text = $"{GameDataManager.instance.gameData.RubyCount}→{GameDataManager.instance.gameData.RubyCount.Value - cardData.price}";
     }
 
     /// <summary>

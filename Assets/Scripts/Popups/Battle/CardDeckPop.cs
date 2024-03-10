@@ -26,7 +26,7 @@ public class CardDeckPop : PopupBase
         base.SetUp();
 
         cardCount
-            .Subscribe(_ => txtCardCount.text = $"{cardCount}/{GameData.instance.handCardCapacity}")
+            .Subscribe(_ => txtCardCount.text = $"{cardCount}/{GameDataManager.instance.gameData.handCardCapacity}")
             .AddTo(this);
     }
 
@@ -38,7 +38,7 @@ public class CardDeckPop : PopupBase
     public void AddCardToCardDeck(CardData data)
     {
         // Listをレベルが低い順(昇順)に並べ替え
-        List<CardData> sortedList = GameData.instance.GetPlayer().HandCardList.OrderBy(card => card.level).ToList();
+        List<CardData> sortedList = GameDataManager.instance.gameData.GetPlayer().HandCardList.OrderBy(card => card.level).ToList();
 
         // 追加するカードの要素番号を取得
         int index = sortedList.FindIndex(x => x == data);

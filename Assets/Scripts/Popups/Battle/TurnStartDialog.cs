@@ -71,7 +71,7 @@ public class TurnStartDialog : PopupBase
                 HidePopUp();
 
                 // ルビー支払い
-                GameData.instance.RubyCount.Value -= fieldResetCost;
+                GameDataManager.instance.gameData.RubyCount.Value -= fieldResetCost;
 
                 // プレイヤーのカードをキャンセル
                 battleEventManager.CancelCards();

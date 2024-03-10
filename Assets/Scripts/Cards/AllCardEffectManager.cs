@@ -11,11 +11,11 @@ public static class AllCardEffectManager
     {
         if (owner == OwnerStatus.Player)
         {
-            GameData.instance.GetOpponent().UpdateHp(attackPower, false);
+            GameDataManager.instance.gameData.GetOpponent().UpdateHp(attackPower, false);
         }
         else
         {
-            GameData.instance.GetPlayer().UpdateHp(attackPower, false);
+            GameDataManager.instance.gameData.GetPlayer().UpdateHp(attackPower, false);
         }
     }
 
@@ -28,11 +28,11 @@ public static class AllCardEffectManager
     {
         if (owner == OwnerStatus.Player)
         {
-            GameData.instance.GetPlayer().HandCardList.Where(data => data == cardData).FirstOrDefault().AttackPower.Value++;
+            GameDataManager.instance.gameData.GetPlayer().HandCardList.Where(data => data == cardData).FirstOrDefault().AttackPower.Value++;
         }
         else
         {
-            GameData.instance.GetOpponent().HandCardList.Where(data => data == cardData).FirstOrDefault().AttackPower.Value++;
+            GameDataManager.instance.gameData.GetOpponent().HandCardList.Where(data => data == cardData).FirstOrDefault().AttackPower.Value++;
         }
     }
 
@@ -45,11 +45,11 @@ public static class AllCardEffectManager
     {
         if (owner == OwnerStatus.Player)
         {
-            GameData.instance.GetPlayer().UpdateHp(recoveryPower, true);
+            GameDataManager.instance.gameData.GetPlayer().UpdateHp(recoveryPower, true);
         }
         else
         {
-            GameData.instance.GetOpponent().UpdateHp(recoveryPower, true);
+            GameDataManager.instance.gameData.GetOpponent().UpdateHp(recoveryPower, true);
         }
     }
 
@@ -62,11 +62,11 @@ public static class AllCardEffectManager
     {
         if (owner == OwnerStatus.Player)
         {
-            GameData.instance.GetPlayer().UpdateShield(shieldPower);
+            GameDataManager.instance.gameData.GetPlayer().UpdateShield(shieldPower);
         }
         else
         {
-            GameData.instance.GetOpponent().UpdateShield(shieldPower);
+            GameDataManager.instance.gameData.GetOpponent().UpdateShield(shieldPower);
         }
     }
 
@@ -79,11 +79,11 @@ public static class AllCardEffectManager
     {
         if (owner == OwnerStatus.Player)
         {
-            GameData.instance.GetPlayer().UpdateBuff(buff);
+            GameDataManager.instance.gameData.GetPlayer().UpdateBuff(buff);
         }
         else
         {
-            GameData.instance.GetOpponent().UpdateBuff(buff);
+            GameDataManager.instance.gameData.GetOpponent().UpdateBuff(buff);
         }
     }
 
@@ -96,11 +96,11 @@ public static class AllCardEffectManager
     {
         if (owner == OwnerStatus.Player)
         {
-            GameData.instance.GetOpponent().UpdateDebuff(debuff);
+            GameDataManager.instance.gameData.GetOpponent().UpdateDebuff(debuff);
         }
         else
         {
-            GameData.instance.GetPlayer().UpdateDebuff(debuff);
+            GameDataManager.instance.gameData.GetPlayer().UpdateDebuff(debuff);
         }
     }
 }

@@ -31,7 +31,7 @@ public class BattleAlwaysPop : PopupBase
         canvasGroup.alpha = 0;
         canvasGroup.blocksRaycasts = false;
 
-        txtRubyCount.text = GameData.instance.RubyCount.ToString();
+        txtRubyCount.text = GameDataManager.instance.gameData.RubyCount.ToString();
 
         // 各ボタンの設定
         btnMenu.OnClickAsObservable()
@@ -66,7 +66,7 @@ public class BattleAlwaysPop : PopupBase
         // TODO btnToPlayerState
 
         // TODO 書く場所
-        GameData.instance.RubyCount
+        GameDataManager.instance.gameData.RubyCount
             .Subscribe(value => txtRubyCount.text = Mathf.Clamp(value, 0, int.MaxValue).ToString())
             .AddTo(this);
     }
