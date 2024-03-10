@@ -6,7 +6,14 @@ using Cysharp.Threading.Tasks;
 /// </summary>
 public interface ICommand
 {
-    UniTask ExecuteAsync(OwnerStatus owner, CancellationToken token);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="owner"></param>
+    /// <param name="token"></param>
+    /// <param name="slotNo">何番目のスロットか</param>
+    /// <returns></returns>
+    UniTask ExecuteAsync(OwnerStatus owner, CancellationToken token, int slotNo);
 
     int GetId();
 }

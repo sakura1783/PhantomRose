@@ -24,7 +24,7 @@ public class CardHandler
             UnityEngine.Debug.Log(ownerList.Count);
             UnityEngine.Debug.Log(token);
 
-            await cardList[i].CardEffect.ExecuteAsync(ownerList[i], token);
+            await cardList[i].CardEffect.ExecuteAsync(ownerList[i], token, i);
 
             if (ownerList[i] == OwnerStatus.Player)
             {

@@ -16,7 +16,7 @@ public class HollowStrike : CardEffectBase
     /// <param name="owner"></param>
     /// <param name="token"></param>
     /// <returns></returns>
-    public override async UniTask ExecuteAsync(OwnerStatus owner, CancellationToken token)
+    public override async UniTask ExecuteAsync(OwnerStatus owner, CancellationToken token, int slotNo)
     {
         //if (owner == OwnerStatus.Player)
         //{

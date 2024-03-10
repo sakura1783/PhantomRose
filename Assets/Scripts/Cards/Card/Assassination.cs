@@ -19,7 +19,7 @@ public class Assassination : CardEffectBase
     /// <param name="owner"></param>
     /// <param name="token"></param>
     /// <returns></returns>
-    public override async UniTask ExecuteAsync(OwnerStatus owner, CancellationToken token)
+    public override async UniTask ExecuteAsync(OwnerStatus owner, CancellationToken token, int slotNo)
     {
         // 指定回数(attackCount)だけ攻撃
         for (int i = 0; i < attackCount; i++)
