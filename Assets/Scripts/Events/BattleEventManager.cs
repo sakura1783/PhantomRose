@@ -334,19 +334,25 @@ public class BattleEventManager : MonoBehaviour
 
         // 手札のカードのプレハブを生成
         GameDataManager.instance.gameData.SortBattleCardList();
+
+        int battleSerialNo = 0;  // バトル専用の通し番号
         foreach (var cardData in GameDataManager.instance.gameData.attackCardList)
         {
             var cardObj = Instantiate(cardPrefab, attackCardTran);
-            cardObj.SetUp(cardData, descriptionPop);
+            cardObj.SetUp(cardData, descriptionPop, battleSerialNo);
 
             playerHandCardObjs.Add(cardObj);
+
+            battleSerialNo++;
         }
         foreach (var cardData in GameDataManager.instance.gameData.magicCardList)
         {
             var cardObj = Instantiate(cardPrefab, magicCardTran);
-            cardObj.SetUp(cardData, descriptionPop);
+            cardObj.SetUp(cardData, descriptionPop, battleSerialNo);
 
             playerHandCardObjs.Add(cardObj);
+
+            battleSerialNo++;
         }
 
         // クールタイム引き継ぎ処理

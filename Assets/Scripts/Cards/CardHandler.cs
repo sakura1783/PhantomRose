@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using UniRx;
 
@@ -28,7 +29,9 @@ public class CardHandler
 
             if (ownerList[i] == OwnerStatus.Player)
             {
-                handCardManager.SetCoolTimeCard(cardList[i]);
+                CardController useCard = handCardManager.cardList.Find(card => card.SerialNo == cardList[i].SerialNo);
+
+                handCardManager.SetCoolTimeCard(useCard);
             }
 
             // 仮の待機時間。本来はエフェクトなどの絡みがあるので、各ExecuteAsync内にかく

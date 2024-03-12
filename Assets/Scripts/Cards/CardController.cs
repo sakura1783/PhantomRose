@@ -35,7 +35,11 @@ public class CardController : MonoBehaviour
     public CardData CardData => cardData;
 
     private int serialNo;  // 通し番号。この値は常に一意
-    public int SerialNo => serialNo;
+    public int SerialNo
+    {
+        get => serialNo;
+        set => serialNo = value;
+    }
 
     private int currentCoolTime;
     public int CurrentCoolTime => currentCoolTime;
