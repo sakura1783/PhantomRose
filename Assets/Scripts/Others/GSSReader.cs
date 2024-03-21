@@ -12,6 +12,7 @@ public enum SheetName
 {
     None,
     CardData,
+    LevelUpCardData,
     StateData,
     OpponentData,
     StageDetailData,

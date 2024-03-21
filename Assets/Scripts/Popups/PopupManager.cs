@@ -14,7 +14,14 @@ public class PopupManager : AbstractSingleton<PopupManager>  // <型引数>に�
     public PopupBase CurrentViewPop => currentViewPop;
     //public ReactiveProperty<PopupBase> currentViewPop = new();  // テスト用。監視
 
-    readonly Stack<PopupBase> history = new();  // 以前開いていたポップアップを保持するためのStack(スタック。新しい要素を追加し、最後に追加された要素を取り出す)
+    //readonly Stack<PopupBase> history = new();  // 以前開いていたポップアップを保持するためのStack(スタック。新しい要素を追加し、最後に追加された要素を取り出す)
+    private Stack<PopupBase> history = new();
+    public Stack<PopupBase> History
+    {
+        get => history;
+        set => history = value;
+    }
+
 
     private PopupBase descriptionPop;
     public PopupBase DescriptionPop => descriptionPop;

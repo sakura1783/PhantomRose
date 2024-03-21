@@ -46,6 +46,9 @@ public class GSSReceiver : MonoBehaviour
             DataBaseManager.instance.cardDataSO.cardDataList =
                 new List<CardData>(sheetDatasList.Find(x => x.SheetName == SheetName.CardData).DatasList.Select(x => new CardData(x)).ToList());  //Find()で、SheetName.CardDataと一致するシートのデータを取得し、それをSelect()でCardData型に変換して、ToList()でCardData型の新しいリストを作成。
 
+            DataBaseManager.instance.levelUpCardDataSO.levelUpCardDataList =
+                new List<LevelUpCardData>(sheetDatasList.Find(x => x.SheetName == SheetName.LevelUpCardData).DatasList.Select(x => new LevelUpCardData(x)).ToList());
+
             DataBaseManager.instance.stateDataSO.stateDataList =
                 new List<StateData>(sheetDatasList.Find(x => x.SheetName == SheetName.StateData).DatasList.Select(x => new StateData(x)).ToList());
 

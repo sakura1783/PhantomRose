@@ -74,9 +74,18 @@ public class CardDeckPop : PopupBase
     /// <summary>
     /// TODO カードデッキからカードを削除
     /// </summary>
-    public void RemoveCardFromCardDeck(CardController tapCard)
+    public async UniTask RemoveCardFromCardDeck(CardController tapCard)
     {
+        // カードを捨てるか確認用のポップアップを開く
+        DiscardSubmitPop discardSubmitPop = (DiscardSubmitPop)PopupManager.instance.Show<DiscardSubmitPop>(true, false);
 
+        bool btnResult = await discardSubmitPop.WaitConfirm();
+
+        // 捨てるを選んだ場合
+        if (btnResult)
+        {
+            // 捨てる際の処理
+        }
     }
 
     /// <summary>

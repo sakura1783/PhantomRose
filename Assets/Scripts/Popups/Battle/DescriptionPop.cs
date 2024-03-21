@@ -39,7 +39,7 @@ public class DescriptionPop : PopupBase
 
         // CardDescポップアップの生成と初期設定
         var cardDescPop = Instantiate(cardDescriptionPopPrefab, transform);
-        cardDescPop.SetUp(cardData);
+        cardDescPop.SetUp(cardData, false);
 
         // StateDescポップアップの生成と初期設定
         for (int i = 0; i < cardData.stateList.Count; i++)

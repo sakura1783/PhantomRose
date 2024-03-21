@@ -27,6 +27,9 @@ public class GameData
     public ReactiveProperty<int> DiamondGemCount = new();
     public ReactiveProperty<int> RubyGemCount = new();
 
+    public List<int> levelupCardSerialNumbers = new();  // レベルアップしたカードたちの通し番号を持つList
+
+    // TODO いらなくなるかも
     public ReactiveProperty<bool> HasSaveData = new();  // セーブデータがあるかどうか。ある場合、その情報を使って中断した部分から再開する。
 
     private Character player;

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
@@ -78,9 +79,19 @@ public class CardController : MonoBehaviour
     /// <summary>
     /// カードに情報を設定する
     /// </summary>
-    private void SetCardDetail(CardData data)
+    public void SetCardDetail(CardData data, LevelUpCardData levelUpData = null)
     {
         // 各値を設定
+        if (levelUpData != null)
+        {
+            // レベルアップのデータがある場合は、そちらを利用
+            imgCard.sprite = IconManager.instance.GetCardIcon(DataBaseManager.instance.cardDataSO.cardDataList.Where(data => data.id == levelUpData.cardId).FirstOrDefault().spriteId);
+            imgBase.color = DataBaseManager.instance.cardDataSO.cardDataList.Where(data => data.id == levelUpData.cardId).FirstOrDefault().cardColor;
+            DisplayAttackPower(levelUpData.attackPower);
+
+            return;
+        }
+
         imgCard.sprite = IconManager.instance.GetCardIcon(data.spriteId);
         imgBase.color = data.cardColor;
         DisplayAttackPower(data.AttackPower.Value);  //TODO 置く場所や状況によって攻撃力に変動があるものは 4+ などのように表示する

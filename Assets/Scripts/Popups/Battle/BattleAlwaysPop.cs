@@ -65,7 +65,6 @@ public class BattleAlwaysPop : PopupBase
 
         // TODO btnToPlayerState
 
-        // TODO 書く場所
         GameDataManager.instance.gameData.RubyCount
             .Subscribe(value => txtRubyCount.text = Mathf.Clamp(value, 0, int.MaxValue).ToString())
             .AddTo(this);
@@ -96,7 +95,7 @@ public class BattleAlwaysPop : PopupBase
     /// btnReturnのアクティブ状態を切り替える
     /// </summary>
     /// <param name="isActive"></param>
-    private void SetReturnButtonActivation(bool isActive)
+    public void SetReturnButtonActivation(bool isActive)
     {
         int alphaValue = isActive == true ? 1 : 0;
 

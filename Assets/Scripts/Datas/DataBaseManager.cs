@@ -8,6 +8,7 @@ public class DataBaseManager : MonoBehaviour
 
     // 各スクリプタブルオブジェクト
     public CardDataSO cardDataSO;
+    public LevelUpCardDataSO levelUpCardDataSO;
     public StateDataSO stateDataSO;
     public ItemDataSO itemDataSO;
     public OpponentDataSO opponentDataSO;

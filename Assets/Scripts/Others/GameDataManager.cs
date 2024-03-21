@@ -12,7 +12,7 @@ public class GameDataManager : AbstractSingleton<GameDataManager>
         base.Awake();
 
         this.UpdateAsObservable()
-            .Where(_ => Input.GetKeyDown(KeyCode.Space))
+            .Where(_ => Input.GetKeyDown(KeyCode.S))
             .Subscribe(_ => PlayerPrefsHelper.SaveGameData());
 
         this.UpdateAsObservable()
