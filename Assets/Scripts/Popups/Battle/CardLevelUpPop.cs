@@ -15,8 +15,6 @@ public class CardLevelUpPop : PopupBase
 
     [SerializeField] private int generateCardCount;
 
-    private int selectCardSerialNo;
-
 
     public override void SetUp()
     {
@@ -25,7 +23,7 @@ public class CardLevelUpPop : PopupBase
         // テスト用
         this.UpdateAsObservable()
             .Where(_ => Input.GetKeyDown(KeyCode.Space))
-            .Subscribe(_ => PopupManager.instance.Show<CardLevelUpPop>(true, false))
+            .Subscribe(_ => PopupManager.instance.Show<CardLevelUpPop>(false, false))
             .AddTo(this);
     }
 
@@ -63,7 +61,7 @@ public class CardLevelUpPop : PopupBase
         }
 
         // myCardSerialList - levelupCardSerialNumbersの差集合のList
-        List<int> deltaSerialList = myCardSerialList.Intersect(GameDataManager.instance.gameData.levelupCardSerialNumbers).ToList();
+        List<int> deltaSerialList = myCardSerialList.Except(GameDataManager.instance.gameData.levelupCardSerialNumbers).ToList();
 
         // 上のListをランダムに並び替え
         List<int> generateSerialList = deltaSerialList.OrderBy(_ => Random.value).Take(generateCardCount).ToList();

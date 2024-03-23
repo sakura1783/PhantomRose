@@ -44,23 +44,24 @@ public class GameData
         set => currentSerialNo = value;
     }
 
+    // TODO コメントアウト？
     /// <summary>
     /// レベルアップしたカードの情報
     /// </summary>
-    [System.Serializable]  // Serializable属性を付けないと、levelUpCardDataList変数をpublicにしても、インスペクターに表示されない
-    public class LevelUpCardData
-    {
-        public int serialNo;
+    //[System.Serializable]  // Serializable属性を付けないと、levelUpCardDataList変数をpublicにしても、インスペクターに表示されない
+    //public class LevelUpCardData
+    //{
+    //    public int serialNo;
 
-        public int attackPower;
-        public int recoveryPower;
-        public int shieldPower;
+    //    public int attackPower;
+    //    public int recoveryPower;
+    //    public int shieldPower;
 
-        public int buffDuration;
-        public int debuffDuration;
-    }
+    //    public int buffDuration;
+    //    public int debuffDuration;
+    //}
 
-    public List<LevelUpCardData> levelUpCardDataList = new();
+    //public List<LevelUpCardData> levelUpCardDataList = new();
 
 
     /// <summary>

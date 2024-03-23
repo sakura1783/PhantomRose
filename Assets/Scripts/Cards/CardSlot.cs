@@ -36,8 +36,6 @@ public class CardSlot : MonoBehaviour
     /// <param name="newCard"></param>
     public void SetCard(CardController newCard)
     {
-        Debug.Log($"シリアル：{newCard.SerialNo}");
-
         // 選択されているカードを複製し、スロットと親子関係にする
         CardController cardClone = Instantiate(newCard, transform);
         cardClone.SerialNo = newCard.SerialNo;

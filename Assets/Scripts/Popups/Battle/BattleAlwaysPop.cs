@@ -20,6 +20,8 @@ public class BattleAlwaysPop : PopupBase
 
     [SerializeField] private CanvasGroup returnButtonGroup;
 
+    [SerializeField] private LevelupDetailPop levelupDetailPop;
+
     private readonly string[] hidePopNames = new[] { "Store(Home)", "Inventory", "CardDeck", "PlayerState" };  // readonlyで、変数が一度初期化されたらその値を変更できなくする
 
 
@@ -43,7 +45,15 @@ public class BattleAlwaysPop : PopupBase
             .ThrottleFirst(TimeSpan.FromSeconds(0.5f))
             .Subscribe(_ =>
             {
-                PopupManager.instance.GoBack();
+                if (PopupManager.instance.CurrentViewPop.name == "CardLevelupPop")
+                {
+                    levelupDetailPop.HidePopUp();
+                }
+                else
+                {
+                    PopupManager.instance.GoBack();
+                }
+
                 SetReturnButtonActivation(false);
             })
             .AddTo(this);

@@ -24,6 +24,8 @@ public class LevelupDetailPop : PopupBase
 
     [SerializeField] private CardLevelUpPop cardLevelupPop;
 
+    [SerializeField] private CardDeckPop cardDeckPop;
+
     private CardData selectCard;
 
     private int selectCardSerialNo;
@@ -50,6 +52,11 @@ public class LevelupDetailPop : PopupBase
                 // GameDataのlevelupCardSerialNumbersリストにカードの通し番号を追加
                 GameDataManager.instance.gameData.levelupCardSerialNumbers.Add(selectCardSerialNo);
 
+                // TODO インベントリのカードにレベルアップ後の見た目を反映(今は情報をセットしているだけ)
+                cardDeckPop.GeneratedCardList.Where(card => card.SerialNo == selectCardSerialNo).FirstOrDefault().EditCardData(selectCard.id);
+                //cardDeckPop.GeneratedCardList.Where(card => card.SerialNo == selectCardSerialNo).FirstOrDefault().SetUp(selectCard, , )
+
+                battleAlwaysPop.SetReturnButtonActivation(false);
                 cardLevelupPop.HidePopUp();
             })
             .AddTo(this);

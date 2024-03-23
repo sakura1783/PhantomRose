@@ -58,9 +58,15 @@ public class CardController : MonoBehaviour
     {
         cardData = data;
 
+        // レベルアップされているカードの場合
+        if (GameDataManager.instance.gameData.levelupCardSerialNumbers.Contains(serialNo))
+        {
+            EditCardData(data.id);
+        }
+
         this.serialNo = serialNo;
 
-        SetCardDetail(data);
+        SetCardDetail(cardData);  // 引数で受け取ったdataではなく、変更後のcardDataを渡す
 
         // リフレクションを利用し、カードから同名のカード効果を持つクラス・インスタンスを生成
         cardEffect = CardEffectFactory.CreateCardEffect(cardData);
@@ -68,7 +74,7 @@ public class CardController : MonoBehaviour
         // 購読処理
         btnCard.OnClickAsObservable()
             .ThrottleFirst(TimeSpan.FromSeconds(0.5f))
-            .Subscribe(_ => descriptionPop.ShowPopUp(data))
+            .Subscribe(_ => descriptionPop.ShowPopUp(cardData))
             .AddTo(this);
 
         cardData.AttackPower
@@ -187,5 +193,26 @@ public class CardController : MonoBehaviour
     private void DisplayAttackPower(int attackPower)
     {
         txtAttackPointOrInterval.text = attackPower <= 0 ? "" : attackPower.ToString();
+    }
+
+    /// <summary>
+    /// カードの一部の情報を変更する(レベルアップした際など)
+    /// </summary>
+    /// <param name="serialNo"></param>
+    public void EditCardData(int cardId)
+    {
+        var levelupData = DataBaseManager.instance.levelUpCardDataSO.levelUpCardDataList[cardId];
+
+        // 一部をレベルアップ後の情報に変更
+        cardData.AttackPower.Value = levelupData.attackPower;
+        cardData.shieldPower = levelupData.shieldPower;
+        cardData.recoveryPower = levelupData.recoveryPower;
+        if (cardData.stateList.Count > 0)
+        {
+            cardData.stateList[0].duration = levelupData.stateDuration;
+        }
+
+        cardData.name = $"{cardData.name}+";
+        cardData.description = levelupData.description;
     }
 }

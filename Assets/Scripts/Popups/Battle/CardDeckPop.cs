@@ -8,6 +8,7 @@ using Cysharp.Threading.Tasks;
 public class CardDeckPop : PopupBase
 {
     [SerializeField] private CardController cardPrefab;
+    public CardController CardPrefab => cardPrefab;
 
     [SerializeField] private Transform cardTran;
 
@@ -17,7 +18,8 @@ public class CardDeckPop : PopupBase
 
     public ReactiveProperty<int> cardCount = new();
 
-    private List<CardData> generatedCardList = new();
+    private List<CardController> generatedCardList = new();
+    public List<CardController> GeneratedCardList => generatedCardList;
 
 
     /// <summary>
@@ -57,13 +59,13 @@ public class CardDeckPop : PopupBase
         var cardObj = Instantiate(cardPrefab, cardTran);
         cardObj.SetUp(data, descriptionPop, GameDataManager.instance.gameData.CurrentSerialNo);
 
-        generatedCardList.Add(cardObj.CardData);
+        generatedCardList.Add(cardObj);
 
         // 生成したカードをレベルが低い順(昇順)に並べ替え
-        List<CardData> sortedList = generatedCardList.OrderBy(card => card.level).ToList();  // TODO 同じカードがあれば、並ぶようにする
+        List<CardController> sortedList = generatedCardList.OrderBy(card => card.CardData.level).ToList();  // TODO 同じカードがあれば、並ぶようにする
 
         // 追加したカードの要素番号を取得
-        int index = sortedList.FindIndex(x => x == data);
+        int index = sortedList.FindIndex(x => x.CardData == data);
 
         // 指定したインデックスの位置にカードを移動
         cardObj.transform.SetSiblingIndex(index);  // TODO 適切な位置にカードが移動するか確認する
