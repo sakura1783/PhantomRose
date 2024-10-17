@@ -52,7 +52,7 @@ public class LevelupDetailPop : PopupBase
                 // GameDataのlevelupCardSerialNumbersリストにカードの通し番号を追加
                 GameDataManager.instance.gameData.levelupCardSerialNumbers.Add(selectCardSerialNo);
 
-                // TODO インベントリのカードにレベルアップ後の見た目を反映(今は情報をセットしているだけ)
+                // インベントリのカードにレベルアップ後の見た目を反映
                 cardDeckPop.GeneratedCardList.Where(card => card.SerialNo == selectCardSerialNo).FirstOrDefault().EditCardData(selectCard.id);
                 //cardDeckPop.GeneratedCardList.Where(card => card.SerialNo == selectCardSerialNo).FirstOrDefault().SetUp(selectCard, , )
 

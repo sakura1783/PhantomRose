@@ -37,9 +37,6 @@ public class LevelupCardObjController : MonoBehaviour
             {
                 //PopupManager.instance.Show<LevelupDetailPop>(true, false);  <= これだとCardDataの情報が渡せない
                 levelupDetailPop.ShowLevelupDetailPopUp(cardData, serialNo);  // CardDataの情報を渡す
-
-                PopupManager.instance.History.Push(PopupManager.instance.CurrentViewPop);  // Historyに追加してLevelupDetailPop内で戻るボタンを押したとき、CardLevelupPopに戻れるようにする
-                Debug.Log($"{PopupManager.instance.CurrentViewPop}をhistoryに追加しました : {PopupManager.instance.History}");
             })
             .AddTo(this);
     }

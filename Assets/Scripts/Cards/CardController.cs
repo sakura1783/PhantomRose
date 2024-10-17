@@ -214,5 +214,7 @@ public class CardController : MonoBehaviour
 
         cardData.name = $"{cardData.name}+";
         cardData.description = levelupData.description;
+
+        Debug.Log($"{cardData.name}カードの情報を変更しました : {cardId}");
     }
 }
